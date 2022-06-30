@@ -1,0 +1,30 @@
+import mongoose from "mongoose";
+import express from "express";
+import cors from "cors";
+import { router } from "./routes/services.js";
+
+const app = express();
+app.use(cors());
+
+// Routes
+app.use("/services", router);
+
+const port = process.env.PORT || 3000;
+
+// Initialize our mongo connection.
+const mongoUri = process.env.MONGO_URI || "mongodb://localhost/deployboard";
+mongoose.connect(
+  mongoUri,
+  () => {
+    console.log("Mongo connection established.");
+  },
+  (e) => console.error(e)
+);
+
+app.get("/h", (req, res) => {
+  res.json({ status: "ok" });
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
