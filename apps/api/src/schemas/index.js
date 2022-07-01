@@ -1,8 +1,5 @@
 import { SchemaComposer } from "graphql-compose";
 
-// TODO: Do we need this?
-import db from "../utils/db"; // eslint-disable-line no-unused-vars
-
 const schemaComposer = new SchemaComposer();
 
 import { ServiceQuery, ServiceMutation } from "./service";

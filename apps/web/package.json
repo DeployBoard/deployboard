@@ -1,0 +1,52 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "HOST=localhost react-scripts start",
+    "start": "HOST=localhost react-scripts start",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject",
+    "test": "cypress run",
+    "seed": "./seed.sh",
+    "clean": "rm -rf node_modules/",
+    "deploy-dev": "aws s3 sync --profile deployboard --delete --acl public-read build/ s3://dapp.deployboard.io/",
+    "invalidate-dev": "aws cloudfront create-invalidation --profile deployboard --distribution-id EYXQQ66Q7B4VF --paths \"/*\"",
+    "deploy-prod": "aws s3 sync --profile deployboard --delete --acl public-read build/ s3://app.deployboard.io/",
+    "invalidate-prod": "aws cloudfront create-invalidation --profile deployboard --distribution-id E3BGYXTAPRWRAV --paths \"/*\""
+  },
+  "dependencies": {
+    "@apollo/client": "^3.6.9",
+    "graphql": "^16.5.0",
+    "axios": "^0.27.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^5.0.1",
+    "react-chartjs-2": "^4.2.0",
+    "@mui/material": "^5.8.5",
+    "@mui/icons-material": "^5.8.4",
+    "@emotion/styled": "^11.9.3",
+    "@emotion/react": "^11.9.3",
+    "@fontsource/roboto": "^4.5.7",
+    "@mui/x-date-pickers": "5.0.0-alpha.7",
+    "luxon": "^2.4.0"
+  },
+  "devDependencies": {
+    "cypress": "^10.2.0"
+  },
+  "eslintConfig": {},
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
