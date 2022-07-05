@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Dashboard from "./components/pages/dashboard";
+import Dashboard from "./components/pages/dashboard/dashboard";
+import Services from "./components/pages/services/services";
+import Logs from "./components/pages/logs/logs";
 // import logo from './assets/DeployBoard256.png';
 
 const App = () => {
@@ -7,6 +9,8 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route exact path="/dashboard" element={<Dashboard />} />
+        <Route exact path="/services" element={<Services />} />
+        <Route exact path="/logs" element={<Logs />} />
         <Route exact path="/" element={<Navigate to="/dashboard" replace />} />
 
         {/* <Route path="/logs" component={Logs} /> */}

@@ -37,6 +37,5 @@ server.start().then((res) => {
 
   app.listen({ port: process.env.PORT }, () => {
     console.log(`Server listening on port ${process.env.PORT}`);
-    console.log(`Health checks available at /h`);
   });
 });

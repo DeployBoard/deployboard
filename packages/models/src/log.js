@@ -1,7 +1,6 @@
-import mongoose, { Schema } from "mongoose";
-import { composeWithMongoose } from "graphql-compose-mongoose";
+const mongoose = require("mongoose");
 
-export const LogSchema = new Schema(
+const LogSchema = new mongoose.Schema(
   {
     account: {
       type: String,
@@ -37,6 +36,7 @@ export const LogSchema = new Schema(
 LogSchema.index({ createdAt: 1, updatedAt: 1 });
 
 const Log = mongoose.model("Log", LogSchema);
-const LogTC = composeWithMongoose(Log);
 
-export { Log, LogTC };
+module.exports = {
+  Log,
+};

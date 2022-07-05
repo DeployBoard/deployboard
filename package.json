@@ -12,6 +12,7 @@
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{js,jsx,md}\"",
+    "seed": "turbo run seed",
     "clean": "turbo run clean --parallel && rm -rf node_modules && rm -rf package-lock.json"
   },
   "devDependencies": {

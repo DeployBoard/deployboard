@@ -1,7 +1,6 @@
-import mongoose, { Schema } from "mongoose";
-import { composeWithMongoose } from "graphql-compose-mongoose";
+const mongoose = require("mongoose");
 
-const environmentSchema = new Schema({
+const environmentSchema = new mongoose.Schema({
   name: {
     type: String,
   },
@@ -15,11 +14,11 @@ const environmentSchema = new Schema({
     type: Date,
   },
   custom: {
-    type: Schema.Types.Mixed,
+    type: mongoose.Schema.Types.Mixed,
   },
 });
 
-export const ServiceSchema = new Schema(
+const ServiceSchema = new mongoose.Schema(
   {
     account: {
       type: String,
@@ -51,6 +50,7 @@ export const ServiceSchema = new Schema(
 ServiceSchema.index({ createdAt: 1, updatedAt: 1 });
 
 const Service = mongoose.model("Service", ServiceSchema);
-const ServiceTC = composeWithMongoose(Service);
 
-export { Service, ServiceTC };
+module.exports = {
+  Service,
+};

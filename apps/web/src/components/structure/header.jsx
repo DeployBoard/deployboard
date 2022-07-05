@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
-const pages = ["dashboard", "ci", "applications", "logs", "analytics"];
+const pages = ["dashboard", "ci", "services", "logs", "analytics"];
 const settings = ["profile", "account", "logout"];
 
 const Header = () => {

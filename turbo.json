@@ -20,6 +20,10 @@
       "dependsOn": ["build", "test", "lint"],
       "outputs": []
     },
+    "seed": {
+      "dependsOn": ["^seed"],
+      "outputs": []
+    },
     "dev": {
       "cache": false
     },

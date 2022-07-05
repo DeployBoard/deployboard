@@ -1,0 +1,10 @@
+{
+  "name": "models",
+  "version": "0.0.0",
+  "description": "Mongoose Models",
+  "main": "./src/index.js",
+  "private": true,
+  "dependencies": {
+    "mongoose": "^6.4.2"
+  }
+}
