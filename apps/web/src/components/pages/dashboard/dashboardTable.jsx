@@ -15,6 +15,7 @@ const GetServices = gql`
       _id
       application
       environments {
+        _id
         name
         status
         version
@@ -30,7 +31,7 @@ const DashboardTable = () => {
   const { loading, error, data } = useQuery(GetServices, {
     variables: {
       filter: {
-        account: "deployboard.io",
+        account: "Seed",
       },
     },
   });
@@ -58,62 +59,60 @@ const DashboardTable = () => {
         <TableBody>
           {data.serviceMany.map((item) => (
             <Fragment key={item._id}>
-              <TableRow
-                hover
-                key={item._id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell align="left">{item.service}</TableCell>
-                <TableCell align="right">{item.application}</TableCell>
-                {item.environments.map((env) => (
-                  <Fragment key={`${item._id}-${env.name}`}>
-                    <TableCell align="right">{env.name}</TableCell>
-                    <TableCell align="right">{env.version}</TableCell>
-                    <TableCell align="right">
-                      {(() => {
-                        if (env.status === "Deployed") {
-                          return (
-                            <Chip
-                              label={env.status}
-                              color="success"
-                              variant="outlined"
-                              size="small"
-                            />
-                          );
-                        } else if (env.status === "Deploying") {
-                          return (
-                            <Chip
-                              label={env.status}
-                              color="primary"
-                              variant="outlined"
-                              size="small"
-                            />
-                          );
-                        } else if (env.status === "Failed") {
-                          return (
-                            <Chip
-                              label={env.status}
-                              color="error"
-                              variant="outlined"
-                              size="small"
-                            />
-                          );
-                        } else {
-                          return (
-                            <Chip
-                              label={env.status}
-                              color="secondary"
-                              variant="outlined"
-                              size="small"
-                            />
-                          );
-                        }
-                      })()}
-                    </TableCell>
-                    <TableCell align="right">{env.timestamp}</TableCell>
-                  </Fragment>
-                ))}
-              </TableRow>
+              {item.environments.map((env) => (
+                <TableRow
+                  key={`${item._id}-${env._id}`}
+                  hover
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell align="left">{item.service}</TableCell>
+                  <TableCell align="right">{item.application}</TableCell>
+                  <TableCell align="right">{env.name}</TableCell>
+                  <TableCell align="right">{env.version}</TableCell>
+                  <TableCell align="right">
+                    {(() => {
+                      if (env.status === "Deployed") {
+                        return (
+                          <Chip
+                            label={env.status}
+                            color="success"
+                            variant="outlined"
+                            size="small"
+                          />
+                        );
+                      } else if (env.status === "Deploying") {
+                        return (
+                          <Chip
+                            label={env.status}
+                            color="primary"
+                            variant="outlined"
+                            size="small"
+                          />
+                        );
+                      } else if (env.status === "Failed") {
+                        return (
+                          <Chip
+                            label={env.status}
+                            color="error"
+                            variant="outlined"
+                            size="small"
+                          />
+                        );
+                      } else {
+                        return (
+                          <Chip
+                            label={env.status}
+                            color="secondary"
+                            variant="outlined"
+                            size="small"
+                          />
+                        );
+                      }
+                    })()}
+                  </TableCell>
+                  <TableCell align="right">{env.timestamp}</TableCell>
+                </TableRow>
+              ))}
             </Fragment>
           ))}
         </TableBody>

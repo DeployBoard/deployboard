@@ -1,14 +1,3 @@
-import mongoose from "mongoose";
-import "../utils/db";
-
-import { Log, Service } from "models";
-
-if (mongoose.connection.readyState > 0) {
-  console.log("Seeding database...");
-} else {
-  console.log("Database not connected, skipping seed...");
-}
-
 const generateLogs = () => {
   let logs = [];
   const services = ["service1", "service2", "service3"];
@@ -48,12 +37,4 @@ const generateLogs = () => {
   return logs;
 };
 
-Log.insertMany(generateLogs())
-  .then((resp) => {
-    console.log(resp);
-    mongoose.connection.close();
-  })
-  .catch((err) => {
-    console.log(err);
-    mongoose.connection.close();
-  });
+export { generateLogs };

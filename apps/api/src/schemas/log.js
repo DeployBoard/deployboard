@@ -1,4 +1,4 @@
-import { Log, LogTC } from "../models/log";
+import { LogTC } from "models";
 
 const LogQuery = {
   logById: LogTC.getResolver("findById"),

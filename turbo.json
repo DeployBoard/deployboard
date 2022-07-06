@@ -2,7 +2,8 @@
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
     "build:schema": {
-      "dependsOn": ["^build:schema"]
+      "dependsOn": ["^build:schema"],
+      "cache": false
     },
     "build": {
       "dependsOn": ["^build"],
@@ -22,7 +23,8 @@
     },
     "seed": {
       "dependsOn": ["^seed"],
-      "outputs": []
+      "outputs": [],
+      "cache": false
     },
     "dev": {
       "cache": false

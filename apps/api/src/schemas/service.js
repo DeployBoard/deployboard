@@ -1,4 +1,4 @@
-import { Service, ServiceTC } from "../models/service";
+import { ServiceTC } from "models";
 
 const ServiceQuery = {
   serviceById: ServiceTC.getResolver("findById"),
