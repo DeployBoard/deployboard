@@ -10,6 +10,7 @@
     "build": "turbo run build",
     "build:schema": "turbo run build:schema",
     "dev": "turbo run dev --parallel",
+    "mongo": "docker run -itd --rm -p 27017:27017 -v db-data:/data/db mongo:5",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{js,jsx,md}\"",
     "seed": "turbo run seed",

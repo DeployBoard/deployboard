@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const composeWithMongoose =
   require("graphql-compose-mongoose").composeWithMongoose;
 
-const environmentSchema = new mongoose.Schema({
+const EnvironmentSchema = new mongoose.Schema({
   name: {
     type: String,
   },
@@ -35,7 +35,7 @@ const ServiceSchema = new mongoose.Schema(
       required: true,
     },
     environments: {
-      type: [environmentSchema],
+      type: [EnvironmentSchema],
       required: false,
     },
     tags: {
@@ -48,8 +48,6 @@ const ServiceSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
-ServiceSchema.index({ createdAt: 1, updatedAt: 1 });
 
 const Service = mongoose.model("Service", ServiceSchema);
 const ServiceTC = composeWithMongoose(Service);

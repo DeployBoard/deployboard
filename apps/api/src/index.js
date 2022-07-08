@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import express from "express";
+import http from "http";
 import { ApolloServer } from "apollo-server-express";
+import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
 import mongoose from "mongoose";
 
 import "./utils/db";
@@ -9,14 +11,17 @@ import schema from "./schemas";
 dotenv.config();
 
 const app = express();
+const httpServer = http.createServer(app);
 
 const server = new ApolloServer({
   schema,
   cors: true,
+  csrfPrevention: true,
   playground: process.env.NODE_ENV === "development" ? true : false,
   introspection: true,
   tracing: true,
   path: "/",
+  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
 server.start().then((res) => {
@@ -35,7 +40,7 @@ server.start().then((res) => {
       }),
   });
 
-  app.listen({ port: process.env.PORT }, () => {
+  httpServer.listen({ port: process.env.PORT }, () => {
     console.log(`Server listening on port ${process.env.PORT}`);
   });
 });
