@@ -6,8 +6,10 @@ const Account = require("./account").Account;
 const AccountTC = require("./account").AccountTC;
 const User = require("./user").User;
 const UserTC = require("./user").UserTC;
-const ApiKey = require("./ApiKey").ApiKey;
-const ApiKeyTC = require("./ApiKey").ApiKeyTC;
+const Team = require("./team").Team;
+const TeamTC = require("./team").TeamTC;
+const ApiKey = require("./apiKey").ApiKey;
+const ApiKeyTC = require("./apiKey").ApiKeyTC;
 
 module.exports = {
   Log,
@@ -18,6 +20,8 @@ module.exports = {
   AccountTC,
   User,
   UserTC,
+  Team,
+  TeamTC,
   ApiKey,
   ApiKeyTC,
 };

@@ -30,12 +30,12 @@ const ServiceSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    application: {
-      type: String,
-      required: true,
-    },
     environments: {
       type: [EnvironmentSchema],
+      required: false,
+    },
+    team: {
+      type: String,
       required: false,
     },
     tags: {

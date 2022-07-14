@@ -12,10 +12,6 @@ const LogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    application: {
-      type: String,
-      required: true,
-    },
     environment: {
       type: String,
       required: true,

@@ -1,17 +1,23 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./components/pages/login/login";
 import Dashboard from "./components/pages/dashboard/dashboard";
-import Services from "./components/pages/services/services";
+import Catalog from "./components/pages/catalog/catalog";
 import Logs from "./components/pages/logs/logs";
+import Analytics from "./components/pages/analytics/analytics";
+import NotFound from "./components/pages/notFound/notFound";
 // import logo from './assets/DeployBoard256.png';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/dashboard" element={<Dashboard />} />
-        <Route exact path="/services" element={<Services />} />
-        <Route exact path="/logs" element={<Logs />} />
-        <Route exact path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/catalog" element={<Catalog />} />
+        <Route path="/logs" element={<Logs />} />
+        <Route path="/analytics" element={<Analytics />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<NotFound />} />
 
         {/* <Route path="/logs" component={Logs} /> */}
         {/* <Route exact path="/applications/:appName" component={ApplicationEdit} /> */}

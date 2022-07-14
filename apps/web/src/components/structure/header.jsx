@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
-const pages = ["dashboard", "ci", "services", "logs", "analytics"];
+const pages = ["dashboard", "ci", "catalog", "logs", "analytics"];
 const settings = ["profile", "account", "logout"];
 
 const Header = () => {
@@ -37,7 +37,7 @@ const Header = () => {
 
   return (
     <AppBar position="static" sx={{ bgcolor: "white", boxShadow: 0 }}>
-      <Container maxWidth="xl">
+      <Container>
         <Toolbar disableGutters>
           <Typography
             variant="h6"

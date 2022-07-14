@@ -13,7 +13,7 @@ const GetServices = gql`
   query GetServices($filter: FilterFindManyServiceInput) {
     serviceMany(filter: $filter) {
       _id
-      application
+      team
       environments {
         _id
         name
@@ -49,7 +49,7 @@ const DashboardTable = () => {
         <TableHead>
           <TableRow>
             <TableCell>Service</TableCell>
-            <TableCell align="right">Application</TableCell>
+            <TableCell align="right">Team</TableCell>
             <TableCell align="right">Environment</TableCell>
             <TableCell align="right">Version</TableCell>
             <TableCell align="right">Status</TableCell>
@@ -66,7 +66,7 @@ const DashboardTable = () => {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell align="left">{item.service}</TableCell>
-                  <TableCell align="right">{item.application}</TableCell>
+                  <TableCell align="right">{item.team}</TableCell>
                   <TableCell align="right">{env.name}</TableCell>
                   <TableCell align="right">{env.version}</TableCell>
                   <TableCell align="right">

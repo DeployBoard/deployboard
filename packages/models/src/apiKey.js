@@ -8,6 +8,10 @@ const ApiKeySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    key: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -27,6 +31,14 @@ const ApiKeySchema = new mongoose.Schema(
     modifiedBy: {
       type: String,
       required: true,
+    },
+    lastUsed: {
+      type: String,
+      required: false,
+    },
+    lastUsedBy: {
+      type: String,
+      required: false,
     },
   },
   {
