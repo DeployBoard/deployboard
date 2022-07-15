@@ -42,6 +42,10 @@ const ServiceSchema = new mongoose.Schema(
       type: Array(String),
       required: false,
     },
+    meta: {
+      type: mongoose.Schema.Types.Mixed,
+      required: false,
+    },
   },
   {
     collection: "services",

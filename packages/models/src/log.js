@@ -24,6 +24,10 @@ const LogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    rollback: {
+      type: Boolean,
+      required: false,
+    },
   },
   {
     collection: "logs",

@@ -301,6 +301,7 @@ type Service {
   environments: [ServiceEnvironments]
   team: String
   tags: [String]
+  meta: JSON
   _id: MongoID!
   updatedAt: Date
   createdAt: Date
@@ -339,6 +340,7 @@ input FilterFindOneServiceInput {
   environments: [FilterFindOneServiceEnvironmentsInput]
   team: String
   tags: [String]
+  meta: JSON
   _id: MongoID
   updatedAt: Date
   createdAt: Date
@@ -387,6 +389,7 @@ input FilterFindManyServiceInput {
   environments: [FilterFindManyServiceEnvironmentsInput]
   team: String
   tags: [String]
+  meta: JSON
   _id: MongoID
   updatedAt: Date
   createdAt: Date
@@ -435,6 +438,7 @@ input FilterCountServiceInput {
   environments: [FilterCountServiceEnvironmentsInput]
   team: String
   tags: [String]
+  meta: JSON
   _id: MongoID
   updatedAt: Date
   createdAt: Date
@@ -539,6 +543,7 @@ type Log {
   environment: String!
   status: String!
   version: String!
+  rollback: Boolean
   _id: MongoID!
   updatedAt: Date
   createdAt: Date
@@ -560,6 +565,7 @@ input FilterFindOneLogInput {
   environment: String
   status: String
   version: String
+  rollback: Boolean
   _id: MongoID
   updatedAt: Date
   createdAt: Date
@@ -614,6 +620,7 @@ input FilterFindManyLogInput {
   environment: String
   status: String
   version: String
+  rollback: Boolean
   _id: MongoID
   updatedAt: Date
   createdAt: Date
@@ -668,6 +675,7 @@ input FilterCountLogInput {
   environment: String
   status: String
   version: String
+  rollback: Boolean
   _id: MongoID
   updatedAt: Date
   createdAt: Date
@@ -1995,6 +2003,7 @@ input CreateOneServiceInput {
   environments: [ServiceEnvironmentsInput]
   team: String
   tags: [String]
+  meta: JSON
   updatedAt: Date
   createdAt: Date
 }
@@ -2031,6 +2040,7 @@ input CreateManyServiceInput {
   environments: [ServiceEnvironmentsInput]
   team: String
   tags: [String]
+  meta: JSON
   updatedAt: Date
   createdAt: Date
 }
@@ -2055,6 +2065,7 @@ input UpdateByIdServiceInput {
   environments: [UpdateByIdServiceEnvironmentsInput]
   team: String
   tags: [String]
+  meta: JSON
   updatedAt: Date
   createdAt: Date
 }
@@ -2089,6 +2100,7 @@ input UpdateOneServiceInput {
   environments: [UpdateOneServiceEnvironmentsInput]
   team: String
   tags: [String]
+  meta: JSON
   updatedAt: Date
   createdAt: Date
 }
@@ -2110,6 +2122,7 @@ input FilterUpdateOneServiceInput {
   environments: [FilterUpdateOneServiceEnvironmentsInput]
   team: String
   tags: [String]
+  meta: JSON
   _id: MongoID
   updatedAt: Date
   createdAt: Date
@@ -2168,6 +2181,7 @@ input UpdateManyServiceInput {
   environments: [UpdateManyServiceEnvironmentsInput]
   team: String
   tags: [String]
+  meta: JSON
   updatedAt: Date
   createdAt: Date
 }
@@ -2189,6 +2203,7 @@ input FilterUpdateManyServiceInput {
   environments: [FilterUpdateManyServiceEnvironmentsInput]
   team: String
   tags: [String]
+  meta: JSON
   _id: MongoID
   updatedAt: Date
   createdAt: Date
@@ -2263,6 +2278,7 @@ input FilterRemoveOneServiceInput {
   environments: [FilterRemoveOneServiceEnvironmentsInput]
   team: String
   tags: [String]
+  meta: JSON
   _id: MongoID
   updatedAt: Date
   createdAt: Date
@@ -2321,6 +2337,7 @@ input FilterRemoveManyServiceInput {
   environments: [FilterRemoveManyServiceEnvironmentsInput]
   team: String
   tags: [String]
+  meta: JSON
   _id: MongoID
   updatedAt: Date
   createdAt: Date
@@ -2377,6 +2394,7 @@ input CreateOneLogInput {
   environment: String!
   status: String!
   version: String!
+  rollback: Boolean
   updatedAt: Date
   createdAt: Date
 }
@@ -2404,6 +2422,7 @@ input CreateManyLogInput {
   environment: String!
   status: String!
   version: String!
+  rollback: Boolean
   updatedAt: Date
   createdAt: Date
 }
@@ -2428,6 +2447,7 @@ input UpdateByIdLogInput {
   environment: String
   status: String
   version: String
+  rollback: Boolean
   updatedAt: Date
   createdAt: Date
 }
@@ -2452,6 +2472,7 @@ input UpdateOneLogInput {
   environment: String
   status: String
   version: String
+  rollback: Boolean
   updatedAt: Date
   createdAt: Date
 }
@@ -2463,6 +2484,7 @@ input FilterUpdateOneLogInput {
   environment: String
   status: String
   version: String
+  rollback: Boolean
   _id: MongoID
   updatedAt: Date
   createdAt: Date
@@ -2527,6 +2549,7 @@ input UpdateManyLogInput {
   environment: String
   status: String
   version: String
+  rollback: Boolean
   updatedAt: Date
   createdAt: Date
 }
@@ -2538,6 +2561,7 @@ input FilterUpdateManyLogInput {
   environment: String
   status: String
   version: String
+  rollback: Boolean
   _id: MongoID
   updatedAt: Date
   createdAt: Date
@@ -2618,6 +2642,7 @@ input FilterRemoveOneLogInput {
   environment: String
   status: String
   version: String
+  rollback: Boolean
   _id: MongoID
   updatedAt: Date
   createdAt: Date
@@ -2682,6 +2707,7 @@ input FilterRemoveManyLogInput {
   environment: String
   status: String
   version: String
+  rollback: Boolean
   _id: MongoID
   updatedAt: Date
   createdAt: Date
