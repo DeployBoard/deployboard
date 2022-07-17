@@ -7,10 +7,12 @@ const tzConvert = (date, timezone) => {
   const day = d.getDate();
   const year = d.getFullYear();
   const hour = d.getHours();
-  const minute = d.getMinutes();
-  const second = d.getSeconds();
+  const minute = (d.getMinutes() < 10 ? "0" : "") + d.getMinutes();
+  const second = (d.getSeconds() < 10 ? "0" : "") + d.getSeconds();
   const ampm = hour >= 12 ? "pm" : "am";
-  return `${month} ${day}, ${year} ${hour}:${minute} ${ampm}`;
+  const ampmHour = hour % 12;
+  const ampmHourFinal = ampmHour === 0 ? 12 : ampmHour;
+  return `${month} ${day}, ${year} ${ampmHourFinal}:${minute} ${ampm}`;
 };
 
 module.exports = {

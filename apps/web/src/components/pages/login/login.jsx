@@ -14,6 +14,7 @@ import {
   FormControl,
   InputAdornment,
   IconButton,
+  Link,
 } from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
@@ -43,79 +44,89 @@ const Dashboard = () => {
   };
 
   return (
-    <Box p={9}>
-      <Container maxWidth="md">
+    <Box p="2rem">
+      <Container maxWidth="xs">
         <Box
           boxShadow="0px 0px 10px 3px #ddd"
-          p={"2rem"}
+          p="2rem"
           width="100%"
           height="100%"
         >
-          <Grid container spacing={1}>
-            <Grid item xs={false} md={7}>
-              <Typography variant="h4" color="textSecondary">
-                <b>DeployBoard</b>
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={5}>
-              <Box display="flex" flexDirection="column">
-                <TextField
-                  id="email"
-                  name="email"
-                  label="Email"
-                  type="email"
-                  placeholder="Email"
-                  onChange={handleChangeEmail}
-                  sx={{ pb: "1rem" }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <MailOutlineIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <TextField
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  label="Password"
-                  placeholder="Password"
-                  onChange={handleChangePassword}
-                  sx={{ pb: "1rem" }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LockOpenIcon />
-                      </InputAdornment>
-                    ),
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="Toggle password visibility"
-                          onClick={handleClickShowPassword}
-                        >
-                          {showPassword ? (
-                            <VisibilityOffRoundedIcon />
-                          ) : (
-                            <VisibilityIcon />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  onClick={handleSubmit}
-                  sx={{ pt: "1rem" }}
-                >
-                  Submit
-                </Button>
-              </Box>
-            </Grid>
-          </Grid>
+          <Box display="flex" flexDirection="column">
+            <Container align="center">
+              <Box
+                align="center"
+                component="img"
+                mb="2rem"
+                sx={{
+                  height: 130,
+                  width: 200,
+                }}
+                alt="deployboard logo"
+                src="https://app.deployboard.io/static/media/DeployBoard256.a0aaf1a0.png"
+              />
+            </Container>
+            <TextField
+              id="email"
+              name="email"
+              label="Email"
+              type="email"
+              placeholder="Email"
+              onChange={handleChangeEmail}
+              sx={{ mb: "1rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <MailOutlineIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
+              id="password"
+              type={showPassword ? "text" : "password"}
+              label="Password"
+              placeholder="Password"
+              onChange={handleChangePassword}
+              sx={{ mb: "1rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockOpenIcon />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="Toggle password visibility"
+                      onClick={handleClickShowPassword}
+                    >
+                      {showPassword ? (
+                        <VisibilityOffRoundedIcon />
+                      ) : (
+                        <VisibilityIcon />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              onClick={handleSubmit}
+              sx={{ p: ".75rem", mb: "1rem" }}
+            >
+              Submit
+            </Button>
+            <Typography variant="caption">
+              <Link href="/forgot">Forgot Password?</Link>
+            </Typography>
+            <Typography variant="caption">
+              Don't have an account? <Link href="/register">Sign Up</Link>
+            </Typography>
+          </Box>
         </Box>
       </Container>
     </Box>

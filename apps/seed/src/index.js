@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
-import "../../utils/db";
+import "./utils/db";
 
 import { Log, Service, Account, User, Team, ApiKey } from "models";
-import { generateServices } from "./service";
-import { generateLogs } from "./log";
-import { generateAccounts } from "./account";
-import { generateUsers } from "./user";
-import { generateTeams } from "./team";
-import { generateApiKeys } from "./apiKey";
+import { generateServices } from "./scripts/service";
+import { generateLogs } from "./scripts/log";
+import { generateAccounts } from "./scripts/account";
+import { generateUsers } from "./scripts/user";
+import { generateTeams } from "./scripts/team";
+import { generateApiKeys } from "./scripts/apiKey";
 
 const services = [
   "Payment",

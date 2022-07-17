@@ -5,7 +5,7 @@ const generateAccounts = () => {
     auth: "local",
     environments: ["Development", "Staging", "Production"],
     passwordPolicy: {
-      length: 6,
+      length: 8,
       lowercase: 1,
       uppercase: 1,
       number: 1,
@@ -17,7 +17,7 @@ const generateAccounts = () => {
     auth: "saml",
     environments: ["Development", "Staging", "Production"],
     passwordPolicy: {
-      length: 6,
+      length: 8,
       lowercase: 1,
       uppercase: 1,
       number: 1,

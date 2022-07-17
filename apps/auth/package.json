@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "PORT=3002 HOST=localhost nodemon --exec babel-node ./src/index.js",
+    "dev": "PORT=3002 HOST=localhost nodemon --delay 500ms --exec babel-node ./src/index.js",
     "start": "PORT=3002 HOST=localhost node --exec babel-node ./src/index.js",
     "clean": "rm -rf node_modules/ dist/",
     "build": "babel src --out-dir dist",

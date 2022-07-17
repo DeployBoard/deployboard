@@ -1,13 +1,13 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import { router } from "./routes/token.js";
+import { router } from "./routes/login.js";
 
 const app = express();
 app.use(cors());
 
 // Routes
-app.use("/token", router);
+app.use("/login", router);
 
 const port = process.env.PORT || 3002;
 

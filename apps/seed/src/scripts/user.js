@@ -5,8 +5,7 @@ const generateUsers = () => {
     account: "Seed",
     enabled: true,
     salt: "69a0056b52554ef3c03793219ebad237",
-    hashedPassword:
-      "$2b$12$ApfdONKAxhbxIVrojy.3aeecdbwePCErcfxJh97.y/yjThgzjoYT.",
+    password: "$2b$12$ApfdONKAxhbxIVrojy.3aeecdbwePCErcfxJh97.y/yjThgzjoYT.",
     passwordExpires: 0,
     lastLoggedIn: new Date(),
     firstName: "Seed",
