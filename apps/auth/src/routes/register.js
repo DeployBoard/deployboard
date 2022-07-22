@@ -1,46 +1,64 @@
 import express from "express";
+import { v4 as uuidv4 } from "uuid";
+
+import { Register, Account } from "models";
+import { sendMail } from "../utils/sendMail.js";
+
 const router = express.Router();
 
-// Schemas
-import { User } from "models";
-
 router.route("/").post(async (req, res) => {
-  const { email, password } = req.body;
-  const newUser = new User({
-    email,
-    password,
-  });
+  const { account, email } = req.body;
+
+  // init an empty uuid, we will only generate if we make it that far
+  let uuid;
 
   try {
-    // save user to database
-    await newUser.save();
-    // attempt to authenticate user
-    const user = User.getAuthenticated(email, password);
-    // register was successful if we have a user.
-    if (user) {
-      // TODO: handle success
-      console.log("register successful");
-      return;
+    // verify the account does not already exist
+    const existingAccount = await Account.findOne({ name: account });
+    if (existingAccount) {
+      return res.status(400).json({
+        message:
+          "Account already exists, please contact your administrator, or try another account name.",
+      });
     }
-    // otherwise we can determine why we failed
-    const reasons = User.failedLogin;
-    switch (reasons) {
-      case reasons.NOT_FOUND:
-      case reasons.PASSWORD_INCORRECT:
-        // note: these cases are treated the same way
-        // don't tell the user why it failed, only that it did
-        break;
-      case reasons.MAX_ATTEMPTS:
-        // send email to user saying they have reached max attempts and temporarily locked their account
-        break;
+    // verify there is not already a pending registration for this email
+    const pendingRegistrationAccount = await Register.findOne({ account });
+    if (pendingRegistrationAccount) {
+      return res.status(400).json({
+        message:
+          "Account already pending registration, please try again later.",
+      });
     }
-    // handle error
-    console.log("register failed");
-    return;
+    // verify there is not already a pending registration for this email
+    const pendingRegistrationEmail = await Register.findOne({ email });
+    if (pendingRegistrationEmail) {
+      return res.status(400).json({
+        message:
+          "Registration email already sent to this email, please try again later.",
+      });
+    }
+    // create a uuid for the registration
+    uuid = uuidv4();
+    // create a new email in the register collection
+    const newRegister = new Register({ account, email, uuid });
+    // save the new register
+    await newRegister.save();
   } catch (e) {
     console.error("register error:", e);
     return res.status(500).json({ error: "Internal server error" });
   }
+
+  // send an email to the user
+  try {
+    await sendMail(email, uuid);
+  } catch (e) {
+    console.error("email error:", e);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+  // return a success message
+  return res.json({
+    message: "Please check your email for a link to complete registration.",
+  });
 });
 
-export { router };
+export { router as registerRouter };

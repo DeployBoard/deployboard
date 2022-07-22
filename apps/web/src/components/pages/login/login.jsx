@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Container,
@@ -16,15 +17,25 @@ import {
   IconButton,
   Link,
 } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 
-const Dashboard = () => {
+import CustomSnackbar from "../../structure/customSnackbar";
+import { setToken } from "../../utils/auth";
+import logo from "../../../assets/DeployBoard256.png";
+
+const Login = () => {
+  const navigate = useNavigate();
   let [showPassword, setShowPassword] = useState(false);
   let [password, setPassword] = useState("");
   let [email, setEmail] = useState("");
+  let [success, setSuccess] = useState("");
+  let [warning, setWarning] = useState("");
+  let [error, setError] = useState("");
+  let [pending, setPending] = useState(false);
 
   const handleChangeEmail = (event) => {
     setEmail(event.target.value);
@@ -34,17 +45,48 @@ const Dashboard = () => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(email, password);
-  };
-
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setPending(true);
+    // make the login api call
+    try {
+      const response = await fetch(`${process.env.REACT_APP_AUTH_URI}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      // check the response status
+      const status = response.status;
+      // get the message and token from our response.
+      const { message, token } = await response.json();
+      if (status == 200) {
+        // set the token in our session storage
+        setToken(token);
+        setSuccess(message);
+        // redirect to the dashboard
+        navigate("/dashboard");
+      } else if (status == 401) {
+        setWarning(message);
+      } else {
+        setWarning(message);
+      }
+      setPending(false);
+    } catch (error) {
+      console.error(error);
+      setError(error.message);
+      setPending(false);
+    }
+  };
+
   return (
     <Box p="2rem">
+      {success && <CustomSnackbar severity="success" message={success} />}
+      {warning && <CustomSnackbar severity="warning" message={warning} />}
+      {error && <CustomSnackbar severity="error" message={error} />}
       <Container maxWidth="xs">
         <Box
           boxShadow="0px 0px 10px 3px #ddd"
@@ -63,7 +105,7 @@ const Dashboard = () => {
                   width: 200,
                 }}
                 alt="deployboard logo"
-                src="https://app.deployboard.io/static/media/DeployBoard256.a0aaf1a0.png"
+                src={logo}
               />
             </Container>
             <TextField
@@ -111,7 +153,8 @@ const Dashboard = () => {
                 ),
               }}
             />
-            <Button
+            <LoadingButton
+              loading={pending}
               variant="contained"
               color="primary"
               type="submit"
@@ -119,6 +162,14 @@ const Dashboard = () => {
               sx={{ p: ".75rem", mb: "1rem" }}
             >
               Submit
+            </LoadingButton>
+            <Button
+              variant="outlined"
+              color="primary"
+              href="/saml-login"
+              sx={{ p: ".75rem", mb: "1rem" }}
+            >
+              Log In with SSO
             </Button>
             <Typography variant="caption">
               <Link href="/forgot">Forgot Password?</Link>
@@ -133,4 +184,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Login;

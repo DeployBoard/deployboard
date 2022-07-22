@@ -10,6 +10,8 @@ const Team = require("./team").Team;
 const TeamTC = require("./team").TeamTC;
 const ApiKey = require("./apiKey").ApiKey;
 const ApiKeyTC = require("./apiKey").ApiKeyTC;
+const Register = require("./register").Register;
+const RegisterTC = require("./register").RegisterTC;
 
 module.exports = {
   Log,
@@ -24,4 +26,6 @@ module.exports = {
   TeamTC,
   ApiKey,
   ApiKeyTC,
+  Register,
+  RegisterTC,
 };

@@ -76,7 +76,7 @@ const DashboardCards = () => {
             >
               <TableCell>{item.service}</TableCell>
               {item.environments.map((env) => (
-                <TableCell align="right">
+                <TableCell key={env._id} align="right">
                   {env.version}
                   <br />
                   {(() => {

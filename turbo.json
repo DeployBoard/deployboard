@@ -9,6 +9,9 @@
       "dependsOn": ["^build"],
       "outputs": ["build/**"]
     },
+    "start": {
+      "dependsOn": ["^start"]
+    },
     "test": {
       "dependsOn": ["build"],
       "outputs": [],

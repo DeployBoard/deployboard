@@ -5,18 +5,25 @@ const composeWithMongoose =
 const PasswordPolicySchema = new mongoose.Schema({
   length: {
     type: Number,
+    default: 8,
+    min: 8,
+    max: 128,
   },
   lowercase: {
     type: Number,
+    default: 0,
   },
   uppercase: {
     type: Number,
+    default: 0,
   },
   number: {
     type: Number,
+    default: 0,
   },
   special: {
     type: Number,
+    default: 0,
   },
 });
 
@@ -34,10 +41,18 @@ const AccountSchema = new mongoose.Schema(
     passwordPolicy: {
       type: PasswordPolicySchema,
       required: true,
+      default: () => ({
+        length: 8,
+        lowercase: 0,
+        uppercase: 0,
+        number: 0,
+        special: 0,
+      }),
     },
     auth: {
       type: String,
       required: true,
+      default: "local",
     },
   },
   {

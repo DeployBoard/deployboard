@@ -23,20 +23,21 @@
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
-    "@mui/material": "^5.8.7",
+    "@mui/material": "^5.9.1",
     "@mui/icons-material": "^5.8.4",
+    "@mui/lab": "5.0.0-alpha.91",
+    "@mui/x-date-pickers": "5.0.0-beta.1",
     "@emotion/styled": "^11.9.3",
     "@emotion/react": "^11.9.3",
     "@fontsource/roboto": "^4.5.7",
-    "@mui/x-date-pickers": "5.0.0-beta.0",
     "luxon": "^2.4.0",
-    "react-chartjs-2": "^4.2.0",
+    "react-chartjs-2": "^4.3.1",
     "chart.js": "^3.8.0",
     "faker": "^4.1.0",
     "tz-convert": "*"
   },
   "devDependencies": {
-    "cypress": "^10.2.0"
+    "cypress": "^10.3.1"
   },
   "eslintConfig": {},
   "browserslist": {
