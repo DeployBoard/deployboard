@@ -8,8 +8,11 @@ export const AnalyticsNumberBox = ({ title, number }) => {
         flexDirection: "column",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: "10px",
-        margin: "10px",
+        paddingTop: ".75rem",
+        paddingBottom: ".75rem",
+        paddingLeft: "1rem",
+        paddingRight: "1rem",
+        margin: "1rem",
       }}
     >
       <Typography

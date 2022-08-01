@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useQuery, gql } from "@apollo/client";
+import axios from "axios";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,30 +11,41 @@ import { LinearProgress } from "@mui/material";
 
 import CustomSnackbar from "../../structure/customSnackbar";
 import findUniqueFields from "../../structure/findUniqueFields";
-
-const GetServices = gql`
-  query GetServices($filter: FilterFindManyServiceInput) {
-    serviceMany(filter: $filter) {
-      _id
-      service
-    }
-  }
-`;
+import { getToken } from "../../utils/auth";
 
 const ServicesTable = () => {
   let services = [];
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const { loading, error, data } = useQuery(GetServices, {
-    variables: {
-      filter: {
-        account: "Seed",
-      },
-    },
-  });
+  const getServices = () => {
+    setLoading(true);
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/services`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setData(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+        setError(error.message);
+      });
+  };
+
+  useEffect(() => {
+    getServices();
+  }, []);
 
   if (data) {
     console.log(data);
-    services = findUniqueFields(data.serviceMany, "service");
+    services = findUniqueFields(data, "service");
   }
   if (loading) return <LinearProgress />;
   if (error)

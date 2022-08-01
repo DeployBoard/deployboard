@@ -1,4 +1,5 @@
-import { useQuery, gql } from "@apollo/client";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,24 +10,36 @@ import Paper from "@mui/material/Paper";
 import { LinearProgress } from "@mui/material";
 
 import CustomSnackbar from "../../structure/customSnackbar";
-
-const GetTeams = gql`
-  query GetTeams($filter: FilterFindManyTeamInput) {
-    teamMany(filter: $filter) {
-      _id
-      name
-    }
-  }
-`;
+import { getToken } from "../../utils/auth";
 
 const TeamsTable = () => {
-  const { loading, error, data } = useQuery(GetTeams, {
-    variables: {
-      filter: {
-        account: "Seed",
-      },
-    },
-  });
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const getTeams = () => {
+    setLoading(true);
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/teams`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setData(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+        setError(error.message);
+      });
+  };
+
+  useEffect(() => {
+    getTeams();
+  }, []);
 
   if (data) {
     console.log(data);
@@ -40,11 +53,11 @@ const TeamsTable = () => {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Teams ({data.teamMany.length})</TableCell>
+            <TableCell>Teams ({data.length})</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.teamMany.map((item) => (
+          {data.map((item) => (
             <TableRow
               hover
               key={item._id}

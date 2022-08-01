@@ -1,0 +1,129 @@
+_type: export
+__export_format: 4
+__export_date: 2022-07-27T23:49:24.690Z
+__export_source: insomnia.desktop.app:v2020.5.2
+resources:
+  - _id: req_570a698b336b4df0b94be6468e37cd59
+    parentId: fld_03d67860146842e6a62987bbd44965cb
+    modified: 1658965665928
+    created: 1608596797619
+    url: "{{base_url}}:{{ port }}/deploy"
+    name: deployments/
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "service": "Payment",
+        	"environment": "dev",
+        	"status": "Deploying",
+        	"version": "v9.9.9"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_309d1dbdd5314c22ba60e8e9ebd0bb72
+    authentication: {}
+    metaSortKey: -1608596797619
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_03d67860146842e6a62987bbd44965cb
+    parentId: wrk_e3ced6a152b0494981ed6f848f9e2d8a
+    modified: 1658965335375
+    created: 1608596561453
+    name: deploy
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1608596561454
+    _type: request_group
+  - _id: wrk_e3ced6a152b0494981ed6f848f9e2d8a
+    parentId: null
+    modified: 1608596397898
+    created: 1608596397898
+    name: Insomnia
+    description: ""
+    scope: null
+    _type: workspace
+  - _id: env_6453292ec8b10266d947a04c49808a8970187b12
+    parentId: wrk_e3ced6a152b0494981ed6f848f9e2d8a
+    modified: 1608596397930
+    created: 1608596397930
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1608596397930
+    _type: environment
+  - _id: jar_6453292ec8b10266d947a04c49808a8970187b12
+    parentId: wrk_e3ced6a152b0494981ed6f848f9e2d8a
+    modified: 1608596397932
+    created: 1608596397932
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_4c5582c13af645f0a78c60919ec0775f
+    parentId: wrk_e3ced6a152b0494981ed6f848f9e2d8a
+    modified: 1608596397899
+    created: 1608596397899
+    fileName: Insomnia
+    contents: ""
+    contentType: yaml
+    _type: api_spec
+  - _id: env_6da45b97ef37430c945f840973c0f304
+    parentId: env_6453292ec8b10266d947a04c49808a8970187b12
+    modified: 1658965525270
+    created: 1608596473575
+    name: local
+    data:
+      base_url: localhost
+      port: "3004"
+    dataPropertyOrder:
+      "&":
+        - base_url
+        - port
+    color: "#00e025"
+    isPrivate: false
+    metaSortKey: 1608596473575
+    _type: environment
+  - _id: env_e7a7f13ad0394789aa02a506229d536b
+    parentId: env_6453292ec8b10266d947a04c49808a8970187b12
+    modified: 1658965573668
+    created: 1608596941732
+    name: dev
+    data:
+      base_url: https://dapi.deployboard.io/
+      port: "443"
+    dataPropertyOrder:
+      "&":
+        - base_url
+        - port
+    color: "#e6d200"
+    isPrivate: false
+    metaSortKey: 1608596941732
+    _type: environment
+  - _id: env_79e5177048cb4b83955c104ebdaecb0a
+    parentId: env_6453292ec8b10266d947a04c49808a8970187b12
+    modified: 1658965583313
+    created: 1658965550299
+    name: prod
+    data:
+      base_url: https://api.deployboard.io/
+      port: "443"
+    dataPropertyOrder:
+      "&":
+        - base_url
+        - port
+    color: "#e00000"
+    isPrivate: false
+    metaSortKey: 1658965550299
+    _type: environment

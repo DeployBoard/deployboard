@@ -1,19 +1,24 @@
 // Short duration JWT token (5-10 min)
 const getToken = () => {
-  return sessionStorage.getItem("jwt");
+  return localStorage.getItem("authToken");
 };
 
 const setToken = (token) => {
-  sessionStorage.setItem("jwt", token);
+  localStorage.setItem("authToken", token);
 };
 
 // Longer duration refresh token (30-60 min)
 const getRefreshToken = () => {
-  return sessionStorage.getItem("refreshToken");
+  return localStorage.getItem("refreshToken");
 };
 
 const setRefreshToken = (token) => {
-  sessionStorage.setItem("refreshToken", token);
+  localStorage.setItem("refreshToken", token);
 };
 
-export { getToken, setToken, getRefreshToken, setRefreshToken };
+const revokeTokens = () => {
+  localStorage.removeItem("authToken");
+  localStorage.removeItem("refreshToken");
+};
+
+export { getToken, setToken, getRefreshToken, setRefreshToken, revokeTokens };

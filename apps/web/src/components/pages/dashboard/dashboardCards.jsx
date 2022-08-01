@@ -1,5 +1,5 @@
-import { Fragment } from "react";
-import { useQuery, gql } from "@apollo/client";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,50 +9,67 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Chip, LinearProgress } from "@mui/material";
 
+import CustomSnackbar from "../../structure/customSnackbar";
 import { tzConvert } from "tz-convert";
-
-const GetAccountAndServices = gql`
-  query GetAccountAndServices(
-    $accountfilter: FilterFindOneAccountInput
-    $serviceManyFilter: FilterFindManyServiceInput
-  ) {
-    accountOne(filter: $accountfilter) {
-      environments
-    }
-    serviceMany(filter: $serviceManyFilter) {
-      _id
-      team
-      service
-      environments {
-        _id
-        name
-        status
-        version
-        timestamp
-        custom
-      }
-    }
-  }
-`;
+import { getToken } from "../../utils/auth";
 
 const DashboardCards = () => {
-  const { loading, error, data } = useQuery(GetAccountAndServices, {
-    variables: {
-      accountfilter: {
-        name: "Seed",
-      },
-      serviceManyFilter: {
-        account: "Seed",
-      },
-    },
-  });
+  const [environments, setEnvironments] = useState([]);
+  const [services, setServices] = useState([]);
+  const [loadingEnvironments, setLoadingEnvironments] = useState(true);
+  const [loadingServices, setLoadingServices] = useState(true);
+  const [errorEnvironments, setErrorEnvironments] = useState("");
+  const [errorServices, setErrorServices] = useState("");
 
-  if (data) {
-    console.log(data);
-  }
-  if (loading) return <LinearProgress />;
-  if (error)
-    return <CustomSnackbar severity={"error"} message={error.message} />;
+  const getEnvironments = () => {
+    setLoadingEnvironments(true);
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/environments`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setEnvironments(res.data);
+        setLoadingEnvironments(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoadingEnvironments(false);
+        setErrorEnvironments(error.message);
+      });
+  };
+
+  const getServices = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/services`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setServices(res.data);
+        setLoadingServices(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoadingServices(false);
+        setErrorServices(error.message);
+      });
+  };
+
+  useEffect(() => {
+    getEnvironments();
+    getServices();
+  }, []);
+
+  if (loadingEnvironments || loadingServices) return <LinearProgress />;
+  if (errorEnvironments)
+    return <CustomSnackbar severity={"error"} message={errorEnvironments} />;
+  if (errorServices)
+    return <CustomSnackbar severity={"error"} message={errorServices} />;
 
   return (
     <TableContainer component={Paper}>
@@ -60,70 +77,74 @@ const DashboardCards = () => {
         <TableHead>
           <TableRow>
             <TableCell>Service</TableCell>
-            {data.accountOne.environments.map((item) => (
-              <TableCell key={item} align="right">
-                {item}
-              </TableCell>
-            ))}
+            {environments
+              ? environments.map((item) => (
+                  <TableCell key={item} align="right">
+                    {item}
+                  </TableCell>
+                ))
+              : null}
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.serviceMany.map((item) => (
-            <TableRow
-              key={`${item._id}`}
-              hover
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell>{item.service}</TableCell>
-              {item.environments.map((env) => (
-                <TableCell key={env._id} align="right">
-                  {env.version}
-                  <br />
-                  {(() => {
-                    if (env.status === "Deployed") {
-                      return (
-                        <Chip
-                          label={env.status}
-                          color="success"
-                          variant="outlined"
-                          size="small"
-                        />
-                      );
-                    } else if (env.status === "Deploying") {
-                      return (
-                        <Chip
-                          label={env.status}
-                          color="primary"
-                          variant="outlined"
-                          size="small"
-                        />
-                      );
-                    } else if (env.status === "Failed") {
-                      return (
-                        <Chip
-                          label={env.status}
-                          color="error"
-                          variant="outlined"
-                          size="small"
-                        />
-                      );
-                    } else {
-                      return (
-                        <Chip
-                          label={env.status}
-                          color="secondary"
-                          variant="outlined"
-                          size="small"
-                        />
-                      );
-                    }
-                  })()}
-                  <br />
-                  {tzConvert(env.timestamp)}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
+          {services
+            ? services.map((item) => (
+                <TableRow
+                  key={`${item._id}`}
+                  hover
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell>{item.service}</TableCell>
+                  {item.environments.map((env) => (
+                    <TableCell key={env._id} align="right">
+                      {env.version}
+                      <br />
+                      {(() => {
+                        if (env.status === "Deployed") {
+                          return (
+                            <Chip
+                              label={env.status}
+                              color="success"
+                              variant="outlined"
+                              size="small"
+                            />
+                          );
+                        } else if (env.status === "Deploying") {
+                          return (
+                            <Chip
+                              label={env.status}
+                              color="primary"
+                              variant="outlined"
+                              size="small"
+                            />
+                          );
+                        } else if (env.status === "Failed") {
+                          return (
+                            <Chip
+                              label={env.status}
+                              color="error"
+                              variant="outlined"
+                              size="small"
+                            />
+                          );
+                        } else {
+                          return (
+                            <Chip
+                              label={env.status}
+                              color="secondary"
+                              variant="outlined"
+                              size="small"
+                            />
+                          );
+                        }
+                      })()}
+                      <br />
+                      {tzConvert(env.timestamp)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            : null}
         </TableBody>
       </Table>
     </TableContainer>

@@ -38,6 +38,10 @@ const AccountSchema = new mongoose.Schema(
       type: [String],
       required: false,
     },
+    statuses: {
+      type: [String],
+      required: false,
+    },
     passwordPolicy: {
       type: PasswordPolicySchema,
       required: true,

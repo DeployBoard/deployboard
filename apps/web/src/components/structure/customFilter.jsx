@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
+import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
 
-const CustomFilter = ({ label, options, selected, onSelect }) => {
+const CustomFilter = ({ label, options, selected, onSelect, loading }) => {
   const [value, setValue] = useState(selected);
   return (
     <Autocomplete
@@ -13,12 +14,27 @@ const CustomFilter = ({ label, options, selected, onSelect }) => {
         setValue(newValue);
         onSelect(newValue);
       }}
+      loading={loading}
       renderInput={(params) => (
         <TextField
           {...params}
           label={label}
-          // placeholder="Filter..."
           size="small"
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <>
+                {loading ? (
+                  <CircularProgress
+                    color="inherit"
+                    size={20}
+                    sx={{ mr: "2rem" }}
+                  />
+                ) : null}
+                {params.InputProps.endAdornment}
+              </>
+            ),
+          }}
         />
       )}
     />

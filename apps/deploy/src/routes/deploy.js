@@ -1,5 +1,8 @@
 import express from "express";
+import log from "loglevel";
 const router = express.Router();
+
+log.setLevel("info");
 
 // Schemas
 import { Account, Log, Service } from "models";
@@ -8,6 +11,9 @@ router.route("/").post(async (req, res) => {
   try {
     // create environment if it doesn't exist
     await handleEnvironment(req.apiKeyObject.account, req.body.environment);
+
+    // create the status if it doesn't exist
+    await handleStatus(req.apiKeyObject.account, req.body.status);
 
     // insert the deployment details into the logs collection
     const log = await insertIntoLogs(
@@ -42,7 +48,7 @@ router.route("/").post(async (req, res) => {
       );
     }
   } catch (e) {
-    console.error(e);
+    log.error(e);
     res.status(500).json({
       error: e.message,
     });
@@ -54,6 +60,7 @@ router.route("/").post(async (req, res) => {
 export { router };
 
 const handleEnvironment = async (account, environment) => {
+  log.debug(`handleEnvironment: ${account} ${environment}`);
   // Get the account
   try {
     const accountObject = await Account.findOne({ name: account });
@@ -61,7 +68,7 @@ const handleEnvironment = async (account, environment) => {
     // if the account is not found, throw an error
     if (!accountObject) {
       // this should not happen, so log an error
-      console.error(`Account ${account} not found`);
+      log.error(`Account ${account} not found`);
       throw new Error("Account not found");
     }
 
@@ -73,7 +80,33 @@ const handleEnvironment = async (account, environment) => {
       accountObject.save();
     }
   } catch (e) {
-    console.error("Account.findOne error", e);
+    log.error("Account.findOne error", e);
+    throw new Error(e);
+  }
+};
+
+const handleStatus = async (account, status) => {
+  log.debug(`handleStatus: ${account} ${status}`);
+  // Get the account
+  try {
+    const accountObject = await Account.findOne({ name: account });
+
+    // if the account is not found, throw an error
+    if (!accountObject) {
+      // this should not happen, so log an error
+      log.error(`Account ${account} not found`);
+      throw new Error("Account not found");
+    }
+
+    // if the status is not found, add it to the statuses array
+    if (!accountObject.statuses.includes(status)) {
+      // add the environment to the accountObject
+      accountObject.statuses.push(status);
+      // write the new accountObject object to the db
+      accountObject.save();
+    }
+  } catch (e) {
+    log.error("Account.findOne error", e);
     throw new Error(e);
   }
 };
@@ -86,6 +119,9 @@ const insertIntoLogs = async (
   version,
   status
 ) => {
+  log.debug(
+    `insertIntoLogs: ${account} ${service} ${environment} ${version} ${status}`
+  );
   try {
     const log = await Log.create({
       account,
@@ -96,7 +132,7 @@ const insertIntoLogs = async (
     });
     return log;
   } catch (e) {
-    console.error(e);
+    log.error(e);
     throw new Error(e);
   }
 };
@@ -113,6 +149,9 @@ const updateServiceWithLatest = async (
   timestamp,
   meta
 ) => {
+  log.debug(
+    `updateServiceWithLatest: ${account} ${service} ${environment} ${version} ${status}`
+  );
   // get the service
   try {
     const serviceObject = await Service.findOne({
@@ -133,7 +172,7 @@ const updateServiceWithLatest = async (
         meta
       );
       // log the new service
-      console.log(`Created new service ${newServiceObject}`);
+      log.debug("Created new service", newServiceObject);
     } else {
       // update the service
       const updatedServiceObject = await updateExistingService(
@@ -148,7 +187,7 @@ const updateServiceWithLatest = async (
       );
     }
   } catch (e) {
-    console.error(e);
+    log.error(e);
     throw new Error(e);
   }
 };
@@ -164,6 +203,9 @@ const createNewService = async (
   timestamp,
   meta
 ) => {
+  log.debug(
+    `createNewService: ${account} ${service} ${environment} ${version} ${status}`
+  );
   // create the service
   try {
     const newServiceObject = await Service.create({
@@ -183,7 +225,7 @@ const createNewService = async (
     });
     return newServiceObject;
   } catch (e) {
-    console.error(e);
+    log.error(e);
     throw new Error(e);
   }
 };
@@ -198,6 +240,9 @@ const updateExistingService = async (
   timestamp,
   meta
 ) => {
+  log.debug(
+    `updateExistingService: ${serviceObject} ${environment} ${version} ${status}`
+  );
   // update the service with team, tags, and meta
   try {
     serviceObject.team = team;
@@ -228,7 +273,7 @@ const updateExistingService = async (
       serviceObject.save();
     }
   } catch (e) {
-    console.error(e);
+    log.error(e);
     throw new Error(e);
   }
 
@@ -242,6 +287,9 @@ const checkIfRollback = async (
   version,
   status
 ) => {
+  log.debug(
+    `checkIfRollback: ${account} ${service} ${environment} ${version} ${status}`
+  );
   // check the logs collection to see if there are multiple logs for the same account, service, environment, version, and status
   try {
     const logs = await Log.find({
@@ -259,7 +307,7 @@ const checkIfRollback = async (
       mostRecentLog.save();
     }
   } catch (e) {
-    console.error("checkIfRollback error", e);
+    log.error("checkIfRollback error", e);
     throw new Error(e);
   }
 };

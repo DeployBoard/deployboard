@@ -4,6 +4,7 @@ const generateAccounts = () => {
     name: "Seed",
     auth: "local",
     environments: ["Development", "Staging", "Production"],
+    statuses: ["Deploying", "Deployed", "Failed"],
     passwordPolicy: {
       length: 8,
       lowercase: 1,
@@ -16,6 +17,7 @@ const generateAccounts = () => {
     name: "SeedSaml",
     auth: "saml",
     environments: ["Development", "Staging", "Production"],
+    statuses: ["Deploying", "Deployed", "Failed"],
     passwordPolicy: {
       length: 8,
       lowercase: 1,

@@ -1,4 +1,7 @@
+import log from "loglevel";
 import NodeCache from "node-cache";
+
+log.setLevel("trace");
 
 const ttl = 1; // TTL in minutes (How long requests live in the cache)
 const limit = 100; // Requests per TTL
@@ -10,6 +13,7 @@ const apiKeyRateCache = new NodeCache({
 });
 
 const rateLimitApiKey = (req, res, next) => {
+  log.debug("Checking rate limit");
   // Get the key from the header
   const apiKey = req.headers["X-API-Key"] || req.headers["x-api-key"];
   // If no key is provided, return a 401
@@ -43,6 +47,7 @@ const rateLimitApiKey = (req, res, next) => {
   apiKeyRateCache.set(apiKey, apiKeyArray);
 
   // Continue to the next middleware
+  log.debug("Passed rate limit");
   next();
 };
 

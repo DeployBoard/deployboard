@@ -7,161 +7,112 @@ import {
   Chip,
   LinearProgress,
   Paper,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
-import { useQuery, gql } from "@apollo/client";
 
 import Header from "../../structure/header";
-import AnalyticsGraphs from "./analyticsGraphs";
 import CustomSnackbar from "../../structure/customSnackbar";
 import CustomFilter from "../../structure/customFilter";
 import CustomTablePagination from "../../structure/customTablePagination";
 import findUniqueFields from "../../structure/findUniqueFields";
 import BarChart from "./barChart";
 import AnalyticsNumberBox from "./analyticsNumberBox";
-
-const GetLogs = gql`
-  query GetLogs(
-    $filter: FilterFindManyLogInput
-    $serviceFilter: FilterFindManyServiceInput
-    $sort: SortFindManyLogInput
-    $limit: Int
-    $skip: Int
-    $logCountFilter: FilterCountLogInput
-  ) {
-    logMany(filter: $filter, sort: $sort, limit: $limit, skip: $skip) {
-      _id
-      service
-      environment
-      status
-      version
-      createdAt
-    }
-    serviceMany(filter: $serviceFilter) {
-      _id
-      service
-      environments {
-        name
-      }
-    }
-    logCount(filter: $logCountFilter)
-  }
-`;
-
-const setFilter = ({ account, service, environment }) => {
-  // Set the filter for the graphql query.
-  let filter = {};
-  if (account) {
-    filter.account = account;
-  } else {
-    console.error("account is required");
-  }
-  if (service) {
-    filter.service = service;
-  }
-  if (environment) {
-    filter.environment = environment;
-  }
-
-  return filter;
-};
-
-const priorDate = (daysAgo) => {
-  // Get the date in the past.
-  return new Date(
-    new Date().setDate(new Date().getDate() - daysAgo)
-  ).toISOString();
-};
+import AnalyticsTotalDeployments from "./analyticsTotalDeployments";
+import AnalyticsAveragePerDay from "./analyticsAveragePerDay";
+import AnalyticsFilters from "./analyticsFilters";
+import AnalyticsFailures from "./analyticsFailures";
+import AnalyticsDeploymentFailureRate from "./analyticsDeploymentFailureRate";
+import AnalyticsDeploymentRollbackRate from "./analyticsDeploymentRollbackRate";
+import { useEffect } from "react";
 
 const Analytics = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [limit, setLimit] = useState(10000);
-  const [skip, setSkip] = useState(0);
+  const [filter, setfilter] = useState({});
 
-  const filter = setFilter({
-    account: "Seed",
-    service: searchParams.get("service"),
-    environment: searchParams.get("environment"),
-  });
-
-  console.log("filter", filter);
-
-  // Query the GraphQL API.
-  // const { loading, error, data } = useQuery(GetLogs, {
-  //   variables: {
-  //     filter: {
-  //       account: "Seed",
-  //       service: searchParams.get("service"),
-  //       environment: searchParams.get("environment"),
-  //       _operators: {
-  //         createdAt: {
-  //           gte: priorDate(30),
-  //         },
-  //       },
-  //     },
-  //     serviceFilter: {
-  //       account: "Seed",
-  //     },
-  //     sort: "CREATEDAT_DESC",
-  //     limit: limit,
-  //     skip: skip,
-  //     logCountFilter: filter,
-  //   },
-  // });
-
-  const data = {
-    logMany: [
-      {
-        _id: "01234",
-        createdAt: "2020-01-06T00:00:00.000Z",
-        status: "Deployed",
-      },
-      {
-        _id: "12345",
-        createdAt: "2020-01-01T00:00:00.000Z",
-        status: "Deployed",
-      },
-      {
-        _id: "23456",
-        createdAt: "2020-01-02T00:00:00.000Z",
-        status: "Failed",
-      },
-    ],
-  };
-
-  if (data) {
-    console.log("data", data);
-  }
-  // if (loading) return <LinearProgress />;
-  // if (error)
-  //   return <CustomSnackbar severity={"error"} message={error.message} />;
+  useEffect(() => {
+    setfilter({
+      environment: searchParams.get("environment"),
+      service: searchParams.get("service"),
+    });
+  }, [searchParams]);
 
   return (
     <>
       <Header />
       <Container>
-        <Container>
+        <Stack
+          justifyContent="flex-end"
+          direction={{ xs: "column", sm: "row" }}
+          spacing={{ xs: 1, sm: 1, md: 2 }}
+        >
+          <Box sx={{ width: 100 }}>
+            <FormControl fullWidth>
+              <InputLabel id="select-days-ago-label">Days Ago</InputLabel>
+              <Select
+                labelId="select-days-ago-label"
+                id="select-days-ago"
+                value={searchParams.get("daysAgo") || 30}
+                label="Days Ago"
+                size="small"
+                sx={{ width: "100%" }}
+                onChange={(event) => {
+                  if (event.target.value) {
+                    searchParams.set("daysAgo", event.target.value);
+                  } else {
+                    searchParams.delete("daysAgo");
+                  }
+                  setSearchParams(searchParams);
+                }}
+              >
+                <MenuItem value={"7"}>7</MenuItem>
+                <MenuItem value={"14"}>14</MenuItem>
+                <MenuItem value={"30"}>30</MenuItem>
+                <MenuItem value={"60"}>60</MenuItem>
+                <MenuItem value={"90"}>90</MenuItem>
+                <MenuItem value={"180"}>180</MenuItem>
+                <MenuItem value={"365"}>365</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <AnalyticsFilters />
+        </Stack>
+        <Container sx={{ pt: "1rem", pb: "1rem" }}>
           <Box
             display="flex"
             flexDirection="row"
             justifyContent="space-between"
           >
-            <AnalyticsNumberBox title="Total Deployments" number={25} />
-            <AnalyticsNumberBox title="Total Failures" number={5} />
-            <AnalyticsNumberBox
-              title="Average Deployments Per Day"
-              number={7}
+            <AnalyticsTotalDeployments
+              daysAgo={searchParams.get("daysAgo") || 30}
+              filter={{ ...filter, status: "Deployed" }}
             />
-            <AnalyticsNumberBox title="Total Failures" number={5} />
-            <AnalyticsNumberBox
-              title="Deployment Failure Rate"
-              number={"20%"}
+            <AnalyticsAveragePerDay
+              daysAgo={searchParams.get("daysAgo") || 30}
+              filter={filter}
             />
-            <AnalyticsNumberBox title="Rollback Rate" number={"0%"} />
+            <AnalyticsFailures
+              daysAgo={searchParams.get("daysAgo") || 30}
+              filter={filter}
+            />
+            <AnalyticsDeploymentFailureRate
+              daysAgo={searchParams.get("daysAgo") || 30}
+              filter={filter}
+            />
+            <AnalyticsDeploymentRollbackRate
+              daysAgo={searchParams.get("daysAgo") || 30}
+              filter={filter}
+            />
           </Box>
         </Container>
-        <Box>
-          <BarChart data={data} />
+        <Box sx={{ height: "20rem" }}>
+          <BarChart
+            daysAgo={searchParams.get("daysAgo") || 30}
+            filter={filter}
+          />
         </Box>
       </Container>
     </>

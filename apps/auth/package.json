@@ -25,7 +25,8 @@
     "mongoose-timestamp": "^0.6.0",
     "nodemailer": "^6.7.7",
     "uuid": "8.3.2",
-    "loglevel": "^1.8.0"
+    "loglevel": "^1.8.0",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.18",

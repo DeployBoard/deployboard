@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
 const pages = ["dashboard", "ci", "catalog", "logs", "analytics"];
-const settings = ["profile", "account", "logout"];
+const settings = ["profile", "account"];
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -155,6 +155,9 @@ const Header = () => {
                   <Button href={`/${setting}`}>{setting}</Button>
                 </MenuItem>
               ))}
+              <MenuItem>
+                <Button href="/logout">logout</Button>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

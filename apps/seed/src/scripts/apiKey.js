@@ -27,6 +27,15 @@ const generateApiKeys = () => {
     createdBy: "admin@seed.seed",
     modifiedBy: "admin@seed.seed",
   });
+  apiKeys.push({
+    account: "Seed",
+    key: "test-deploy-key",
+    name: "test-deploy-api-key",
+    role: "Deploy",
+    enabled: true,
+    createdBy: "admin@seed.seed",
+    modifiedBy: "admin@seed.seed",
+  });
   return apiKeys;
 };
 

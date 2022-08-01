@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Chart as ChartJS,
   LinearScale,
@@ -9,7 +11,9 @@ import {
   Tooltip,
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
-import faker from "faker";
+
+import CustomSnackbar from "../../structure/customSnackbar";
+import { getToken } from "../../utils/auth";
 
 ChartJS.register(
   LinearScale,
@@ -21,41 +25,7 @@ ChartJS.register(
   Tooltip
 );
 
-const labels = [
-  "1/1",
-  "1/2",
-  "1/3",
-  "Jan 4",
-  "Jan 5",
-  "Jan 6",
-  "Jan 7",
-  "Jan 8",
-  "Jan 9",
-  "Jan 10",
-  "Jan 11",
-  "Jan 12",
-  "Jan 13",
-  "Jan 14",
-  "Jan 15",
-  "Jan 16",
-  "Jan 17",
-  "Jan 18",
-  "Jan 19",
-  "Jan 20",
-  "Jan 21",
-  "Jan 22",
-  "Jan 23",
-  "Jan 24",
-  "Jan 25",
-  "Jan 26",
-  "Jan 27",
-  "Jan 28",
-  "Jan 29",
-  "Jan 30",
-  "Jan 31",
-];
-
-export const options = {
+export const chartOptions = {
   plugins: {
     title: {
       display: true,
@@ -74,27 +44,92 @@ export const options = {
   },
 };
 
-const data = {
-  labels,
-  datasets: [
-    {
-      type: "line",
-      label: "Failed",
-      data: labels.map(() => faker.random.number({ min: 0, max: 3 })),
-      borderColor: "rgb(255, 25, 25)",
-      backgroundColor: "rgb(255, 25, 25)",
-      borderWidth: 2,
-      fill: true,
-    },
-    {
-      type: "bar",
-      label: "Deployed",
-      data: labels.map(() => faker.random.number({ min: 0, max: 25 })),
-      backgroundColor: "rgb(25, 150, 220)",
-    },
-  ],
+const chartData = (labels, deployedData, failedData) => {
+  return {
+    labels,
+    datasets: [
+      {
+        type: "line",
+        label: "Failed",
+        data: failedData,
+        borderColor: "rgb(255, 25, 25)",
+        backgroundColor: "rgb(255, 25, 25)",
+        borderWidth: 2,
+        fill: true,
+      },
+      {
+        type: "bar",
+        label: "Deployed",
+        data: deployedData,
+        backgroundColor: "rgb(25, 150, 220)",
+      },
+    ],
+  };
 };
 
-export default function BarChart() {
-  return <Chart options={options} data={data} />;
-}
+const BarChart = ({ daysAgo, filter }) => {
+  const [deployedData, setDeployedData] = useState(null);
+  const [failedData, setFailedData] = useState(null);
+  const [labels, setLabels] = useState(null);
+  const [error, setError] = useState(null);
+
+  const formatChartData = (data) => {
+    const labels = [];
+    const deployments = [];
+    const failures = [];
+    Object.entries(data).forEach(([key, value]) => {
+      labels.push(key);
+      deployments.push(value.Deployed);
+      failures.push(value.Failed);
+    });
+    // reverse the arrays so the data is in the correct order
+    return {
+      labels: labels.reverse(),
+      deployments: deployments.reverse(),
+      failures: failures.reverse(),
+    };
+  };
+
+  // query analytics endpoint for total deployments
+  const getGraphData = (daysAgo, filter) => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/analytics/deployment-graph`, {
+        headers: {
+          authorization: `Bearer ${getToken()}`,
+        },
+        params: {
+          daysAgo: daysAgo,
+          ...filter,
+        },
+        timeout: 10000,
+      })
+      .then((response) => {
+        // console.log(response);
+        const formattedData = formatChartData(response.data);
+        setLabels(formattedData.labels);
+        setDeployedData(formattedData.deployments);
+        setFailedData(formattedData.failures);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
+  useEffect(() => {
+    getGraphData(daysAgo, filter);
+  }, [daysAgo, filter]);
+
+  return (
+    <>
+      {error ? (
+        <CustomSnackbar severity={"error"} message={error.message} />
+      ) : null}
+      <Chart
+        options={chartOptions}
+        data={chartData(labels, deployedData, failedData)}
+      />
+    </>
+  );
+};
+
+export default BarChart;

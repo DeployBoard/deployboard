@@ -22,9 +22,11 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
+import jwt_decode from "jwt-decode";
 
 import CustomSnackbar from "../../structure/customSnackbar";
 import { setToken } from "../../utils/auth";
+import useStore from "../../utils/appStore";
 import logo from "../../../assets/DeployBoard256.png";
 
 const Login = () => {
@@ -36,6 +38,10 @@ const Login = () => {
   let [warning, setWarning] = useState("");
   let [error, setError] = useState("");
   let [pending, setPending] = useState(false);
+  const setStoreEmail = useStore((state) => state.setEmail);
+  const setStoreAccount = useStore((state) => state.setAccount);
+  const setStoreRole = useStore((state) => state.setRole);
+  const loggedOut = window.location.search.includes("loggedOut");
 
   const handleChangeEmail = (event) => {
     setEmail(event.target.value);
@@ -67,6 +73,12 @@ const Login = () => {
         // set the token in our session storage
         setToken(token);
         setSuccess(message);
+        // decode the token and get the user info
+        const decodedToken = jwt_decode(token);
+        // set the email, account and role in our store
+        setStoreEmail(decodedToken.email);
+        setStoreAccount(decodedToken.account);
+        setStoreRole(decodedToken.role);
         // redirect to the dashboard
         navigate("/dashboard");
       } else if (status == 401) {
@@ -84,6 +96,12 @@ const Login = () => {
 
   return (
     <Box p="2rem">
+      {loggedOut && (
+        <CustomSnackbar
+          severity="success"
+          message="You have been logged out."
+        />
+      )}
       {success && <CustomSnackbar severity="success" message={success} />}
       {warning && <CustomSnackbar severity="warning" message={warning} />}
       {error && <CustomSnackbar severity="error" message={error} />}

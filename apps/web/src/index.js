@@ -3,7 +3,6 @@ import { createRoot } from "react-dom/client";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 import App from "./App";
 
@@ -28,19 +27,12 @@ const theme = createTheme({
   },
 });
 
-const client = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_URI,
-  cache: new InMemoryCache(),
-});
-
 root.render(
   <StrictMode>
-    <ApolloProvider client={client}>
-      <LocalizationProvider dateAdapter={AdapterLuxon}>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </LocalizationProvider>
-    </ApolloProvider>
+    <LocalizationProvider dateAdapter={AdapterLuxon}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </LocalizationProvider>
   </StrictMode>
 );

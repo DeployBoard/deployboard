@@ -10,7 +10,7 @@ const Catalog = () => {
     <>
       <Header />
       <Box>
-        <AddService />
+        {/* <AddService /> */}
         <Box
           sx={{
             display: "flex",

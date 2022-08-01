@@ -1,9 +1,11 @@
 import express from "express";
 import log from "loglevel";
-log.setLevel("trace");
 
 import { User } from "models";
 import { sendLockedMail } from "../utils/sendMail.js";
+import { generateToken } from "../utils/token.js";
+
+log.setLevel("trace");
 
 const MAX_LOGIN_ATTEMPTS = 8; // make sure this is the same as in the user model
 const router = express.Router();
@@ -55,8 +57,10 @@ router.route("/").post(async (req, res) => {
       }
       if (isMatch) {
         log.debug("Passwords match");
-        // TODO: generate a token for the user
-        const token = "TODO";
+        // generate a token for the user
+        const token = generateToken(user);
+        log.debug("Token generated");
+        log.debug(token);
         // reset attempts and lockUntil
         user.successfulLogin(function (err) {
           if (err) {

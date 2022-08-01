@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useMutation, gql } from "@apollo/client";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -9,38 +9,14 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { LinearProgress } from "@mui/material";
 
-const AddService = gql`
-  mutation Mutation($record: CreateOneServiceInput!) {
-    serviceCreateOne(record: $record) {
-      record {
-        _id
-        service
-        account
-        environments {
-          name
-          status
-          version
-          timestamp
-        }
-      }
-    }
-  }
-`;
+import { getToken } from "../../utils/auth";
 
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
-  const [mutateFunction, { data, loading, error }] = useMutation(AddService, {
-    variables: {
-      record: {
-        service: "payment",
-        account: "deployboard.io",
-      },
-    },
-  });
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  if (data) {
-    console.log(data);
-  }
   if (loading) return <LinearProgress />;
   // TODO: display snackbar at top right when error occurs.
   if (error) return `Submission error! ${error.message}`;
@@ -57,7 +33,6 @@ export default function FormDialog() {
 
   const handleSubmit = () => {
     console.log("submit");
-    mutateFunction();
     setOpen(false);
   };
 

@@ -11,6 +11,7 @@ import Catalog from "./components/pages/catalog/catalog";
 import Logs from "./components/pages/logs/logs";
 import Analytics from "./components/pages/analytics/analytics";
 import NotFound from "./components/pages/notFound/notFound";
+import Logout from "./components/pages/logout/logout";
 
 const App = () => {
   const [token, setToken] = useState();
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/logs" element={<Logs />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
         </Route>
         <Route path="*" element={<NotFound />} />
