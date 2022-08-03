@@ -1,0 +1,9 @@
+**/node_modules
+**/build
+**/dist
+.gitignore
+.github
+.git
+.turbo
+docs
+seed
