@@ -2,77 +2,59 @@
 
 ## Process
 
-DeployBoard works on a [Fork & Pull](https://reflectoring.io/github-fork-and-pull/){:target="_blank"} based system.
+DeployBoard works on a [Fork & Pull](https://reflectoring.io/github-fork-and-pull/){:target="\_blank"} based system.
 
-If you want to implement a new feature, or fix an existing bug, first search our [open issues](https://github.com/DeployBoard/deployboard/issues){:target="_blank"} to see if an issue already exists.
+If you want to implement a new feature, or fix an existing bug, first search our [open issues](https://github.com/DeployBoard/deployboard/issues){:target="\_blank"} to see if an issue already exists.
 
 If you find an existing issue, please first comment on the issue that you are going to work on. This helps reduce duplicated work.
 
-If you do not find an existing issue, please [open a new issue](https://github.com/DeployBoard/deployboard/issues/new/choose){:target="_blank"} filling out the provided issue templates before starting work.
+If you do not find an existing issue, please [open a new issue](https://github.com/DeployBoard/deployboard/issues/new/choose){:target="\_blank"} filling out the provided issue templates before starting work.
 
 ## Development
 
 Of course, you are free to use whatever editor and environment you like.
 
-A runtime is provided via Docker.
+DeployBoard uses React for the frontend, NodeJS/Express for the backend api, and MongoDB as the database.
 
 !!! Note
-    The following commands are run from the project root.
+The following commands are run from the project root.
 
-### Virtual Environment
+### NVM
 
-To ensure everyone has a similar environment, we create a virtual environment using the following commands.
+To ensure we all have the same development environment, we provide a `.nvmrc` file that specifies the version of node we use for the entire project.
+
+```
+# Switch to the version of node specified in the .nvmrc file.
+nvm use
+```
+
+### Run Dev
+
+If you notice the commands in the `package.json` actually run `turbo` mapped to commands in the `turbo.json` file. You can look in the `turbo.json` file if you are interested in what is happening.
+
+```
+npm run dev
+```
+
+The application should be running now at `localhost:3000`, but you still need to start and seed the database before you can log in.
+
+### Start the DB
+
+We use Docker to run a local copy of MongoDB, but we provide an npm script via npm to start it.
+
+```
+npm run mongo
+```
 
 !!! Note
-    The following commands use `pyenv` and `pyenv-virtualenv` to manage python versions. This is recommended instead of using your system version of python.
-
-```
-# Install the version of python we're currently using.
-pyenv install 3.10.4
-
-# Create the virual environment.
-pyenv virtualenv 3.10.4 dpb
-
-# Activate the virtual environment.
-pyenv activate dpb
-```
-
-To leave the virtual environment, simply run `pyenv deactivate`.
-
-After leaving, you can delete the virtual environment by simply running `rm -rf venv` from the project root.
-
-### Build Bootstrap
-
-The UI requires bootstrap. We use some custom scss variables which requires building bootstrap.
-
-You can build bootstrap using the provided script located in the `/scripts/` directory.
-
-```
-bash ./scripts/build_bootstrap.sh
-```
-
-### Start the App
-
-After building bootstrap, you will want to start the application. You can do this with Docker.
-
-```
-docker-compose up -d --build
-```
-
-The application should be running now at `localhost:80`, but you still need to seed the database before you can log in.
+Since the database is started as a Docker container, if you want to stop Mongo, you will need to run a separate `docker stop mongo` command.
 
 ### Seed the DB
 
-!!! Note
-    First you need to install some local dependencies for our seed script.
-    ```
-    pip3 install -r requirements-dev.txt
-    ```
-
-Once the application is up, you can seed the database using the provided script in the `/scripts/` directory.
+We also provide an npm script to seed the database with the seed user and some randomized sample data.
 
 ```
-python3 ./scripts/db_seed.py
+npm run seed
 ```
 
 ### Usage
@@ -85,61 +67,42 @@ The usernames created as part of the seed script are:
 - editor@example.com (role: Editor)
 - viewer@example.com (role: Viewer)
 
-The password provided for all development users is the string `secret`.
+The password provided for all development users is the string `Password123`.
 
 !!! Note
-    Disabled users are also created for each role. The disabled users were created for testing access controls.
+Disabled users are also created for each role. The disabled users were created for testing access controls.
 
-API Keys are also created, you can find them at `localhost/settings/apikeys`.
+API Keys are also created, you can find them at `localhost:3000/settings/apikeys`.
+
+### Build the app
+
+After testing in the Dev environment, we want to create a production ready build to verify everything still works.
+
+```
+# Build the app
+npm run build
+
+# Start the app from the built bundle
+npm run start
+```
+
+Since the built app uses the same database, you don't need to restart the DB or re-run the seed script, the previous credentials should still work.
 
 ## Testing
 
-Tests are run using pyteset on Docker.
-
-We currently build our own docker image locally to use for pytest. To build the deployboard-pytest docker image run the following command.
-
-```
-docker build --no-cache -t deployboard-pytest:latest -f tests/Dockerfile .
-```
-
-Now that we have the image built, we can run the container passing in our code.
-
-```
-docker run --rm -it -v ${PWD}:/app deployboard-pytest
-```
-
-This will run all of our tests and generate a coverage report at the root of the project `/htmlcov/index.html`
+TBD
 
 ## Docs
 
-Docs are hosted via Docker, and can be started as part of the docker-compose script mentioned in the above section.
+Docs are hosted via Docker, and can be started with an npm script like the Mongo database.
+
+```
+npm run docs
+```
 
 !!! Note
-    If you have already started the application with `docker-compose` the Docs will be available at: `localhost:8000`.
-
-The Docs source code is found in `/src/docs/` of the project root.
-
-If you only want to run the Docs, and not the rest of the application, you can do so by running this command
-
-```
-docker run --rm -it -p 8000:8000 -v ${PWD}/docs:/docs squidfunk/mkdocs-material
-```
-
-Just like running via `docker-compose`, the Docs will be available at `localhost:8000`.
+Just like the MongoDB container, we will need to stop the Docs container separately with `docker stop docs`
 
 ## Committing
 
-We use pre-commit hooks to verify some things prior to committing to source control.
-
-To enable this, you need to run the following commands.
-
-!!! Note
-    Make sure to set up your [Virtual Environment](contributing.md#virtual-environment).
-
-```
-# Install pre-commit and any other dev dependencies.
-pip3 install -r requirements-dev.txt
-
-# Install git hooks in the .git directory.
-pre-commit install
-```
+TODO: Set up a pre-commit library.
