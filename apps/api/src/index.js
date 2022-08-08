@@ -37,7 +37,7 @@ app.use("/statuses", statusesRouter);
 app.use("/teams", teamsRouter);
 app.use("/users", usersRouter);
 
-const port = process.env.PORT || 3005;
+const port = process.env.PORT || 3001;
 
 // Initialize our mongo connection.
 const mongoUri = process.env.MONGO_URI || "mongodb://localhost/deployboard";

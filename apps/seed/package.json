@@ -2,6 +2,10 @@
   "name": "seed",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  },
   "scripts": {
     "seed": "babel-node ./src/index.js",
     "clean": "rm -rf node_modues/"

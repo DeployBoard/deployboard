@@ -1,9 +1,14 @@
+node_modules
 **/node_modules
+npm-debug.log
+build
 **/build
+dist
 **/dist
 .gitignore
 .github
 .git
 .turbo
+**/.turbo
 docs
 seed

@@ -2,12 +2,15 @@
   "name": "api",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  },
   "scripts": {
-    "dev": "PORT=3005 HOST=localhost nodemon --delay 500ms --exec babel-node ./src/index.js",
-    "start": "PORT=3005 HOST=localhost node ./dist/index.js",
+    "dev": "PORT=3001 HOST=localhost nodemon --delay 500ms --exec babel-node ./src/index.js",
+    "start": "PORT=3001 HOST=localhost node ./dist/index.js",
     "clean": "rm -rf node_modules/ dist/",
     "build": "babel src --out-dir dist",
-    "build:schema": "babel-node ./src/scripts/buildSchema.js",
     "prettier": "prettier --config ./.prettierrc --write \"**/*.js\"",
     "pretest": "eslint --ignore-path .gitignore .",
     "postinstall": "rm -rf dist && npm run build",
