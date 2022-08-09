@@ -25,6 +25,8 @@ import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 
 import CustomSnackbar from "../../structure/customSnackbar";
 
+import logo from "../../../assets/DeployBoard256.png";
+
 const CompleteRegistration = () => {
   let { uuid } = useParams();
   let [password, setPassword] = useState("");
@@ -95,7 +97,7 @@ const CompleteRegistration = () => {
                   width: 200,
                 }}
                 alt="deployboard logo"
-                src="https://app.deployboard.io/static/media/DeployBoard256.a0aaf1a0.png"
+                src={logo}
               />
             </Container>
             {success ? (

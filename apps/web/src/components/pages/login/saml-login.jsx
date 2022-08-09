@@ -21,6 +21,8 @@ import LockOpenIcon from "@mui/icons-material/LockOpen";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 
+import logo from "../../../assets/DeployBoard256.png";
+
 const SamlLogin = () => {
   let [showPassword, setShowPassword] = useState(false);
   let [password, setPassword] = useState("");
@@ -63,7 +65,7 @@ const SamlLogin = () => {
                   width: 200,
                 }}
                 alt="deployboard logo"
-                src="https://app.deployboard.io/static/media/DeployBoard256.a0aaf1a0.png"
+                src={logo}
               />
             </Container>
             <TextField
