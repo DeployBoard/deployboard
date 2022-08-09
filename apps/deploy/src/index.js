@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 // Routes
 app.use("/deploy", rateLimitApiKey, validateApiKey, validateBody, router);
 
-const port = process.env.PORT || 3004;
+const port = process.env.PORT || 3003;
 
 // Initialize our mongo connection.
 const mongoUri = process.env.MONGO_URI || "mongodb://localhost/deployboard";

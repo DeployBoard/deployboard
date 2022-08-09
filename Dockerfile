@@ -1,12 +1,21 @@
-# syntax=docker/dockerfile:1
 # Source from the official Dockerfile repository
-FROM node:16-slim AS builder
+# AS builder
+FROM node:16-slim
+# Run as node user
+USER root
 # Install git
 RUN apt-get update && apt-get install -y git
 # Set the working directory
 WORKDIR /app
 # Copy the app into the container
 COPY ./ /app/
+#  TODO: We shouldn't need these because of the .dockerignore
+# Copy the nginx config into place
+# RUN cp -a /app/nginx.conf /etc/nginx/conf.d/default.conf
+# # Remove seed
+# RUN rm -rf /app/apps/seed
+# # Remove docs
+# RUN rm -rf /app/apps/docs
 # Install turborepo
 RUN npm install --location=global turbo
 # Install dependencies
@@ -15,16 +24,21 @@ RUN npm install
 RUN npm run build
 
 # Source from the official Dockerfile repository
-FROM node:16-slim
+# FROM node:16-slim
 # Install git
-RUN apt-get update && apt-get install -y git
+# RUN apt-get update && apt-get install -y git
 # Set the working directory
-WORKDIR /app
-# Copy the built app from the builder stage into this container
-COPY --from=builder /app ./
+# WORKDIR /app
+# Copy the app into the container
+# COPY ./ /app/
+# Copy the built dist directories from the builder stage into this container
+# COPY --from=builder /app/apps/api/dist ./app/apps/api/
+# COPY --from=builder /app/apps/auth/dist ./app/apps/auth/
+# COPY --from=builder /app/apps/deploy/dist ./app/apps/deploy/
+# COPY --from=builder /app/apps/web/build ./app/apps/web/
 # Install turborepo
-RUN npm install --location=global turbo
+# RUN npm install --location=global turbo
 # Install dependencies
-RUN npm install --omit=dev
+# RUN npm install --omit=dev
 # Run the app
-CMD ["npm", "run", "start"]
+ENTRYPOINT ["turbo", "run", "start"]

@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "type": "module",
   "private": true,
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  },
   "scripts": {
     "dev": "PORT=3002 HOST=localhost nodemon --delay 500ms --exec babel-node ./src/index.js",
     "start": "PORT=3002 HOST=localhost node ./dist/index.js",

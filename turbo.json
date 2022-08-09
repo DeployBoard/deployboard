@@ -7,10 +7,12 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["build/**", "dist/**"]
+      "outputs": ["build/**", "dist/**"],
+      "cache": false
     },
     "start": {
-      "dependsOn": ["^start"]
+      "dependsOn": ["^start"],
+      "cache": false
     },
     "test": {
       "dependsOn": ["build"],
@@ -22,7 +24,8 @@
     },
     "deploy": {
       "dependsOn": ["build", "test", "lint"],
-      "outputs": []
+      "outputs": [],
+      "cache": false
     },
     "seed": {
       "dependsOn": ["^seed"],
@@ -32,6 +35,8 @@
     "dev": {
       "cache": false
     },
-    "clean": {}
+    "clean": {
+      "dependsOn": ["^clean"]
+    }
   }
 }
