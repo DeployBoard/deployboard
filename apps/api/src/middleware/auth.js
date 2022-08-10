@@ -51,4 +51,17 @@ const verifyToken = (req, res, next) => {
   next();
 };
 
-export { verifyToken };
+// verify the role of the user is authorized to access the resource
+const verifyRole = (roles, role) => {
+  log.debug(`verifyRole: verifying if ${role} is in ${roles}`);
+  // if role array does not include req.role, return 401
+  if (roles.includes(role)) {
+    log.debug(`verifyRole: ${role} is in ${roles}`);
+    return true;
+  } else {
+    log.debug(`verifyRole: ${role} not in ${roles}`);
+    return false;
+  }
+};
+
+export { verifyToken, verifyRole };

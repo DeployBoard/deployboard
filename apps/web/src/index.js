@@ -24,6 +24,14 @@ const theme = createTheme({
         disableRipple: true,
       },
     },
+    MuiAppBar: {
+      styleOverrides: {
+        colorPrimary: {
+          backgroundColor: "white",
+          boxShadow: "none",
+        },
+      },
+    },
   },
 });
 

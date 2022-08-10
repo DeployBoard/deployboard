@@ -6,7 +6,7 @@ import bodyParser from "body-parser";
 
 import { accountsRouter } from "./routes/accounts.js";
 import { analyticsRouter } from "./routes/analytics.js";
-// import { apikeysRouter } from "./routes/apikeys.js";
+import { apikeysRouter } from "./routes/apikeys.js";
 import { environmentsRouter } from "./routes/environments.js";
 import { logsRouter } from "./routes/logs.js";
 import { servicesRouter } from "./routes/services.js";
@@ -29,7 +29,7 @@ app.use(verifyToken);
 // Routes
 app.use("/accounts", accountsRouter);
 app.use("/analytics", analyticsRouter);
-// app.use("/apikeys", apikeysRouter);
+app.use("/apikeys", apikeysRouter);
 app.use("/environments", environmentsRouter);
 app.use("/logs", logsRouter);
 app.use("/services", servicesRouter);
