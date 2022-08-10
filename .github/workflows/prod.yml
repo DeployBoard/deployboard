@@ -19,7 +19,7 @@ jobs:
       - name: Docker Login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Docker Build
-        run: docker build -f Dockerfile -t deployboard/deployboard:latest
+        run: docker build -f Dockerfile -t deployboard/deployboard:latest .
       - name: Docker Push
         run: docker push deployboard/deployboard:latest
         # Deploy
