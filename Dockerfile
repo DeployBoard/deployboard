@@ -9,13 +9,6 @@ RUN apt-get update && apt-get install -y git
 WORKDIR /app
 # Copy the app into the container
 COPY ./ /app/
-#  TODO: We shouldn't need these because of the .dockerignore
-# Copy the nginx config into place
-# RUN cp -a /app/nginx.conf /etc/nginx/conf.d/default.conf
-# # Remove seed
-# RUN rm -rf /app/apps/seed
-# # Remove docs
-# RUN rm -rf /app/apps/docs
 # Install turborepo
 RUN npm install --location=global turbo
 # Install dependencies

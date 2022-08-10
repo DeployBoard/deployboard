@@ -21,6 +21,7 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import RocketOutlinedIcon from "@mui/icons-material/RocketOutlined";
 
 import CustomSnackbar from "../../structure/customSnackbar";
+import logo from "../../../assets/DeployBoard256.png";
 
 const Register = () => {
   let [account, setAccount] = useState("");
@@ -92,7 +93,7 @@ const Register = () => {
                   width: 200,
                 }}
                 alt="deployboard logo"
-                src="https://app.deployboard.io/static/media/DeployBoard256.a0aaf1a0.png"
+                src={logo}
               />
             </Container>
             <TextField

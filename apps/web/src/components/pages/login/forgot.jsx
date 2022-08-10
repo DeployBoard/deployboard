@@ -19,6 +19,8 @@ import {
 import LoadingButton from "@mui/lab/LoadingButton";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 
+import logo from "../../../assets/DeployBoard256.png";
+
 const Forgot = () => {
   let [email, setEmail] = useState("");
   let [pending, setPending] = useState(false);
@@ -54,7 +56,7 @@ const Forgot = () => {
                   width: 200,
                 }}
                 alt="deployboard logo"
-                src="https://app.deployboard.io/static/media/DeployBoard256.a0aaf1a0.png"
+                src={logo}
               />
             </Container>
             <TextField
