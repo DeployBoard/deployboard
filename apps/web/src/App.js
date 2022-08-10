@@ -10,6 +10,9 @@ import Dashboard from "./components/pages/dashboard/dashboard";
 import Catalog from "./components/pages/catalog/catalog";
 import Logs from "./components/pages/logs/logs";
 import Analytics from "./components/pages/analytics/analytics";
+import Users from "./components/pages/account/users/users";
+import ApiKeys from "./components/pages/account/apikeys/apikeys";
+import Integrations from "./components/pages/account/integrations/integrations";
 import NotFound from "./components/pages/notFound/notFound";
 import Logout from "./components/pages/logout/logout";
 
@@ -32,26 +35,24 @@ const App = () => {
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/logs" element={<Logs />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route
+            path="/account"
+            element={<Navigate to="/account/users" replace />}
+          />
+          <Route path="/account/users" element={<Users />} />
+          <Route path="/account/apikeys" element={<ApiKeys />} />
+          <Route path="/account/integrations" element={<Integrations />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
         </Route>
         <Route path="*" element={<NotFound />} />
 
-        {/* <Route path="/logs" component={Logs} /> */}
         {/* <Route exact path="/applications/:appName" component={ApplicationEdit} /> */}
         {/* <Route exact path="/applications" component={Applications} /> */}
-        {/* <Route exact path="/logs" component={Logs} /> */}
         {/* <Route exact path="/ci" component={DashboardCI} /> */}
         {/* <Route exact path="/infographic" component={Infographic} /> */}
         {/* <Route exact path="/rss" component={RSS} /> */}
-        {/* <Route exact path="/graphs" component={Graphs} /> */}
-        {/* <Route exact path="/analytics" component={Analytics} /> */}
-        {/* <Route exact path="/analytics2" component={Analytics2} /> */}
         {/* <Route exact path="/import" component={Import} /> */}
-        {/* <Route exact path="/settings/users" component={Users} /> */}
-        {/* <Route exact path="/settings/apikeys" component={ApiKeys} /> */}
-        {/* <Route exact path="/settings/integrations" component={Integrations} /> */}
-        {/* <Route exact path="/settings/billing" component={Billing} /> */}
       </Routes>
     </BrowserRouter>
   );

@@ -12,6 +12,8 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
+import logo from "../../assets/DeployBoard256.png";
+
 const pages = ["dashboard", "ci", "catalog", "logs", "analytics"];
 const settings = ["profile", "account"];
 
@@ -36,7 +38,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ bgcolor: "white", boxShadow: 0 }}>
+    <AppBar position="static">
       <Container>
         <Toolbar disableGutters>
           <Typography
@@ -100,7 +102,7 @@ const Header = () => {
               display: { xs: "flex", md: "none" },
             }}
           >
-            LeagueSheet
+            User Name
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
@@ -131,7 +133,7 @@ const Header = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="League Sheet" src="/static/images/avatar/1.jpg" />
+                <Avatar alt="User Avatar" src={logo} />
               </IconButton>
             </Tooltip>
             <Menu
