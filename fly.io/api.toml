@@ -7,7 +7,7 @@ processes = ["api"]
 [env]
 
 [build]
-  image = "deployboard/deployboard-api:latest"
+  image = "deployboard/deployboard:latest"
 
 [processes]
 api = "--scope=api"
