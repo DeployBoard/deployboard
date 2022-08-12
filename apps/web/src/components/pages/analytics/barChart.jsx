@@ -58,7 +58,7 @@ const chartData = (labels, deployedData, failedData) => {
         borderColor: "rgb(255, 25, 25)",
         backgroundColor: "rgb(255, 25, 25)",
         borderWidth: 2,
-        fill: true,
+        fill: false,
       },
       {
         type: "bar",
