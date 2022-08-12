@@ -9,11 +9,14 @@ import {
   LineElement,
   Legend,
   Tooltip,
+  registerables as registerablesJS,
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
 
 import CustomSnackbar from "../../structure/customSnackbar";
 import { getToken } from "../../utils/auth";
+
+ChartJS.register(...registerablesJS);
 
 ChartJS.register(
   LinearScale,
