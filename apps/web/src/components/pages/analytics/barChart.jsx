@@ -9,11 +9,14 @@ import {
   LineElement,
   Legend,
   Tooltip,
+  registerables as registerablesJS,
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
 
 import CustomSnackbar from "../../structure/customSnackbar";
 import { getToken } from "../../utils/auth";
+
+ChartJS.register(...registerablesJS);
 
 ChartJS.register(
   LinearScale,
@@ -55,7 +58,7 @@ const chartData = (labels, deployedData, failedData) => {
         borderColor: "rgb(255, 25, 25)",
         backgroundColor: "rgb(255, 25, 25)",
         borderWidth: 2,
-        fill: true,
+        fill: false,
       },
       {
         type: "bar",
