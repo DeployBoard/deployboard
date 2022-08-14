@@ -7,8 +7,7 @@ log.setLevel("trace");
 
 const router = express.Router();
 
-router.route("/").get(async (req, res) => {
-  log.debug("account", req.account);
+router.route("/").get(async (req, res, next) => {
   log.debug("query", req.query);
   const limit = req.query.limit || 25; // default to 25
   const skip = req.query.skip || 0; // default to 0
@@ -53,7 +52,9 @@ router.route("/").get(async (req, res) => {
             message: "Internal server error.",
           });
         }
-        return res.status(200).json(logs);
+        res.locals.status = 200;
+        res.locals.body = logs;
+        next();
       });
   }
 });

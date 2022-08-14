@@ -7,9 +7,7 @@ log.setLevel("trace");
 
 const router = express.Router();
 
-router.route("/").get(async (req, res) => {
-  log.debug(req.account);
-
+router.route("/").get(async (req, res, next) => {
   Account.findOne({ name: req.account }, function (err, account) {
     if (err) {
       log.error(err);
@@ -24,7 +22,9 @@ router.route("/").get(async (req, res) => {
         message: "Unable to process this request.",
       });
     }
-    return res.status(200).json(account);
+    res.locals.status = 200;
+    res.locals.body = account;
+    next();
   });
 });
 

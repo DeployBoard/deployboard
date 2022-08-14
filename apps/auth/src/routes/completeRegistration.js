@@ -42,7 +42,7 @@ router.route("/").post(async (req, res) => {
     const newUser = new User({
       account: register.account,
       email: register.email,
-      role: "admin",
+      role: "Admin",
       password,
     });
     // save the user to the database

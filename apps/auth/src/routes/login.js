@@ -27,6 +27,15 @@ router.route("/").post(async (req, res) => {
       });
     }
 
+    // check if the account is currently enabled
+    if (!user.enabled) {
+      log.debug(`Account is disaled.`);
+      // just return generic invalid message, we don't want to leak if the account is locked
+      return res.status(401).json({
+        message: "Invalid email or password.",
+      });
+    }
+
     // check if the account is currently locked
     if (user.isLocked) {
       log.debug("User is locked.");

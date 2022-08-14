@@ -21,6 +21,7 @@ let UserSchema = new mongoose.Schema(
     },
     role: {
       type: String,
+      enum: ["User", "Editor", "Admin"],
       required: true,
     },
     enabled: {
