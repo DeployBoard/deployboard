@@ -7,9 +7,7 @@ log.setLevel("trace");
 
 const router = express.Router();
 
-router.route("/").get(async (req, res) => {
-  log.debug(req.account);
-
+router.route("/").get(async (req, res, next) => {
   let usersList = [];
 
   User.find({ account: req.account }, function (err, users) {
@@ -26,7 +24,9 @@ router.route("/").get(async (req, res) => {
       usersList.push(user);
     });
 
-    return res.status(200).json(usersList);
+    res.locals.status = 200;
+    res.locals.body = usersList;
+    next();
   });
 });
 

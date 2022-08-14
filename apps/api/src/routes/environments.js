@@ -8,8 +8,6 @@ log.setLevel("trace");
 const router = express.Router();
 
 router.route("/").get(async (req, res) => {
-  log.debug(req.account);
-
   Account.findOne({ name: req.account }, function (err, account) {
     if (err) {
       log.error(err);

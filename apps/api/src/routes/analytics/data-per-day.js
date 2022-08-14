@@ -8,7 +8,6 @@ log.setLevel("trace");
 const router = express.Router();
 
 router.route("/").get(async (req, res) => {
-  log.debug(req.account);
   log.debug(req.query);
   const daysAgo = req.query.daysAgo || 30;
 

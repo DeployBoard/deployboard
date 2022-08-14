@@ -7,9 +7,7 @@ log.setLevel("trace");
 
 const router = express.Router();
 
-router.route("/").get(async (req, res) => {
-  log.debug(req.account);
-
+router.route("/").get(async (req, res, next) => {
   Team.find({ account: req.account }, function (err, teams) {
     if (err) {
       log.error(err);
@@ -17,7 +15,9 @@ router.route("/").get(async (req, res) => {
         message: "Internal server error.",
       });
     }
-    return res.status(200).json(teams);
+    res.locals.status = 200;
+    res.locals.body = teams;
+    next();
   });
 });
 

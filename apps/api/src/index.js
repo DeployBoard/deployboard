@@ -3,6 +3,10 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
+import mongoSanitize from "express-mongo-sanitize";
+
+import { verifyToken } from "./middleware/auth.js";
+import { validateResponse } from "./middleware/response-validator.js";
 
 import { accountsRouter } from "./routes/accounts.js";
 import { analyticsRouter } from "./routes/analytics.js";
@@ -13,7 +17,6 @@ import { servicesRouter } from "./routes/services.js";
 import { statusesRouter } from "./routes/statuses.js";
 import { teamsRouter } from "./routes/teams.js";
 import { usersRouter } from "./routes/users.js";
-import { verifyToken } from "./middleware/auth.js";
 
 dotenv.config();
 
@@ -23,6 +26,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
+// sanitize mongoose queries
+app.use(mongoSanitize());
 // verify token
 app.use(verifyToken);
 
@@ -36,6 +41,9 @@ app.use("/services", servicesRouter);
 app.use("/statuses", statusesRouter);
 app.use("/teams", teamsRouter);
 app.use("/users", usersRouter);
+
+// response validation
+app.use(validateResponse);
 
 const port = process.env.PORT || 3001;
 

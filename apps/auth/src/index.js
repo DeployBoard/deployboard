@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
+import mongoSanitize from "express-mongo-sanitize";
 
 import { loginRouter } from "./routes/login.js";
 import { registerRouter } from "./routes/register.js";
@@ -13,6 +14,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
+// sanitize mongoose queries
+app.use(mongoSanitize());
 
 // Routes
 app.use("/login", loginRouter);

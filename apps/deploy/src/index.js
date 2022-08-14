@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
+import mongoSanitize from "express-mongo-sanitize";
 
 import rateLimitApiKey from "./middleware/rateLimitApiKey.js";
 import validateApiKey from "./middleware/validateApiKey.js";
@@ -15,6 +16,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
+// sanitize mongoose queries
+app.use(mongoSanitize());
 
 // Routes
 app.use("/deploy", rateLimitApiKey, validateApiKey, validateBody, router);
