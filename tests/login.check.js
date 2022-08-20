@@ -20,8 +20,8 @@ test("login test", async ({ page }) => {
   await page.locator("text=Submit").click();
   await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/dashboard`);
   // Click #root >> text=ci
-  await page.locator("#root >> text=ci").click();
-  await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/ci`);
+  // await page.locator("#root >> text=ci").click();
+  // await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/ci`);
   // Click #root >> text=catalog
   await page.locator("#root >> text=catalog").click();
   await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/catalog`);
@@ -31,6 +31,14 @@ test("login test", async ({ page }) => {
   // Click #root >> text=analytics
   await page.locator("#root >> text=analytics").click();
   await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/analytics`);
+  // Click [aria-label="Open settings"]
+  await page.locator('[aria-label="Open settings"]').click();
+  // Click account
+  await page.locator("text=account").click();
+  await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/account/users`);
+  // Click #root >> text=analytics
+  await page.locator("#root >> text=apikeys").click();
+  await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/account/apikeys`);
   // Click [aria-label="Open settings"]
   await page.locator('[aria-label="Open settings"]').click();
   // Click text=logout

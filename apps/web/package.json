@@ -19,8 +19,6 @@
     "invalidate-prod": "aws cloudfront create-invalidation --profile deployboard --distribution-id E3BGYXTAPRWRAV --paths \"/*\""
   },
   "dependencies": {
-    "@apollo/client": "^3.6.9",
-    "graphql": "^16.5.0",
     "axios": "^0.27.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

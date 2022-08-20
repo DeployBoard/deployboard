@@ -14,7 +14,13 @@ import MenuItem from "@mui/material/MenuItem";
 
 import logo from "../../assets/DeployBoard256.png";
 
-const pages = ["dashboard", "ci", "catalog", "logs", "analytics"];
+const pages = [
+  "dashboard",
+  // "ci",
+  "catalog",
+  "logs",
+  "analytics",
+];
 const settings = ["profile", "account"];
 
 const Header = () => {

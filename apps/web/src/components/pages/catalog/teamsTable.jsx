@@ -26,7 +26,7 @@ const TeamsTable = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setData(res.data);
         setLoading(false);
       })
@@ -41,9 +41,6 @@ const TeamsTable = () => {
     getTeams();
   }, []);
 
-  if (data) {
-    console.log(data);
-  }
   if (loading) return <LinearProgress />;
   if (error)
     return <CustomSnackbar severity={"error"} message={error.message} />;

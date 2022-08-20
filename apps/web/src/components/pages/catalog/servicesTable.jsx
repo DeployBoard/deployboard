@@ -28,7 +28,7 @@ const ServicesTable = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setData(res.data);
         setLoading(false);
       })
@@ -44,7 +44,6 @@ const ServicesTable = () => {
   }, []);
 
   if (data) {
-    console.log(data);
     services = findUniqueFields(data, "service");
   }
   if (loading) return <LinearProgress />;
