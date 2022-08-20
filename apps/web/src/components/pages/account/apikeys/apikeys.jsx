@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 
 import Header from "../../../structure/header";
 import AccountNav from "../accountNav";
+import AddApiKey from "./addApiKey";
 import ApiKeysTable from "./apiKeysTable";
 
 const ApiKeys = () => {
@@ -9,6 +10,7 @@ const ApiKeys = () => {
     <>
       <Header />
       <AccountNav />
+      <AddApiKey />
       <Box>
         <ApiKeysTable />
       </Box>
