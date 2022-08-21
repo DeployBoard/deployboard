@@ -1,7 +1,7 @@
 import log from "loglevel";
 import NodeCache from "node-cache";
 
-log.setLevel("trace");
+log.setLevel("debug");
 
 const ttl = 1; // TTL in minutes (How long requests live in the cache)
 const limit = 100; // Requests per TTL

@@ -11,7 +11,6 @@ import Paper from "@mui/material/Paper";
 
 import ApiKeyRow from "./apiKeyRow";
 import CustomSnackbar from "../../../structure/customSnackbar";
-import { tzConvert } from "tz-convert";
 import { getToken } from "../../../utils/auth";
 
 const ApiKeysTable = () => {

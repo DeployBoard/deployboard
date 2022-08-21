@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useSearchParams } from "react-router-dom";
 
 import { getToken } from "../../utils/auth";
 import AnalyticsNumberBox from "./analyticsNumberBox";

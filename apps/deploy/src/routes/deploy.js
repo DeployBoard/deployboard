@@ -175,7 +175,7 @@ const updateServiceWithLatest = async (
       log.debug("Created new service", newServiceObject);
     } else {
       // update the service
-      const updatedServiceObject = await updateExistingService(
+      await updateExistingService(
         serviceObject,
         environment,
         version,
