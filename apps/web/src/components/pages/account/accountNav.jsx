@@ -2,7 +2,11 @@ import * as React from "react";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 
-const pages = ["users", "apikeys", "integrations"];
+const pages = [
+  "users",
+  "apikeys",
+  // "integrations",
+];
 
 const AccountNav = () => {
   return (

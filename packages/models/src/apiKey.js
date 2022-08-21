@@ -8,16 +8,13 @@ const ApiKeySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    key: {
-      type: String,
-      required: true,
-    },
     name: {
       type: String,
       required: true,
     },
     role: {
       type: String,
+      enum: ["User", "Editor", "Admin", "Deploy"],
       required: true,
     },
     enabled: {

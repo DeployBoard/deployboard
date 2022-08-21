@@ -9,6 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
+import ApiKeyRow from "./apiKeyRow";
 import CustomSnackbar from "../../../structure/customSnackbar";
 import { tzConvert } from "tz-convert";
 import { getToken } from "../../../utils/auth";
@@ -27,7 +28,7 @@ const ApiKeysTable = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setData(res.data);
         setLoading(false);
       })
@@ -50,26 +51,18 @@ const ApiKeysTable = () => {
       <Table sx={{ minWidth: 500 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
+            <TableCell>Key ID</TableCell>
+            <TableCell align="right">Name</TableCell>
             <TableCell align="right">Role</TableCell>
             <TableCell align="right">Enabled</TableCell>
             <TableCell align="right">Created</TableCell>
             <TableCell align="right">Updated</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((item) => (
-            <TableRow
-              hover
-              key={item._id}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell align="left">{item.name}</TableCell>
-              <TableCell align="right">{item.role}</TableCell>
-              <TableCell align="right">{`${item.enabled}`}</TableCell>
-              <TableCell align="right">{tzConvert(item.createdAt)}</TableCell>
-              <TableCell align="right">{tzConvert(item.updatedAt)}</TableCell>
-            </TableRow>
+            <ApiKeyRow key={item._id} keyData={item} />
           ))}
         </TableBody>
       </Table>

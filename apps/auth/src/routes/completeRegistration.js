@@ -1,6 +1,6 @@
 import express from "express";
 
-import { Register, Account, User } from "models";
+import { Register, Account, User, ApiKey } from "models";
 
 const router = express.Router();
 
@@ -22,6 +22,7 @@ router.route("/").post(async (req, res) => {
         message: "Invalid registration link. Try requesting a new one.",
       });
     }
+
     // verify the account does not already exist
     const existingAccount = await Account.findOne({ name: register.account });
     if (existingAccount) {
@@ -32,12 +33,14 @@ router.route("/").post(async (req, res) => {
           "Account already exists, please contact your administrator, or try another account name.",
       });
     }
+
     // create our newAccount object
     const newAccount = new Account({
       name: register.account,
     });
     // save the account to the database
     await newAccount.save();
+
     // create our newUser object
     const newUser = new User({
       account: register.account,
@@ -47,6 +50,20 @@ router.route("/").post(async (req, res) => {
     });
     // save the user to the database
     await newUser.save();
+
+    // create a new deploy API key
+    const newApiKey = new ApiKey({
+      account: register.account,
+      createdBy: register.email,
+      modifiedBy: register.email,
+      enabled: true,
+      role: "Deploy",
+      name: "Default",
+    });
+
+    // save the deploy API key to the database
+    await newApiKey.save();
+
     // delete the register record
     await Register.deleteOne({ uuid });
     console.log(`Account: ${register.account} successfully registered.`);

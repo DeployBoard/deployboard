@@ -30,7 +30,7 @@ const DashboardCards = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setEnvironments(res.data);
         setLoadingEnvironments(false);
       })
@@ -49,7 +49,7 @@ const DashboardCards = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setServices(res.data);
         setLoadingServices(false);
       })
