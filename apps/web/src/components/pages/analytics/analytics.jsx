@@ -2,11 +2,7 @@ import { useState } from "react";
 import {
   Box,
   Container,
-  Typography,
   Stack,
-  Chip,
-  LinearProgress,
-  Paper,
   MenuItem,
   Select,
   InputLabel,
@@ -15,12 +11,7 @@ import {
 import { useSearchParams } from "react-router-dom";
 
 import Header from "../../structure/header";
-import CustomSnackbar from "../../structure/customSnackbar";
-import CustomFilter from "../../structure/customFilter";
-import CustomTablePagination from "../../structure/customTablePagination";
-import findUniqueFields from "../../structure/findUniqueFields";
 import BarChart from "./barChart";
-import AnalyticsNumberBox from "./analyticsNumberBox";
 import AnalyticsTotalDeployments from "./analyticsTotalDeployments";
 import AnalyticsAveragePerDay from "./analyticsAveragePerDay";
 import AnalyticsFilters from "./analyticsFilters";

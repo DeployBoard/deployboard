@@ -2,47 +2,26 @@ import { useState } from "react";
 import {
   Box,
   Container,
-  Grid,
   Typography,
-  Tab,
-  Paper,
-  InputLabel,
-  Input,
   TextField,
-  Avatar,
   Button,
-  FormControl,
   InputAdornment,
-  IconButton,
   Link,
 } from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 
 import logo from "../../../assets/DeployBoard256.png";
 
 const SamlLogin = () => {
-  let [showPassword, setShowPassword] = useState(false);
-  let [password, setPassword] = useState("");
   let [email, setEmail] = useState("");
 
   const handleChangeEmail = (event) => {
     setEmail(event.target.value);
   };
 
-  const handleChangePassword = (event) => {
-    setPassword(event.target.value);
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(email, password);
-  };
-
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
+    console.log(email);
   };
 
   return (

@@ -17,13 +17,11 @@ import NotFound from "./components/pages/notFound/notFound";
 import Logout from "./components/pages/logout/logout";
 
 const App = () => {
-  const [token, setToken] = useState();
-
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login setToken={setToken} />} />
-        <Route path="/saml-login" element={<SamlLogin setToken={setToken} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/saml-login" element={<SamlLogin />} />
         <Route path="/register" element={<Register />} />
         <Route
           path="/complete-registration/:uuid"

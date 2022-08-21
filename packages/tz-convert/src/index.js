@@ -8,7 +8,7 @@ const tzConvert = (date, timezone) => {
   const year = d.getFullYear();
   const hour = d.getHours();
   const minute = (d.getMinutes() < 10 ? "0" : "") + d.getMinutes();
-  const second = (d.getSeconds() < 10 ? "0" : "") + d.getSeconds();
+  // const second = (d.getSeconds() < 10 ? "0" : "") + d.getSeconds();
   const ampm = hour >= 12 ? "pm" : "am";
   const ampmHour = hour % 12;
   const ampmHourFinal = ampmHour === 0 ? 12 : ampmHour;
