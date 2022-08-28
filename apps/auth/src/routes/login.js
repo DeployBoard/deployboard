@@ -5,6 +5,8 @@ import { User } from "models";
 import { sendLockedMail } from "../utils/sendMail.js";
 import { generateToken } from "../utils/token.js";
 
+import { ssoRouter } from "./sso.js";
+
 log.setLevel("trace");
 
 const MAX_LOGIN_ATTEMPTS = 8; // make sure this is the same as in the user model
@@ -108,5 +110,8 @@ router.route("/").post(async (req, res) => {
     });
   });
 });
+
+// /login/sso routes
+router.use("/sso", ssoRouter);
 
 export { router as loginRouter };

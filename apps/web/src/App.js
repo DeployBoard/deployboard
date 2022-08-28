@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import PrivateRoutes from "./components/utils/PrivateRoutes";
 import Login from "./components/pages/login/login";
-import SamlLogin from "./components/pages/login/saml-login";
+import LoginSSO from "./components/pages/login/loginSSO";
+import LoginSSOCallback from "./components/pages/login/loginSSOCallback";
 import Register from "./components/pages/login/register";
 import CompleteRegistration from "./components/pages/login/completeRegistration";
 import Forgot from "./components/pages/login/forgot";
@@ -21,7 +21,8 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/saml-login" element={<SamlLogin />} />
+        <Route path="/login/sso" element={<LoginSSO />} />
+        <Route path="/login/sso/callback" element={<LoginSSOCallback />} />
         <Route path="/register" element={<Register />} />
         <Route
           path="/complete-registration/:uuid"
