@@ -86,21 +86,9 @@ router.route("/").post(async (req, res) => {
       const { id, context } = sp.createLoginRequest(idp, "redirect");
       // log.debug(id);
       // log.debug(context);
-      // cache control no cache header
-      res.setHeader("Cache-Control", "no-cache");
-      // set Referrer-Policy: no-referrer
-      res.setHeader("Referrer-Policy", "no-referrer");
-      // set cors headers
-      res.setHeader("Access-Control-Allow-Origin", "*");
-      res.setHeader("Access-Control-Allow-Headers", "*");
-      res.setHeader("Access-Control-Allow-Methods", "*");
-      res.setHeader("Access-Control-Allow-Credentials", "true");
       return res.status(200).json({
         message: `${context}`,
       });
-      // return res.redirect(context);
-
-      // return res.redirect(`/saml/${account.name}`);
     } else if (account.auth === "oauth2") {
       // send the user to their oauth2 provider
       return res.redirect(`/oauth2/${account.name}`);
