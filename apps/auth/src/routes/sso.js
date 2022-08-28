@@ -3,7 +3,7 @@ import log from "loglevel";
 import dotenv from "dotenv";
 import saml from "samlify";
 import validator from "@authenio/samlify-node-xmllint";
-import xml2js, { parseString } from "xml2js";
+import xml2js from "xml2js";
 
 import { Account } from "models";
 import { generateToken } from "../utils/token.js";
