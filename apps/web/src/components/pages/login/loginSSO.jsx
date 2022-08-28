@@ -12,16 +12,56 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 
 import logo from "../../../assets/DeployBoard256.png";
 
-const SamlLogin = () => {
+const LoginSSO = () => {
   let [email, setEmail] = useState("");
+  let [pending, setPending] = useState(false);
+  let [warning, setWarning] = useState("");
+  let [error, setError] = useState("");
 
   const handleChangeEmail = (event) => {
     setEmail(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(email);
+    setPending(true);
+    // make the login api call
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_AUTH_URI}/login/sso`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        }
+      );
+      // check the response status
+      const status = response.status;
+      // get the message and token from our response.
+      const { message } = await response.json();
+
+      if (status == 200) {
+        // redirect to the saml login page
+        window.location.replace(message);
+      } else {
+        setWarning(message);
+      }
+
+      console.log(message);
+      if (status == 200) {
+        console.log("token", token);
+        navigate("/dashboard");
+      } else if (status == 401) {
+        setWarning(message);
+      } else {
+        setWarning(message);
+      }
+      setPending(false);
+    } catch (error) {
+      console.error(error);
+      setError(error.message);
+      setPending(false);
+    }
   };
 
   return (
@@ -82,4 +122,4 @@ const SamlLogin = () => {
   );
 };
 
-export default SamlLogin;
+export default LoginSSO;

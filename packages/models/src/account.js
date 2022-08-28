@@ -58,6 +58,18 @@ const AccountSchema = new mongoose.Schema(
       required: true,
       default: "local",
     },
+    ssoDomain: {
+      type: String,
+      required: false,
+    },
+    samlConfig: {
+      type: Object,
+      required: false,
+    },
+    samlRoleMapping: {
+      type: Object,
+      required: false,
+    },
   },
   {
     collection: "accounts",

@@ -177,7 +177,7 @@ const Login = () => {
             <Button
               variant="outlined"
               color="primary"
-              href="/saml-login"
+              href="/login/sso"
               sx={{ p: ".75rem", mb: "1rem" }}
             >
               Log In with SSO

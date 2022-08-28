@@ -26,6 +26,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
+// parse text/plain
+app.use(bodyParser.text());
 // sanitize mongoose queries
 app.use(mongoSanitize());
 // verify token
