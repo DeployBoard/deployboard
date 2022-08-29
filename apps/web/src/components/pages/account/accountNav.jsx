@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 const pages = [
   "users",
   "apikeys",
+  "sso",
   // "integrations",
 ];
 
