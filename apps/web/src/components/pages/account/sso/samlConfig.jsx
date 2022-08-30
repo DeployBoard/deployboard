@@ -33,12 +33,17 @@ const SamlConfig = () => {
         if (res.data.auth === "saml") {
           setSamlEnabled(true);
         }
-        setSamlDomain(res.data.ssoDomain);
+        // if we have an ssoDomain, set it.
+        if (res.data.ssoDomain) {
+          setSamlDomain(res.data.ssoDomain);
+        }
 
         // parse the metadata xml
-        const builder = new xml2js.Builder();
-        const metadataXmlString = builder.buildObject(res.data.samlConfig);
-        setMetadataXml(metadataXmlString);
+        if (res.data.samlConfig) {
+          const builder = new xml2js.Builder();
+          const metadataXmlString = builder.buildObject(res.data.samlConfig);
+          setMetadataXml(metadataXmlString);
+        }
 
         // set the groups
         setAdminGroups(JSON.stringify(res.data.samlRoleMapping.Admin));
