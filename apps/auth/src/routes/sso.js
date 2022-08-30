@@ -206,7 +206,7 @@ router.route("/callback").post(async (req, res) => {
     // and admins can see last login time, role, etc.
 
     // return the token in the url so the frontend can get it and use it to authenticate future requests.
-    res.redirect(`${process.env.WEB_URI}/login/sso/callback?token=${token}`);
+    res.redirect(`${process.env.APP_URI}/login/sso/callback?token=${token}`);
   } catch (err) {
     log.error("error:", err);
     return res.status(500).json({
