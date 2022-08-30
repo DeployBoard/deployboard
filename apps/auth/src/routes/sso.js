@@ -141,7 +141,7 @@ router.route("/callback").post(async (req, res) => {
     // We also do a domain check afterwards just in case.
     const { extract } = await sp.parseLoginResponse(idp, "post", req);
 
-    // log.debug("extract:", extract);
+    log.debug("extract:", extract);
     // log.debug("extract.attributes:", extract.attributes);
 
     // get the email and groups from the saml response
