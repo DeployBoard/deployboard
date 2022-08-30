@@ -46,14 +46,16 @@ const SamlConfig = () => {
         }
 
         // set the groups if we have them
-        if (res.data.samlRoleMapping.Admin) {
-          setAdminGroups(JSON.stringify(res.data.samlRoleMapping.Admin));
-        }
-        if (res.data.samlRoleMapping.Editor) {
-          setEditorGroups(JSON.stringify(res.data.samlRoleMapping.Editor));
-        }
-        if (res.data.samlRoleMapping.User) {
-          setUserGroups(JSON.stringify(res.data.samlRoleMapping.User));
+        if (res.data.samlRoleMapping) {
+          if (res.data.samlRoleMapping.Admin) {
+            setAdminGroups(JSON.stringify(res.data.samlRoleMapping.Admin));
+          }
+          if (res.data.samlRoleMapping.Editor) {
+            setEditorGroups(JSON.stringify(res.data.samlRoleMapping.Editor));
+          }
+          if (res.data.samlRoleMapping.User) {
+            setUserGroups(JSON.stringify(res.data.samlRoleMapping.User));
+          }
         }
 
         setLoading(false);
@@ -70,6 +72,7 @@ const SamlConfig = () => {
     try {
       await handleSubmitSamlConfig();
       await handleSubmitSamlSettings();
+      setSuccess("Successfully updated SAML settings");
     } catch (err) {
       console.log(err);
       setError(err);
