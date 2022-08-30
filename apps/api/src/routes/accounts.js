@@ -41,6 +41,15 @@ router.route("/").get(async (req, res, next) => {
 });
 
 router.route("/").post(async (req, res, next) => {
+  // verify the user has the correct role to access the resource
+  if (!verifyRole(["Admin"], req.role)) {
+    res.locals.status = 401;
+    res.locals.body = {
+      message: "You are not authorized to access this resource",
+    };
+    return next();
+  }
+
   try {
     // get the account from the database.
     const account = await Account.findOne({ name: req.account });
