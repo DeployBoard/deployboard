@@ -3,6 +3,7 @@ import log from "loglevel";
 import { parseString } from "xml2js";
 
 import { Account } from "models";
+import { verifyRole } from "../middleware/auth";
 
 log.setLevel("trace");
 
@@ -18,6 +19,44 @@ router.route("/").get(async (req, res, next) => {
         message: "Account not found.",
       });
     }
+    res.locals.status = 200;
+    res.locals.body = account;
+    next();
+  } catch (err) {
+    log.error(err);
+    return res.status(500).json({
+      message: "Internal server error.",
+    });
+  }
+});
+
+router.route("/").post(async (req, res, next) => {
+  try {
+    // get the account from the database.
+    const account = await Account.findOne({ name: req.account });
+    // if the account is not found, return a 404.
+    if (!account) {
+      return res.status(404).json({
+        message: "Account not found.",
+      });
+    }
+    // get ssoDomain, and samlRoleMapping from payload
+    const { auth, ssoDomain, samlRoleMapping } = req.body;
+    // if we have auth, update the account with the auth
+    if (auth) {
+      account.auth = auth;
+    }
+    // if we have ssoDomain, update the account with the ssoDomain
+    if (ssoDomain) {
+      account.ssoDomain = ssoDomain;
+    }
+    // if we have samlRoleMapping, update the account with the samlRoleMapping
+    if (samlRoleMapping) {
+      account.samlRoleMapping = samlRoleMapping;
+    }
+    // save the account
+    await account.save();
+    // return the modified account
     res.locals.status = 200;
     res.locals.body = account;
     next();
