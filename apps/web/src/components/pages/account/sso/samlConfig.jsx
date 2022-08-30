@@ -45,10 +45,16 @@ const SamlConfig = () => {
           setMetadataXml(metadataXmlString);
         }
 
-        // set the groups
-        setAdminGroups(JSON.stringify(res.data.samlRoleMapping.Admin));
-        setEditorGroups(JSON.stringify(res.data.samlRoleMapping.Editor));
-        setUserGroups(JSON.stringify(res.data.samlRoleMapping.User));
+        // set the groups if we have them
+        if (res.data.samlRoleMapping.Admin) {
+          setAdminGroups(JSON.stringify(res.data.samlRoleMapping.Admin));
+        }
+        if (res.data.samlRoleMapping.Editor) {
+          setEditorGroups(JSON.stringify(res.data.samlRoleMapping.Editor));
+        }
+        if (res.data.samlRoleMapping.User) {
+          setUserGroups(JSON.stringify(res.data.samlRoleMapping.User));
+        }
 
         setLoading(false);
       })
