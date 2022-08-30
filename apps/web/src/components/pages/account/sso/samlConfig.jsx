@@ -12,9 +12,9 @@ const SamlConfig = () => {
   const [samlEnabled, setSamlEnabled] = useState(false);
   const [samlDomain, setSamlDomain] = useState("");
   const [metadataXml, setMetadataXml] = useState("");
-  const [adminGroups, setAdminGroups] = useState("");
-  const [editorGroups, setEditorGroups] = useState("");
-  const [userGroups, setUserGroups] = useState("");
+  const [adminGroups, setAdminGroups] = useState("[]");
+  const [editorGroups, setEditorGroups] = useState("[]");
+  const [userGroups, setUserGroups] = useState("[]");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
