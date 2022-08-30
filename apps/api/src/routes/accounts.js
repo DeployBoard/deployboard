@@ -19,6 +19,16 @@ router.route("/").get(async (req, res, next) => {
         message: "Account not found.",
       });
     }
+
+    // if we are not an admin, we want to remove some items from the response.
+    if (!verifyRole(["Admin"], req.role)) {
+      account.auth = undefined;
+      account.ssoDomain = undefined;
+      account.samlConfig = undefined;
+      account.samlRoleMapping = undefined;
+      account.passwordPolicy = undefined;
+    }
+
     res.locals.status = 200;
     res.locals.body = account;
     next();
