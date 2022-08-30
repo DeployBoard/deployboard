@@ -18,12 +18,6 @@ saml.setSchemaValidator(validator);
 
 const sp = saml.ServiceProvider({
   entityID: `${process.env.AUTH_URI}/login/sso/metadata`,
-  assertionConsumerService: [
-    {
-      Binding: saml.Constants.namespace.binding.post,
-      Location: `${process.env.AUTH_URI}/login/sso/callback`,
-    },
-  ],
 });
 
 const router = express.Router();
