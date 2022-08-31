@@ -16,10 +16,6 @@ const builder = new xml2js.Builder();
 
 saml.setSchemaValidator(validator);
 
-const sp = saml.ServiceProvider({
-  entityID: `${process.env.AUTH_URI}/login/sso/metadata`,
-});
-
 const router = express.Router();
 
 router.route("/").post(async (req, res) => {
@@ -48,8 +44,7 @@ router.route("/").post(async (req, res) => {
 
     // Find the account in the database that matches our email domain.
     const account = await Account.findOne({ ssoDomain: emailDomain });
-    log.debug("account.name:", account.name);
-
+    // if we don't find an account, return a 401.
     if (!account) {
       // return invalid message
       return res.status(401).json({
@@ -57,9 +52,21 @@ router.route("/").post(async (req, res) => {
           "Unable to find an account matching this domain. Contact your administrator to set up SSO.",
       });
     }
+    log.debug("account.name:", account.name);
 
     // check the auth type of the account.
     if (account.auth === "saml") {
+      // generate our sp
+      const sp = saml.ServiceProvider({
+        entityID: `${process.env.AUTH_URI}/login/sso/metadata`,
+        assertionConsumerService: [
+          {
+            Binding: saml.Constants.namespace.binding.post,
+            Location: `${process.env.AUTH_URI}/login/sso/callback?account=${account.name}`,
+          },
+        ],
+      });
+
       // send the user to their saml provider
       // log.debug(`samlConfig: ${account.samlConfig}`);
 
@@ -74,12 +81,12 @@ router.route("/").post(async (req, res) => {
         metadata: metadataXml,
       });
 
-      // log.debug("idp", idp);
-      // log.debug("sp:", sp);
+      log.debug("idp", idp);
+      log.debug("sp:", sp);
 
       const { id, context } = sp.createLoginRequest(idp, "redirect");
-      // log.debug(id);
-      // log.debug(context);
+      log.debug(id);
+      log.debug(context);
       return res.status(200).json({
         message: `${context}`,
       });
@@ -119,6 +126,17 @@ router.route("/callback").post(async (req, res) => {
 
     const account = await Account.findOne({ name: accountName });
     // log.debug("account:", account);
+
+    // generate our sp
+    const sp = saml.ServiceProvider({
+      entityID: `${process.env.AUTH_URI}/login/sso/metadata`,
+      assertionConsumerService: [
+        {
+          Binding: saml.Constants.namespace.binding.post,
+          Location: `${process.env.AUTH_URI}/login/sso/callback?account=${account.name}`,
+        },
+      ],
+    });
 
     const samlConfig = account.samlConfig;
     // log.debug("samlConfig:", samlConfig);
@@ -212,6 +230,12 @@ router.route("/callback").post(async (req, res) => {
 // /login/sso/metadata
 router.get("/metadata", (req, res) => {
   log.debug("/metadata");
+
+  // generate our sp
+  const sp = saml.ServiceProvider({
+    entityID: `${process.env.AUTH_URI}/login/sso/metadata`,
+  });
+
   res.header("Content-Type", "text/xml").send(sp.getMetadata());
 });
 
