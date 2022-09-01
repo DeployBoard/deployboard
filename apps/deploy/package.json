@@ -27,7 +27,8 @@
     "models": "*",
     "dotenv": "^16.0.1",
     "mongoose-bcrypt": "^1.9.0",
-    "mongoose-timestamp": "^0.6.0"
+    "mongoose-timestamp": "^0.6.0",
+    "loglevel": "^1.8.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.19",

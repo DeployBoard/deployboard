@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const composeWithMongoose =
-  require("graphql-compose-mongoose").composeWithMongoose;
 
 const LogSchema = new mongoose.Schema(
   {
@@ -38,9 +36,7 @@ const LogSchema = new mongoose.Schema(
 LogSchema.index({ createdAt: 1, updatedAt: 1 });
 
 const Log = mongoose.model("Log", LogSchema);
-const LogTC = composeWithMongoose(Log);
 
 module.exports = {
   Log,
-  LogTC,
 };

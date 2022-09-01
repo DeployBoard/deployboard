@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const composeWithMongoose =
-  require("graphql-compose-mongoose").composeWithMongoose;
 const bcrypt = require("bcrypt");
 const SALT_WORK_FACTOR = 12;
 const MAX_LOGIN_ATTEMPTS = 8; // attempts within our LOCK_TIME period
@@ -214,9 +212,7 @@ UserSchema.methods.incLoginAttempts = function (cb) {
 // };
 
 const User = mongoose.model("User", UserSchema);
-const UserTC = composeWithMongoose(User);
 
 module.exports = {
   User,
-  UserTC,
 };

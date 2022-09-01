@@ -2,7 +2,7 @@ import express from "express";
 import log from "loglevel";
 const router = express.Router();
 
-log.setLevel("info");
+log.setLevel("debug");
 
 // Schemas
 import { Account, Log, Service } from "models";

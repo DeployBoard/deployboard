@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const composeWithMongoose =
-  require("graphql-compose-mongoose").composeWithMongoose;
 
 const EnvironmentSchema = new mongoose.Schema({
   name: {
@@ -54,9 +52,7 @@ const ServiceSchema = new mongoose.Schema(
 );
 
 const Service = mongoose.model("Service", ServiceSchema);
-const ServiceTC = composeWithMongoose(Service);
 
 module.exports = {
   Service,
-  ServiceTC,
 };

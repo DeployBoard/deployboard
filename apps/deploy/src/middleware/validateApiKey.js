@@ -1,7 +1,7 @@
 import log from "loglevel";
 import { ApiKey } from "models";
 
-log.setLevel("trace");
+log.setLevel("debug");
 
 const validateApiKey = (req, res, next) => {
   log.debug("Checking API key");
@@ -16,7 +16,7 @@ const validateApiKey = (req, res, next) => {
   }
   // Find the key in the db
   log.debug("Finding API key from DB");
-  ApiKey.findOne({ key: apiKey })
+  ApiKey.findOne({ _id: apiKey })
     .then((apiKeyObject) => {
       // if the key is not found, return a 401
       if (!apiKeyObject) {
