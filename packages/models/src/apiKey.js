@@ -8,7 +8,7 @@ const ApiKeySchema = new mongoose.Schema(
       default: function () {
         return uuidv4();
       },
-      required: true,
+      required: false,
     },
     account: {
       type: String,
