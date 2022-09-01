@@ -1,9 +1,15 @@
 const mongoose = require("mongoose");
-const composeWithMongoose =
-  require("graphql-compose-mongoose").composeWithMongoose;
+const { v4: uuidv4 } = require("uuid");
 
 const ApiKeySchema = new mongoose.Schema(
   {
+    _id: {
+      type: String,
+      default: function () {
+        return uuidv4();
+      },
+      required: true,
+    },
     account: {
       type: String,
       required: true,
@@ -45,9 +51,7 @@ const ApiKeySchema = new mongoose.Schema(
 );
 
 const ApiKey = mongoose.model("ApiKey", ApiKeySchema);
-const ApiKeyTC = composeWithMongoose(ApiKey);
 
 module.exports = {
   ApiKey,
-  ApiKeyTC,
 };

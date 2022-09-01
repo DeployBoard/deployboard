@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const composeWithMongoose =
-  require("graphql-compose-mongoose").composeWithMongoose;
 
 let RegisterSchema = new mongoose.Schema(
   {
@@ -29,9 +27,7 @@ let RegisterSchema = new mongoose.Schema(
 RegisterSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 });
 
 const Register = mongoose.model("Register", RegisterSchema);
-const RegisterTC = composeWithMongoose(Register);
 
 module.exports = {
   Register,
-  RegisterTC,
 };

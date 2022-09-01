@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const composeWithMongoose =
-  require("graphql-compose-mongoose").composeWithMongoose;
 
 const PasswordPolicySchema = new mongoose.Schema({
   length: {
@@ -78,9 +76,7 @@ const AccountSchema = new mongoose.Schema(
 );
 
 const Account = mongoose.model("Account", AccountSchema);
-const AccountTC = composeWithMongoose(Account);
 
 module.exports = {
   Account,
-  AccountTC,
 };
