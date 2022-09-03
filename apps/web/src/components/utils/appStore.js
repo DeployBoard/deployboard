@@ -6,9 +6,13 @@ const useStore = create(
     email: "",
     account: "",
     role: "",
+    navOpen: true,
+    theme: "",
     setEmail: (email) => set({ email }),
     setAccount: (account) => set({ account }),
     setRole: (role) => set({ role }),
+    setNavOpen: (navOpen) => set({ navOpen }),
+    setTheme: (theme) => set({ theme }),
     removeAllState: () => set({ email: "", account: "" }),
   }))
 );
