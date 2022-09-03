@@ -1,7 +1,5 @@
 import { useState } from "react";
 import {
-  Box,
-  Container,
   Typography,
   TextField,
   InputAdornment,
@@ -13,7 +11,6 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import RocketOutlinedIcon from "@mui/icons-material/RocketOutlined";
 
 import CustomSnackbar from "../../structure/customSnackbar";
-import logo from "../../../assets/DeployBoard256.png";
 import LoginWrapper from "./loginWrapper";
 
 const Register = () => {
