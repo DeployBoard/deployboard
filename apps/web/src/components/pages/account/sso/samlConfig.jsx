@@ -3,7 +3,7 @@ import axios from "axios";
 import xml2js from "xml2js";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Box } from "@mui/system";
-import { LinearProgress, Checkbox, TextField, Typography } from "@mui/material";
+import { LinearProgress, Switch, TextField, Typography } from "@mui/material";
 
 import { getToken } from "../../../utils/auth";
 import CustomSnackbar from "../../../structure/customSnackbar";
@@ -155,7 +155,7 @@ const SamlConfig = () => {
         sx={{ mt: 2 }}
       >
         <Typography>SAML Enabled</Typography>
-        <Checkbox
+        <Switch
           checked={samlEnabled}
           onChange={(event) => setSamlEnabled(event.target.checked)}
         />

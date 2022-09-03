@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Modal from "@mui/material/Modal";
 import { Box } from "@mui/system";
-import { Checkbox, TextField, Typography } from "@mui/material";
+import { Switch, TextField, Typography } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 
 import { getToken } from "../../../utils/auth";
@@ -95,6 +95,18 @@ const AddApiKey = () => {
           }}
         >
           <Typography variant="h5">Add API Key</Typography>
+          <Box
+            display="flex"
+            justifyContent="left"
+            alignItems="center"
+            sx={{ mt: 2 }}
+          >
+            <Typography>Enabled</Typography>
+            <Switch
+              checked={enabled}
+              onChange={(event) => setEnabled(event.target.checked)}
+            />
+          </Box>
           <TextField
             fullWidth
             label="Name"
@@ -108,26 +120,13 @@ const AddApiKey = () => {
             label="Role"
             value={role}
             onChange={(event) => setRole(event.target.value)}
-            sx={{ mt: 2 }}
+            sx={{ mt: 2, mb: 2 }}
           >
             <MenuItem value="Deploy">Deploy</MenuItem>
             <MenuItem value="Admin">Admin</MenuItem>
             <MenuItem value="Editor">Editor</MenuItem>
             <MenuItem value="User">User</MenuItem>
           </TextField>
-          <Box
-            display="flex"
-            justifyContent="left"
-            alignItems="center"
-            sx={{ mt: 2 }}
-          >
-            <Typography>Enabled</Typography>
-            <Checkbox
-              checked={enabled}
-              onChange={(event) => setEnabled(event.target.checked)}
-            />
-          </Box>
-          <br />
           <Box display="flex" justifyContent="flex-end">
             <LoadingButton
               loading={loading}
