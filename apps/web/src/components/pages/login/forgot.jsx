@@ -1,16 +1,15 @@
 import { useState } from "react";
 import {
-  Box,
-  Container,
   Typography,
   TextField,
   InputAdornment,
   Link,
+  CssBaseline,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 
-import logo from "../../../assets/DeployBoard256.png";
+import LoginWrapper from "./loginWrapper";
 
 const Forgot = () => {
   let [email, setEmail] = useState("");
@@ -28,28 +27,11 @@ const Forgot = () => {
   };
 
   return (
-    <Box p="2rem">
-      <Container maxWidth="xs">
-        <Box
-          boxShadow="0px 0px 10px 3px #ddd"
-          p="2rem"
-          width="100%"
-          height="100%"
-        >
-          <Box display="flex" flexDirection="column">
-            <Container align="center">
-              <Box
-                align="center"
-                component="img"
-                mb="2rem"
-                sx={{
-                  height: 130,
-                  width: 200,
-                }}
-                alt="deployboard logo"
-                src={logo}
-              />
-            </Container>
+    <>
+      <CssBaseline />
+      <LoginWrapper
+        content={
+          <>
             <TextField
               id="email"
               name="email"
@@ -85,10 +67,10 @@ const Forgot = () => {
             <Typography variant="caption">
               Don't have an account? <Link href="/register">Sign Up</Link>
             </Typography>
-          </Box>
-        </Box>
-      </Container>
-    </Box>
+          </>
+        }
+      />
+    </>
   );
 };
 

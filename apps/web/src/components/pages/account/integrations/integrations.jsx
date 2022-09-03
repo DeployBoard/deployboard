@@ -1,13 +1,12 @@
-import { Box, Typography } from "@mui/material";
+import { Box, CssBaseline, Typography } from "@mui/material";
 
-import Header from "../../../structure/header";
-import AccountNav from "../accountNav";
+import MiniDrawer from "../../../structure/headerDrawer";
 
 const ApiKeys = () => {
   return (
     <>
-      <Header />
-      <AccountNav />
+      <CssBaseline />
+      <MiniDrawer />
       <Box display="flex" justifyContent="center" alignItems="center">
         <Typography>Integrations coming soon</Typography>
       </Box>

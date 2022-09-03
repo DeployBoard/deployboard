@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Box,
-  Container,
   Typography,
   TextField,
   Button,
   InputAdornment,
   IconButton,
   Link,
+  CssBaseline,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
@@ -17,10 +16,10 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import jwt_decode from "jwt-decode";
 
+import LoginWrapper from "./loginWrapper";
 import CustomSnackbar from "../../structure/customSnackbar";
 import { setToken } from "../../utils/auth";
 import useStore from "../../utils/appStore";
-import logo from "../../../assets/DeployBoard256.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -88,7 +87,8 @@ const Login = () => {
   };
 
   return (
-    <Box p="2rem">
+    <>
+      <CssBaseline />
       {loggedOut && (
         <CustomSnackbar
           severity="success"
@@ -98,27 +98,9 @@ const Login = () => {
       {success && <CustomSnackbar severity="success" message={success} />}
       {warning && <CustomSnackbar severity="warning" message={warning} />}
       {error && <CustomSnackbar severity="error" message={error} />}
-      <Container maxWidth="xs">
-        <Box
-          boxShadow="0px 0px 10px 3px #ddd"
-          p="2rem"
-          width="100%"
-          height="100%"
-        >
-          <Box display="flex" flexDirection="column">
-            <Container align="center">
-              <Box
-                align="center"
-                component="img"
-                mb="2rem"
-                sx={{
-                  height: 130,
-                  width: 200,
-                }}
-                alt="deployboard logo"
-                src={logo}
-              />
-            </Container>
+      <LoginWrapper
+        content={
+          <>
             <TextField
               id="email"
               name="email"
@@ -188,10 +170,10 @@ const Login = () => {
             <Typography variant="caption">
               Don't have an account? <Link href="/register">Sign Up</Link>
             </Typography>
-          </Box>
-        </Box>
-      </Container>
-    </Box>
+          </>
+        }
+      />
+    </>
   );
 };
 

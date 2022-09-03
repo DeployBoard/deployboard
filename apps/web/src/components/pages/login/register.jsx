@@ -6,6 +6,7 @@ import {
   TextField,
   InputAdornment,
   Link,
+  CssBaseline,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
@@ -13,6 +14,7 @@ import RocketOutlinedIcon from "@mui/icons-material/RocketOutlined";
 
 import CustomSnackbar from "../../structure/customSnackbar";
 import logo from "../../../assets/DeployBoard256.png";
+import LoginWrapper from "./loginWrapper";
 
 const Register = () => {
   let [account, setAccount] = useState("");
@@ -62,31 +64,16 @@ const Register = () => {
   };
 
   return (
-    <Box p="2rem">
+    <>
+      <CssBaseline />
+
       {error && <CustomSnackbar severity="error" message={error} />}
       {warning && <CustomSnackbar severity="warning" message={warning} />}
       {success && <CustomSnackbar severity="success" message={success} />}
-      <Container maxWidth="xs">
-        <Box
-          boxShadow="0px 0px 10px 3px #ddd"
-          p="2rem"
-          width="100%"
-          height="100%"
-        >
-          <Box display="flex" flexDirection="column">
-            <Container align="center">
-              <Box
-                align="center"
-                component="img"
-                mb="2rem"
-                sx={{
-                  height: 130,
-                  width: 200,
-                }}
-                alt="deployboard logo"
-                src={logo}
-              />
-            </Container>
+
+      <LoginWrapper
+        content={
+          <>
             <TextField
               id="account"
               name="account"
@@ -138,10 +125,10 @@ const Register = () => {
             <Typography variant="caption">
               Already have an account? <Link href="/login">Log In</Link>
             </Typography>
-          </Box>
-        </Box>
-      </Container>
-    </Box>
+          </>
+        }
+      />
+    </>
   );
 };
 

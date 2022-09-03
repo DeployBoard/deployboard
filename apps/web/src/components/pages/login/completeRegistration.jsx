@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import {
-  Box,
-  Container,
   Typography,
   TextField,
   Button,
   InputAdornment,
   IconButton,
   Link,
+  CssBaseline,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
@@ -17,7 +16,7 @@ import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 
 import CustomSnackbar from "../../structure/customSnackbar";
 
-import logo from "../../../assets/DeployBoard256.png";
+import LoginWrapper from "./loginWrapper";
 
 const CompleteRegistration = () => {
   let { uuid } = useParams();
@@ -67,31 +66,14 @@ const CompleteRegistration = () => {
   };
 
   return (
-    <Box p="2rem">
+    <>
+      <CssBaseline />
       {error && <CustomSnackbar severity="error" message={error} />}
       {warning && <CustomSnackbar severity="warning" message={warning} />}
       {success && <CustomSnackbar severity="success" message={success} />}
-      <Container maxWidth="xs">
-        <Box
-          boxShadow="0px 0px 10px 3px #ddd"
-          p="2rem"
-          width="100%"
-          height="100%"
-        >
-          <Box display="flex" flexDirection="column">
-            <Container align="center">
-              <Box
-                align="center"
-                component="img"
-                mb="2rem"
-                sx={{
-                  height: 130,
-                  width: 200,
-                }}
-                alt="deployboard logo"
-                src={logo}
-              />
-            </Container>
+      <LoginWrapper
+        content={
+          <>
             {success ? (
               <>
                 <Typography sx={{ mb: "1rem" }} align="center">
@@ -161,10 +143,10 @@ const CompleteRegistration = () => {
             <Typography variant="caption">
               Already have an account? <Link href="/login">Log In</Link>
             </Typography>
-          </Box>
-        </Box>
-      </Container>
-    </Box>
+          </>
+        }
+      />
+    </>
   );
 };
 
