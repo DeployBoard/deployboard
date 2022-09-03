@@ -19,30 +19,35 @@ test("login test", async ({ page }) => {
   // Click text=Submit
   await page.locator("text=Submit").click();
   await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/dashboard`);
-  // Click #root >> text=ci
-  // await page.locator("#root >> text=ci").click();
-  // await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/ci`);
-  // Click #root >> text=catalog
-  await page.locator("#root >> text=catalog").click();
+  await expect(page.locator('h6:has-text("Dashboard")')).toBeVisible();
+  // Click Catalog
+  await page.locator('span:has-text("Catalog")').click();
   await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/catalog`);
-  // Click #root >> text=logs
-  await page.locator("#root >> text=logs").click();
+  await expect(page.locator('h6:has-text("Catalog")')).toBeVisible();
+  await expect(page.locator("text=Services")).toBeVisible();
+  await expect(page.locator("text=Teams")).toBeVisible();
+  // Click Logs
+  await page.locator('span:has-text("Logs")').click();
   await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/logs`);
-  // Click #root >> text=analytics
-  await page.locator("#root >> text=analytics").click();
+  await expect(page.locator('h6:has-text("Logs")')).toBeVisible();
+  // Click Analytics
+  await page.locator('span:has-text("Analytics")').click();
   await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/analytics`);
-  // Click [aria-label="Open settings"]
-  await page.locator('[aria-label="Open settings"]').click();
-  // Click account
-  await page.locator("text=account").click();
+  await expect(page.locator('h6:has-text("Analytics")')).toBeVisible();
+  // Click Users
+  await page.locator('span:has-text("Users")').click();
   await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/account/users`);
-  // Click #root >> text=analytics
-  await page.locator("#root >> text=apikeys").click();
+  await expect(page.locator('h6:has-text("Users")')).toBeVisible();
+  // Click ApiKeys
+  await page.locator('span:has-text("ApiKeys")').click();
   await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/account/apikeys`);
-  // Click [aria-label="Open settings"]
-  await page.locator('[aria-label="Open settings"]').click();
+  await expect(page.locator('h6:has-text("Api Keys")')).toBeVisible();
+  // Click SSO
+  await page.locator('span:has-text("SSO")').click();
+  await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/account/sso`);
+  await expect(page.locator('h6:has-text("SSO Config")')).toBeVisible();
   // Click text=logout
-  await page.locator("text=logout").click();
+  await page.locator('span:has-text("Log Out")').click();
   await expect(page).toHaveURL(
     `${process.env.CHECK_BASE_URL}/login?loggedOut=true`
   );

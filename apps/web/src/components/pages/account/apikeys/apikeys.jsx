@@ -10,10 +10,10 @@ const ApiKeys = () => {
       <CssBaseline />
       <MiniDrawer />
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        {/* Put the Typography on the left and the AddApiKey on the right */}
+        {/* Put the Typography on the left and the AddApiKey Button on the right */}
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="h6" sx={{ pb: "1rem" }}>
-            Users
+            API Keys
           </Typography>
           <AddApiKey />
         </Box>
