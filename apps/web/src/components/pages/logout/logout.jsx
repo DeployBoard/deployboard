@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 import { revokeTokens } from "../../utils/auth";
 import useStore from "../../utils/appStore";
+import { CssBaseline } from "@mui/material";
 
 const Logout = () => {
   const removeAllState = useStore((state) => state.removeAllState);
@@ -16,7 +17,11 @@ const Logout = () => {
     handleLogout();
   }, []);
 
-  return <></>;
+  return (
+    <>
+      <CssBaseline />
+    </>
+  );
 };
 
 export default Logout;
