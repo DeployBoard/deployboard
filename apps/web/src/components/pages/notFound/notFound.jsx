@@ -1,13 +1,15 @@
-import { Box } from "@mui/material";
-
-import Header from "../../structure/header";
+import { Box, CssBaseline, Typography } from "@mui/material";
 
 const NotFound = () => {
   return (
-    <>
-      <Header />
-      <Box>404</Box>
-    </>
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Typography variant="h6" sx={{ pb: "1rem" }}>
+          404 - Not Found
+        </Typography>
+      </Box>
+    </Box>
   );
 };
 

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
-  Box,
-  Container,
+  CssBaseline,
   Typography,
   TextField,
   Button,
@@ -10,7 +9,7 @@ import {
 } from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 
-import logo from "../../../assets/DeployBoard256.png";
+import LoginWrapper from "./loginWrapper";
 
 const LoginSSO = () => {
   let [email, setEmail] = useState("");
@@ -49,6 +48,8 @@ const LoginSSO = () => {
 
       console.log(message);
       if (status == 200) {
+        // TODO: I don't think we need this code because the api redirects to the sso provider.
+        // We should never get a 200 status code here.
         console.log("token", token);
         navigate("/dashboard");
       } else if (status == 401) {
@@ -65,28 +66,11 @@ const LoginSSO = () => {
   };
 
   return (
-    <Box p="2rem">
-      <Container maxWidth="xs">
-        <Box
-          boxShadow="0px 0px 10px 3px #ddd"
-          p="2rem"
-          width="100%"
-          height="100%"
-        >
-          <Box display="flex" flexDirection="column">
-            <Container align="center">
-              <Box
-                align="center"
-                component="img"
-                mb="2rem"
-                sx={{
-                  height: 130,
-                  width: 200,
-                }}
-                alt="deployboard logo"
-                src={logo}
-              />
-            </Container>
+    <>
+      <CssBaseline />
+      <LoginWrapper
+        content={
+          <>
             <TextField
               id="email"
               name="email"
@@ -115,10 +99,10 @@ const LoginSSO = () => {
             <Typography variant="caption">
               <Link href="/login">Back to Log In</Link>
             </Typography>
-          </Box>
-        </Box>
-      </Container>
-    </Box>
+          </>
+        }
+      />
+    </>
   );
 };
 

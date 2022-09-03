@@ -1,20 +1,25 @@
-import { Box } from "@mui/material";
+import { Box, CssBaseline, Typography } from "@mui/material";
 
-import Header from "../../../structure/header";
-import AccountNav from "../accountNav";
+import MiniDrawer from "../../../structure/headerDrawer";
 import AddApiKey from "./addApiKey";
 import ApiKeysTable from "./apiKeysTable";
 
 const ApiKeys = () => {
   return (
-    <>
-      <Header />
-      <AccountNav />
-      <AddApiKey />
-      <Box>
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <MiniDrawer />
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        {/* Put the Typography on the left and the AddApiKey on the right */}
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="h6" sx={{ pb: "1rem" }}>
+            Users
+          </Typography>
+          <AddApiKey />
+        </Box>
         <ApiKeysTable />
       </Box>
-    </>
+    </Box>
   );
 };
 

@@ -1,18 +1,20 @@
-import { Container } from "@mui/material";
+import { Box, CssBaseline, Typography } from "@mui/material";
 
-import Header from "../../../structure/header";
-import AccountNav from "../accountNav";
+import MiniDrawer from "../../../structure/headerDrawer";
 import SamlConfig from "./samlConfig";
 
 const SSOConfig = () => {
   return (
-    <>
-      <Header />
-      <AccountNav />
-      <Container>
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <MiniDrawer />
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Typography variant="h6" sx={{ pb: "1rem" }}>
+          SSO Config
+        </Typography>
         <SamlConfig />
-      </Container>
-    </>
+      </Box>
+    </Box>
   );
 };
 

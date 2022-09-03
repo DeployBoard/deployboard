@@ -11,7 +11,7 @@ import { LinearProgress } from "@mui/material";
 
 import { getToken } from "../../utils/auth";
 
-export default function FormDialog() {
+const AddService = () => {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
@@ -62,4 +62,6 @@ export default function FormDialog() {
       </Dialog>
     </div>
   );
-}
+};
+
+export default AddService;
