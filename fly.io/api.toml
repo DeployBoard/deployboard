@@ -9,6 +9,9 @@ processes = ["api"]
 [build]
   image = "deployboard/deployboard:latest"
 
+[deploy]
+  strategy = "bluegreen"
+
 [processes]
 api = "--scope=api"
 

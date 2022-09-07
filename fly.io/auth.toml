@@ -9,6 +9,9 @@ processes = ["auth"]
 [build]
   image = "deployboard/deployboard:latest"
 
+[deploy]
+  strategy = "bluegreen"
+
 [processes]
 auth = "--scope=auth"
 
