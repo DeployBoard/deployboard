@@ -18,8 +18,12 @@ const TeamSchema = new mongoose.Schema(
       type: [String],
       required: false,
     },
-    tags: {
-      type: [String],
+    meta: {
+      type: mongoose.Schema.Types.Mixed,
+      required: false,
+    },
+    externalLinks: {
+      type: mongoose.Schema.Types.Mixed,
       required: false,
     },
   },
