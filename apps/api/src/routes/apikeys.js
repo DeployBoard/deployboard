@@ -4,7 +4,7 @@ import log from "loglevel";
 import { verifyRole } from "../middleware/auth";
 import { ApiKey } from "models";
 
-log.setLevel("trace");
+log.setLevel("debug");
 
 const router = express.Router();
 

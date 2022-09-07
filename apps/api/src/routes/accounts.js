@@ -5,7 +5,7 @@ import { parseString } from "xml2js";
 import { Account } from "models";
 import { verifyRole } from "../middleware/auth";
 
-log.setLevel("trace");
+log.setLevel("debug");
 
 const router = express.Router();
 
