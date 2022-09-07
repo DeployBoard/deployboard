@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
-import { Box, LinearProgress, Paper, Typography } from "@mui/material";
+import { Box, LinearProgress, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import MiniDrawer from "../../../structure/headerDrawer";
 import CustomSnackbar from "../../../structure/customSnackbar";
 import ExternalLinks from "./externalLinks";
-import Dependencies from "./dependencies";
 import Deployments from "./deployments";
 import Maturity from "./maturity";
 import Metadata from "./metadata";
