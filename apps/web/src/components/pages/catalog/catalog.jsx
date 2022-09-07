@@ -1,10 +1,10 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import MiniDrawer from "../../structure/headerDrawer";
 import ServicesTable from "./servicesTable";
 import TeamsTable from "./teamsTable";
-import AddService from "./addService";
+// import AddService from "./addService";
 
 const Catalog = () => {
   return (
