@@ -22,7 +22,16 @@ const generateServices = (services, environments) => {
       service: service,
       team: teams[Math.floor(Math.random() * teams.length)],
       environments: envs,
-      tags: ["seed", "test", "javascript"],
+      meta: {
+        Description: "This is a test service",
+        Language: "JavaScript",
+      },
+      externalLinks: {
+        GitHub: "https://github.com",
+        Docs: "https://docs.deployboard.io",
+        "Production URL": "https://app.deployboard.io",
+        Swagger: "https://petstore.swagger.io",
+      },
     };
     insertServices.push(tmpService);
   });
