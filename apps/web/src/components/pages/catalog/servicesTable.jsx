@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { LinearProgress } from "@mui/material";
+import {
+  Divider,
+  Box,
+  Typography,
+  Link,
+  List,
+  ListItem,
+  ListItemButton,
+  Paper,
+  LinearProgress,
+} from "@mui/material";
 
 import CustomSnackbar from "../../structure/customSnackbar";
 import findUniqueFields from "../../structure/findUniqueFields";
@@ -51,26 +54,29 @@ const ServicesTable = () => {
     return <CustomSnackbar severity={"error"} message={error.message} />;
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Services ({services.length})</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {services.map((item) => (
-            <TableRow
-              hover
-              key={item}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell align="left">{item}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Paper elevation={3}>
+      <Box display="flex" sx={{ pt: ".5rem", px: "1rem" }}>
+        <Typography variant="h6">Services</Typography>
+        <Typography variant="h6">&nbsp;</Typography>
+        <Typography variant="body2">({services.length})</Typography>
+      </Box>
+      <List>
+        {services.map((item) => (
+          <Box key={item}>
+            <Divider />
+            <ListItem disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                component={Link}
+                to={`/catalog/services/${item}`}
+                sx={{ px: "1rem" }}
+              >
+                {item}
+              </ListItemButton>
+            </ListItem>
+          </Box>
+        ))}
+      </List>
+    </Paper>
   );
 };
 
