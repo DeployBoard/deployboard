@@ -8,6 +8,8 @@ import CompleteRegistration from "./components/pages/login/completeRegistration"
 import Forgot from "./components/pages/login/forgot";
 import Dashboard from "./components/pages/dashboard/dashboard";
 import Catalog from "./components/pages/catalog/catalog";
+import Service from "./components/pages/catalog/services/service";
+import Team from "./components/pages/catalog/teams/team";
 import Logs from "./components/pages/logs/logs";
 import Analytics from "./components/pages/analytics/analytics";
 import Users from "./components/pages/account/users/users";
@@ -33,6 +35,8 @@ const App = () => {
         <Route element={<PrivateRoutes />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/catalog" element={<Catalog />} />
+          <Route path="/catalog/services/:serviceId" element={<Service />} />
+          <Route path="/catalog/teams/:teamId" element={<Team />} />
           <Route path="/logs" element={<Logs />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route
