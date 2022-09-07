@@ -3,7 +3,7 @@ const tzConvert = (date, timezone) => {
   // if no timezone is provided, use the browser's timezone
   const tz = timezone || "default";
   const d = new Date(date);
-  const month = d.toLocaleString(tz, { month: "long" });
+  const month = d.toLocaleString(tz, { month: "short" });
   const day = d.getDate();
   const year = d.getFullYear();
   const hour = d.getHours();
