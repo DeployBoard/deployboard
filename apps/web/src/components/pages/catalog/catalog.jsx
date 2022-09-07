@@ -22,12 +22,12 @@ const Catalog = () => {
             marginTop: "1rem",
           }}
         >
-          <Paper elevation={1} sx={{ flex: 1, mr: "2rem" }}>
+          <Box sx={{ flex: 1, mr: "2rem" }}>
             <ServicesTable />
-          </Paper>
-          <Paper elevation={1} sx={{ flex: 1 }}>
+          </Box>
+          <Box sx={{ flex: 1 }}>
             <TeamsTable />
-          </Paper>
+          </Box>
         </Box>
       </Box>
     </Box>
