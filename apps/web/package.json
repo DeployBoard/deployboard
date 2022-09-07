@@ -12,11 +12,7 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "test": "cypress run",
-    "clean": "rm -rf node_modules/ build/",
-    "deploy-dev": "aws s3 sync --profile deployboard --delete --acl public-read build/ s3://dapp.deployboard.io/",
-    "invalidate-dev": "aws cloudfront create-invalidation --profile deployboard --distribution-id EYXQQ66Q7B4VF --paths \"/*\"",
-    "deploy-prod": "aws s3 sync --profile deployboard --delete --acl public-read build/ s3://app.deployboard.io/",
-    "invalidate-prod": "aws cloudfront create-invalidation --profile deployboard --distribution-id E3BGYXTAPRWRAV --paths \"/*\""
+    "clean": "rm -rf node_modules/ build/"
   },
   "dependencies": {
     "axios": "^0.27.2",
