@@ -3,7 +3,7 @@ import log from "loglevel";
 
 import { Account } from "models";
 
-log.setLevel("trace");
+log.setLevel("debug");
 
 const router = express.Router();
 
