@@ -36,11 +36,11 @@ const ServiceSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    tags: {
-      type: Array(String),
+    meta: {
+      type: mongoose.Schema.Types.Mixed,
       required: false,
     },
-    meta: {
+    externalLinks: {
       type: mongoose.Schema.Types.Mixed,
       required: false,
     },
