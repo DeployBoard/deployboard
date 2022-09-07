@@ -103,7 +103,7 @@ const MiniDrawer = () => {
           </Typography>
         ) : null}
         <IconButton onClick={handleDrawerToggle}>
-          <RocketLaunchIcon sx={{ transform: open ? "rotate(-90deg)" : "" }} />
+          <RocketLaunchIcon sx={{ rotate: open ? "-90deg" : "" }} />
         </IconButton>
       </DrawerHeader>
       <Divider />
