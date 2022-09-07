@@ -9,6 +9,9 @@ processes = ["deploy"]
 [build]
   image = "deployboard/deployboard:latest"
 
+[deploy]
+  strategy = "bluegreen"
+
 [processes]
 deploy = "--scope=deploy"
 
