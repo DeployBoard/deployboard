@@ -16,6 +16,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import InsightsIcon from "@mui/icons-material/Insights";
+import ForestIcon from "@mui/icons-material/Forest";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import MemoryIcon from "@mui/icons-material/Memory";
@@ -31,6 +32,8 @@ const pages = [
   { name: "Logs", icon: <EqualizerIcon /> },
   { name: "Analytics", icon: <InsightsIcon /> },
 ];
+
+const editorPages = [{ name: "Environments", icon: <ForestIcon /> }];
 
 const adminPages = [
   { name: "Users", icon: <PeopleAltIcon /> },
@@ -136,6 +139,45 @@ const MiniDrawer = () => {
           </ListItem>
         ))}
       </List>
+
+      {userRole === "Editor" || userRole === "Admin" ? (
+        <>
+          <Divider />
+          <List>
+            {editorPages.map((item) => (
+              <ListItem
+                key={item.name}
+                disablePadding
+                sx={{ display: "block" }}
+              >
+                <ListItemButton
+                  component={Link}
+                  to={`/account/${item.name.toLowerCase()}`}
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.name}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </>
+      ) : null}
 
       {userRole === "Admin" ? (
         <>
