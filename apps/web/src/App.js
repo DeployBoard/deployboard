@@ -12,6 +12,7 @@ import Service from "./components/pages/catalog/services/service";
 import Team from "./components/pages/catalog/teams/team";
 import Logs from "./components/pages/logs/logs";
 import Analytics from "./components/pages/analytics/analytics";
+import Environments from "./components/pages/account/environments/environments";
 import Users from "./components/pages/account/users/users";
 import ApiKeys from "./components/pages/account/apikeys/apikeys";
 import SSOConfig from "./components/pages/account/sso/ssoConfig";
@@ -43,6 +44,7 @@ const App = () => {
             path="/account"
             element={<Navigate to="/account/users" replace />}
           />
+          <Route path="/account/environments" element={<Environments />} />
           <Route path="/account/users" element={<Users />} />
           <Route path="/account/apikeys" element={<ApiKeys />} />
           <Route path="/account/sso" element={<SSOConfig />} />
