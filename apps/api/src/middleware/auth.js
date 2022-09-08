@@ -3,7 +3,7 @@ import log from "loglevel";
 
 // TODO: set the log level from environment variable
 // log.setLevel(process.env.LOG_LEVEL);
-log.setLevel("trace");
+log.setLevel("debug");
 
 // verify we have a token in the auth header
 const verifyToken = (req, res, next) => {
