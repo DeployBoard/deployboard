@@ -64,5 +64,5 @@ app.get("/h", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`auth service listening on port ${port}`);
+  console.log(`api service listening on port ${port}`);
 });

@@ -2,7 +2,7 @@ import log from "loglevel";
 
 // TODO: set the log level from environment variable
 // log.setLevel(process.env.LOG_LEVEL);
-log.setLevel("trace");
+log.setLevel("debug");
 
 // verify the response only contains data from the account in the token
 const validateResponse = (req, res) => {

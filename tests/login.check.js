@@ -34,6 +34,12 @@ test("login test", async ({ page }) => {
   await page.locator('span:has-text("Analytics")').click();
   await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/analytics`);
   await expect(page.locator('h6:has-text("Analytics")')).toBeVisible();
+  // Click Environments
+  await page.locator('span:has-text("Environments")').click();
+  await expect(page).toHaveURL(
+    `${process.env.CHECK_BASE_URL}/account/environments`
+  );
+  await expect(page.locator('h6:has-text("Environments")')).toBeVisible();
   // Click Users
   await page.locator('span:has-text("Users")').click();
   await expect(page).toHaveURL(`${process.env.CHECK_BASE_URL}/account/users`);
