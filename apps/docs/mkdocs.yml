@@ -33,23 +33,9 @@ plugins:
 nav:
   - DeployBoard: index.md
   - features.md
-  - Usage:
-      - usage/index.md
-      - usage/dashboard.md
-      - usage/ci.md
-      - usage/applications.md
-      - usage/logs.md
-      - usage/analytics.md
-      - usage/me.md
-      - Settings:
-          - usage/settings/users.md
-          - usage/settings/apikeys.md
-          - usage/settings/integrations.md
-          - usage/settings/billing.md
-          - usage/settings/environments.md
+  - quick-start.md
   - Deployment:
       - deployment/index.md
-      - deployment/quickstart.md
       - deployment/configuration.md
       - deployment/docker-hub.md
       - deployment/docker-source.md
@@ -62,7 +48,6 @@ nav:
       - upgrading/index.md
   - security.md
   - people.md
-  - history.md
   - external-links.md
   - help-deployboard.md
   - contributing.md

@@ -17,16 +17,31 @@ Of course, you are free to use whatever editor and environment you like.
 DeployBoard uses React for the frontend, NodeJS/Express for the backend api, and MongoDB as the database.
 
 !!! Note
-The following commands are run from the project root.
 
-### NVM
+    The following commands are run from the project root.
 
-To ensure we all have the same development environment, we provide a `.nvmrc` file that specifies the version of node we use for the entire project.
+### Volta
+
+To ensure we all have the same development environment, we use [Volta](https://volta.sh/). We provide a `volta` config in the root `package.json` file that specifies the version of node and npm that we use for the entire project. See [Volta's Installation](https://docs.volta.sh/guide/getting-started) guide to set that up.
+
+!!! Note
+
+    You are free to use any other manager, just ensure the versions match what is in the volta config.
+
+Use Volta to install node and npm
 
 ```
-# Switch to the version of node specified in the .nvmrc file.
-nvm use
+# Install the specified versions of node and npm, and also install turbo.
+volta install node npm turbo
 ```
+
+### Turborepo
+
+Notice we install `turbo` in the `volta install` command, this is because DeployBoard is a monorepo that uses [Turborepo](https://turborepo.org/) to manage the apps within the repo.
+
+### NPM Install
+
+From here we can simply run `npm install` to install all of the dependencies for all of the applications.
 
 ### Run Dev
 
@@ -47,7 +62,8 @@ npm run mongo
 ```
 
 !!! Note
-Since the database is started as a Docker container, if you want to stop Mongo, you will need to run a separate `docker stop mongo` command.
+
+    Since the database is started as a Docker container, if you want to stop Mongo, you will need to run a separate `docker stop mongo` command.
 
 ### Seed the DB
 
@@ -63,16 +79,17 @@ Once you have the database seeded, you will be able to log in.
 
 The usernames created as part of the seed script are:
 
-- admin@example.com (role: Admin)
-- editor@example.com (role: Editor)
-- viewer@example.com (role: Viewer)
+- admin@seed.seed (role: Admin)
+- editor@seed.seed (role: Editor)
+- viewer@seed.seed (role: Viewer)
 
 The password provided for all development users is the string `Password123`.
 
 !!! Note
-Disabled users are also created for each role. The disabled users were created for testing access controls.
 
-API Keys are also created, you can find them at `localhost:3000/settings/apikeys`.
+    Disabled users are also created for each role. The disabled users were created for testing access controls.
+
+API Keys are also created, you can find them at `localhost:3000/account/apikeys`.
 
 ### Build the app
 
@@ -101,7 +118,8 @@ npm run docs
 ```
 
 !!! Note
-Just like the MongoDB container, we will need to stop the Docs container separately with `docker stop docs`
+
+    Just like the MongoDB container, we will need to stop the Docs container separately with `docker stop docs`
 
 ## Committing
 

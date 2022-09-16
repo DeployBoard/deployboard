@@ -10,7 +10,7 @@ Because DeployBoard tracks all of your events, it is able to provide valuable an
 
 ## Compliance/Audit Log
 
-The append-only hashing nature of DeployBoard allows you to confidently hand over deployment events to auditors.
+DeployBoard allows you to confidently hand over production deployment change events to auditors.
 
 ## Notifications
 
@@ -22,6 +22,8 @@ You no longer have to reach our to your Dev or Ops team to find out what version
 
 Answers common questions:
 
-* "What version of `application` is deployed to `environment`?"
-* "When was `application` deployed to `environment`?"
-* "What applications were deployed around `time`?"
+> "What version of **<application\>** is deployed to **<environment\>**?"
+
+> "When was **<application\>** **<version\>** deployed to **<environment\>**?"
+
+> "What applications were deployed around **<time\>**?"

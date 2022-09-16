@@ -1,19 +1,15 @@
 # Deployment - Intro
 
-!!! note
-    Kicking the tires? Check out our [Quick Start](quickstart.md).
-
-Deploying **DeployBoard** is relatively easy.
+Deploying your own instance of **DeployBoard** is relatively easy.
 
 There are several ways to do it depending on your specific use case and the tools that you use.
 
+- Use the pre-built docker image from [docker hub](https://hub.docker.com/r/deployboard/deployboard).
+- Build your own docker image from source code.
+- Build and run the application from source without docker.
+
+The easiest and recommended approach is to just use the pre-built docker image from [docker hub](https://hub.docker.com/r/deployboard/deployboard).
+
 !!! tip
-    Before deploying, please read the configuration page on how to configure DeployBoard.
 
-* Use the pre-built docker image from docker hub.
-* Build your own docker image from source code.
-* Build and run the application from source without docker.
-
-There are some unique scenarios that we will discover in the next sections.
-
-* Deploying behind a firewall?
+    Before deploying, please read the [configuration](/deployment/configuration) page on how to configure DeployBoard.

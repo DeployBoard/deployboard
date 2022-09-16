@@ -18,19 +18,20 @@
     "mongo": "docker run -itd --rm -p 27017:27017 -v db-data:/data/db --name mongo mongo:5",
     "docs": "docker run -itd --rm -p 8000:8000 -v ${PWD}/apps/docs:/docs/ --name docs squidfunk/mkdocs-material:latest",
     "lint": "turbo run lint",
-    "test": "playwright test",
+    "test": "playwright test --retries=0",
     "test:debug": "PWDEBUG=1 playwright test",
     "format": "prettier --write \"**/*.{js,jsx,md}\"",
     "seed": "turbo run seed",
     "clean": "turbo run clean --parallel && rm -rf node_modules && rm -rf package-lock.json"
   },
-  "dependencies": {
-    "turbo": "^1.4.3"
-  },
   "devDependencies": {
-    "prettier": "latest",
-    "playwright": "^1.25.0",
     "@playwright/test": "^1.25.0",
-    "dotenv": "^16.0.1"
+    "dotenv": "^16.0.1",
+    "playwright": "^1.25.0",
+    "prettier": "latest"
+  },
+  "volta": {
+    "node": "16.16.0",
+    "npm": "8.19.1"
   }
 }
