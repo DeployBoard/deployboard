@@ -11,8 +11,9 @@
   <a href="https://codecov.io/gh/DeployBoard/deployboard" target="_blank">
     <img src="https://codecov.io/gh/DeployBoard/deployboard/branch/main/graph/badge.svg" alt="Coverage" />
   </a>
-  <a href="https://lgtm.com/projects/g/DeployBoard/deployboard/context:python">
-    <img src="https://img.shields.io/lgtm/grade/python/github/DeployBoard/deployboard?label=Quality&logo=lgtm&logoColor=lightblue" alt="Quality" />
+  <a href="https://sonarcloud.io/summary/new_code?id=deployboard" target="_blank">
+    <img src="https://sonarcloud.io/api/project_badges/measure?project=deployboard&metric=alert_status
+" alt="Quality" />
   </a>
 </p>
 
@@ -23,6 +24,7 @@
 - Simple deployment tracking tool.
 - Easily plugs in to any deployment tool or pipeline.
 - Tracks DORA metrics, compliance, and more.
+- Service catalog.
 
 See the full set of <a href="https://docs.deployboard.io/features/" class="external-link" target="_blank">Features</a>.
 
