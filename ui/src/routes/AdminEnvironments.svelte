@@ -92,12 +92,13 @@
     <div class="tab-header">
       <h2>Environment Priority</h2>
       <button class="btn-primary" on:click={syncEnvironments}>
-        Sync Environments
+        Discover New Environments
       </button>
     </div>
 
     <div class="info-box">
-      <p><strong>Priority Ordering:</strong> Higher numbers appear first. Environments are displayed in priority order (highest first) on the dashboard and in dropdown filters.</p>
+      <p><strong>Priority Ordering:</strong> Higher numbers appear first. Environments are displayed in priority order (highest first) on the dashboard and in dropdown filters. Environments without a priority are treated as 0 and shown last.</p>
+      <p style="margin-top: 0.5rem;"><strong>Discover New Environments:</strong> Click the button above to scan all deployments and add any new environments that haven't been prioritized yet. They'll be added with a priority of 0.</p>
     </div>
 
     {#if loading}
@@ -109,7 +110,7 @@
       </div>
     {:else if environments.length === 0}
       <div class="empty">
-        <p>No environments found. Deploy to an environment to create one automatically, or click "Sync Environments" to discover existing environments.</p>
+        <p>No environments found. Deploy to an environment or click "Discover New Environments" to scan existing deployments.</p>
       </div>
     {:else}
       <div class="data-container">
@@ -118,7 +119,6 @@
             <tr>
               <th>Environment</th>
               <th>Priority</th>
-              <th>Created</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -138,7 +138,6 @@
                     <span class="priority-value">{env.priority}</span>
                   {/if}
                 </td>
-                <td class="env-date">{formatDate(env.created_at)}</td>
                 <td class="env-actions">
                   {#if editingId === env.id}
                     <button class="btn-save" on:click={() => updateEnvironmentPriority(env.id, editingPriority)}>
@@ -345,6 +344,10 @@
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+  }
+
+  th:last-child {
+    text-align: right;
   }
 
   tbody tr {

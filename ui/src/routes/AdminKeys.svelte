@@ -392,6 +392,10 @@
     letter-spacing: 0.5px;
   }
 
+  th:last-child {
+    text-align: right;
+  }
+
   tbody tr {
     border-bottom: 1px solid #ecf0f1;
     transition: background 0.2s;

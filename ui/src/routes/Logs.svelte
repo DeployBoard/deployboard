@@ -112,36 +112,42 @@
       </div>
     {:else}
       <div class="logs-container">
-        <div class="logs-header">
-          <span class="col-time">Timestamp</span>
-          <span class="col-app">Application</span>
-          <span class="col-version">Version</span>
-          <span class="col-env">Environment</span>
-          <span class="col-meta">Details</span>
-        </div>
-        {#each logs as log}
-          <div class="log-row">
-            <span class="col-time">{formatTimestamp(log.timestamp)}</span>
-            <span class="col-app">{log.application}</span>
-            <span class="col-version">{log.version}</span>
-            <span class="col-env">
-              <span class="env-badge" class:prod={log.environment === 'production'} class:staging={log.environment === 'staging'} class:dev={log.environment === 'development'}>
-                {log.environment}
-              </span>
-            </span>
-            <span class="col-meta">
-              {#if log.meta?.commit}
-                <code class="commit">{log.meta.commit.substring(0, 7)}</code>
-              {/if}
-              {#if log.meta?.branch}
-                <span class="branch">{log.meta.branch}</span>
-              {/if}
-              {#if log.meta?.committer}
-                <span class="committer">{log.meta.committer}</span>
-              {/if}
-            </span>
-          </div>
-        {/each}
+        <table>
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Application</th>
+              <th>Version</th>
+              <th>Environment</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {#each logs as log}
+              <tr>
+                <td>{formatTimestamp(log.timestamp)}</td>
+                <td>{log.application}</td>
+                <td>{log.version}</td>
+                <td>
+                  <span class="env-badge" class:prod={log.environment === 'production'} class:staging={log.environment === 'staging'} class:dev={log.environment === 'development'}>
+                    {log.environment}
+                  </span>
+                </td>
+                <td>
+                  {#if log.meta?.commit}
+                    <code class="commit">{log.meta.commit.substring(0, 7)}</code>
+                  {/if}
+                  {#if log.meta?.branch}
+                    <span class="branch">{log.meta.branch}</span>
+                  {/if}
+                  {#if log.meta?.committer}
+                    <span class="committer">{log.meta.committer}</span>
+                  {/if}
+                </td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
       </div>
     {/if}
   </div>
@@ -223,59 +229,40 @@
     overflow: hidden;
   }
 
-  .logs-header {
-    display: grid;
-    grid-template-columns: 200px 1fr 120px 140px 2fr;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
     background: #34495e;
     color: white;
+  }
+
+  th {
+    padding: 1rem 1.5rem;
+    text-align: left;
     font-weight: 600;
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
 
-  .log-row {
-    display: grid;
-    grid-template-columns: 200px 1fr 120px 140px 2fr;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
+  tbody tr {
     border-bottom: 1px solid #ecf0f1;
-    align-items: center;
     transition: background 0.2s;
   }
 
-  .log-row:hover {
+  tbody tr:hover {
     background: #f8f9fa;
   }
 
-  .log-row:last-child {
+  tbody tr:last-child {
     border-bottom: none;
   }
 
-  .col-time {
-    font-size: 13px;
-    color: #7f8c8d;
-  }
-
-  .col-app {
-    font-weight: 600;
-    color: #2c3e50;
-  }
-
-  .col-version {
-    font-family: 'Courier New', monospace;
-    font-size: 14px;
-    color: #2c3e50;
-  }
-
-  .col-meta {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    align-items: center;
-    font-size: 13px;
+  td {
+    padding: 1rem 1.5rem;
   }
 
   .env-badge {
