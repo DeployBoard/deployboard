@@ -69,14 +69,19 @@ curl -X POST http://localhost:8080/api/deployments \
 ### Deployments
 
 - `POST /api/deployments` - Create a new deployment record
-- `GET /api/deployments` - List deployments (supports filtering)
+- `GET /api/deployments` - List current deployments (supports filtering)
 - `GET /api/deployments/:id` - Get a specific deployment
+
+### Deployment Logs
+
+- `GET /api/logs` - List all deployment history (supports filtering)
+- `GET /api/logs/:id` - Get a specific log entry
 
 ### Query Parameters
 
 - `application` - Filter by application name
 - `environment` - Filter by environment
-- `limit` - Limit results (default: 100)
+- `limit` - Limit results (default: 25)
 
 ### Authentication
 

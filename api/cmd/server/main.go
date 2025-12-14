@@ -33,6 +33,14 @@ func main() {
 			deployments.GET("/:id", handlers.GetDeployment(database))
 		}
 
+		// Deployment logs routes (require API key)
+		logs := api.Group("/logs")
+		logs.Use(middleware.RequireAPIKey(database))
+		{
+			logs.GET("", handlers.ListDeploymentLogs(database))
+			logs.GET("/:id", handlers.GetDeploymentLog(database))
+		}
+
 		// Health check (no auth required)
 		api.GET("/health", func(c *gin.Context) {
 			c.JSON(200, gin.H{"status": "ok"})
