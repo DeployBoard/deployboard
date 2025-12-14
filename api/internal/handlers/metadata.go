@@ -28,8 +28,13 @@ func GetMetadata(db *sql.DB) gin.HandlerFunc {
 			applications = append(applications, app)
 		}
 
-		// Get distinct environments
-		envRows, err := db.Query("SELECT DISTINCT environment FROM deployments ORDER BY environment")
+		// Get environments ordered by priority
+		envRows, err := db.Query(`
+			SELECT COALESCE(e.name, d.environment) as name
+			FROM (SELECT DISTINCT environment FROM deployments) d
+			LEFT JOIN environments e ON d.environment = e.name
+			ORDER BY COALESCE(e.priority, 0) DESC, d.environment ASC
+		`)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch environments"})
 			return

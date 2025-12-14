@@ -31,7 +31,7 @@
       <a href="/logs" use:link class:active={currentPath === '/logs'}>
         Logs
       </a>
-      <a href="/admin" use:link class:active={currentPath === '/admin'}>
+      <a href="/admin/keys" use:link class:active={currentPath.startsWith('/admin')}>
         Admin
       </a>
     </div>

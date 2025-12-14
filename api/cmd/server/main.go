@@ -50,6 +50,10 @@ func main() {
 			admin.GET("/keys", handlers.ListAPIKeys(database))
 			admin.POST("/keys", handlers.CreateAPIKey(database))
 			admin.DELETE("/keys/:id", handlers.DeleteAPIKey(database))
+			
+			admin.GET("/environments", handlers.ListEnvironments(database))
+			admin.PUT("/environments/:id", handlers.UpdateEnvironmentPriority(database))
+			admin.POST("/environments/sync", handlers.SyncEnvironments(database))
 		}
 
 		// Health check (no auth required)

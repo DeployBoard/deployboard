@@ -9,6 +9,17 @@ CREATE TABLE IF NOT EXISTS api_keys (
 -- Create index on key for faster lookups
 CREATE INDEX idx_api_keys_key ON api_keys(key);
 
+-- Create environments table for priority ordering
+CREATE TABLE IF NOT EXISTS environments (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    priority INTEGER NOT NULL DEFAULT 0,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+-- Create index on priority for faster ordering
+CREATE INDEX idx_environments_priority ON environments(priority DESC);
+
 -- Create deployments table
 CREATE TABLE IF NOT EXISTS deployments (
     id SERIAL PRIMARY KEY,
@@ -46,6 +57,12 @@ INSERT INTO api_keys (key, name) VALUES
     ('dev-key-12345', 'Development Key'),
     ('prod-key-67890', 'Production Key'),
     ('test-key-abcde', 'Test Key');
+
+-- Insert default environments with priority (higher priority = shown first)
+INSERT INTO environments (name, priority) VALUES
+    ('production', 100),
+    ('staging', 50),
+    ('development', 10);
 
 -- Insert sample deployments
 INSERT INTO deployments (application, version, environment, meta, timestamp) VALUES

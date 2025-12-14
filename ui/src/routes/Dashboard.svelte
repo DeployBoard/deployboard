@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { fetchDeployments, transformToMatrix } from '../lib/api.js';
+  import { fetchDeployments, fetchMetadata, transformToMatrix } from '../lib/api.js';
   import DeploymentCell from '../lib/DeploymentCell.svelte';
 
   let loading = true;
@@ -11,8 +11,10 @@
 
   onMount(async () => {
     try {
+      // Fetch metadata first to get priority-ordered environments
+      const metadata = await fetchMetadata();
       const deployments = await fetchDeployments();
-      const transformed = transformToMatrix(deployments);
+      const transformed = transformToMatrix(deployments, metadata.environments);
       applications = transformed.applications;
       environments = transformed.environments;
       matrix = transformed.matrix;

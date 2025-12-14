@@ -20,8 +20,23 @@ export async function fetchDeployments() {
   }
 }
 
+// Fetch metadata with priority-sorted environments
+export async function fetchMetadata() {
+  try {
+    const response = await fetch('/api/metadata');
+    if (!response.ok) {
+      throw new Error(`Failed to fetch metadata: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Failed to fetch metadata:', error);
+    throw error;
+  }
+}
+
 // Transform flat deployment list into a matrix of apps x environments
-export function transformToMatrix(deployments) {
+// Uses priorityOrderedEnvs if provided, otherwise falls back to default ordering
+export function transformToMatrix(deployments, priorityOrderedEnvs = null) {
   const matrix = {};
   const environments = new Set();
 
@@ -45,17 +60,23 @@ export function transformToMatrix(deployments) {
   // Sort applications alphabetically
   const applications = Object.keys(matrix).sort();
   
-  // Sort environments: development, staging, production, then others alphabetically
-  const envOrder = ['development', 'staging', 'production'];
-  const sortedEnvironments = Array.from(environments).sort((a, b) => {
-    const aIndex = envOrder.indexOf(a);
-    const bIndex = envOrder.indexOf(b);
-    
-    if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
-    if (aIndex !== -1) return -1;
-    if (bIndex !== -1) return 1;
-    return a.localeCompare(b);
-  });
+  let sortedEnvironments;
+  if (priorityOrderedEnvs) {
+    // Use priority ordering from metadata, but only include environments that exist in deployments
+    sortedEnvironments = priorityOrderedEnvs.filter(env => environments.has(env));
+  } else {
+    // Fallback: Sort environments with default order
+    const envOrder = ['production', 'staging', 'development'];
+    sortedEnvironments = Array.from(environments).sort((a, b) => {
+      const aIndex = envOrder.indexOf(a);
+      const bIndex = envOrder.indexOf(b);
+      
+      if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+      if (aIndex !== -1) return -1;
+      if (bIndex !== -1) return 1;
+      return a.localeCompare(b);
+    });
+  }
 
   return {
     applications,
