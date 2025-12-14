@@ -1,8 +1,0 @@
-{
-  "name": "tz-convert",
-  "version": "0.0.0",
-  "description": "Convert timezone from TZ format to standard application format",
-  "main": "./src/index.js",
-  "private": true,
-  "dependencies": {}
-}
