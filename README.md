@@ -77,6 +77,10 @@ curl -X POST http://localhost:8080/api/deployments \
 - `GET /api/logs` - List all deployment history (supports filtering)
 - `GET /api/logs/:id` - Get a specific log entry
 
+### Metadata
+
+- `GET /api/metadata` - Get list of all applications and environments (no auth required)
+
 ### Query Parameters
 
 - `application` - Filter by application name
@@ -179,10 +183,23 @@ The application can be deployed to any container runtime (ECS, Cloud Run, etc.) 
 ## UI Features
 
 The web interface provides:
+
+### Dashboard
 - **Environment Matrix View**: See all applications and their versions across environments at a glance
 - **Recent Deployment Info**: Each cell shows version, deployment time, and commit hash
 - **Color-Coded Environments**: Development (blue), Staging (orange), Production (red)
-- **Responsive Design**: Clean, modern interface that works on all screen sizes
+
+### Logs Page
+- **Deployment History**: View chronological deployment records
+- **Advanced Filtering**: Filter by application, environment, or both
+- **Adjustable Limits**: Choose to view 10, 25, 50, or 100 records
+- **Detailed Metadata**: See commit hashes, branches, committers, and custom metadata
+
+### Admin (Coming Soon)
+- API key management
+- System settings and configuration
+
+The UI features responsive design that works on all screen sizes.
 
 ## Roadmap
 

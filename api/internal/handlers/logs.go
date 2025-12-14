@@ -15,7 +15,7 @@ func ListDeploymentLogs(db *sql.DB) gin.HandlerFunc {
 		// Optional query parameters for filtering
 		app := c.Query("application")
 		env := c.Query("environment")
-		limit := c.DefaultQuery("limit", "100")
+		limit := c.DefaultQuery("limit", "25")
 
 		query := `SELECT id, application, version, environment, meta, timestamp FROM deployment_logs WHERE 1=1`
 		args := []interface{}{}

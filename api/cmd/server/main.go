@@ -41,6 +41,9 @@ func main() {
 			logs.GET("/:id", handlers.GetDeploymentLog(database))
 		}
 
+		// Metadata route (no auth required for UI)
+		api.GET("/metadata", handlers.GetMetadata(database))
+
 		// Health check (no auth required)
 		api.GET("/health", func(c *gin.Context) {
 			c.JSON(200, gin.H{"status": "ok"})
