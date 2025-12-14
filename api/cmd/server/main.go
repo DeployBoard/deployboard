@@ -44,6 +44,14 @@ func main() {
 		// Metadata route (no auth required for UI)
 		api.GET("/metadata", handlers.GetMetadata(database))
 
+		// Admin routes (no auth for now, will lock down later)
+		admin := api.Group("/admin")
+		{
+			admin.GET("/keys", handlers.ListAPIKeys(database))
+			admin.POST("/keys", handlers.CreateAPIKey(database))
+			admin.DELETE("/keys/:id", handlers.DeleteAPIKey(database))
+		}
+
 		// Health check (no auth required)
 		api.GET("/health", func(c *gin.Context) {
 			c.JSON(200, gin.H{"status": "ok"})
