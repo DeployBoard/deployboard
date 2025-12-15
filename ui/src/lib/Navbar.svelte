@@ -14,12 +14,16 @@
   <div class="nav-container">
     <div class="nav-brand">
       <svg class="logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2L4 7v10l8 5 8-5V7l-8-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-        <path d="M12 22V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <path d="M12 12L4 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <path d="M12 12L20 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="12" cy="12" r="2" fill="currentColor"/>
-        <path d="M8 17l2-3 2 3 2-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+        <!-- Rocket body -->
+        <path d="M12 2L9 6V16H15V6L12 2Z" fill="currentColor"/>
+        <!-- Window -->
+        <circle cx="12" cy="9" r="1.5" fill="rgba(255,255,255,0.9)"/>
+        <!-- Left wing -->
+        <path d="M9 12L6 18L9 16Z" fill="currentColor"/>
+        <!-- Right wing -->
+        <path d="M15 12L18 18L15 16Z" fill="currentColor"/>
+        <!-- Flame -->
+        <path d="M9 16L12 22L15 16" fill="#f59e0b"/>
       </svg>
       <span class="brand-text">DeployBoard</span>
     </div>
@@ -40,7 +44,7 @@
 
 <style>
   nav {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     position: sticky;
     top: 0;

@@ -201,13 +201,13 @@
   }
 
   .filters select:hover {
-    border-color: #667eea;
+    border-color: #2563eb;
   }
 
   .filters select:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
   }
 
   .loading, .error, .empty {
