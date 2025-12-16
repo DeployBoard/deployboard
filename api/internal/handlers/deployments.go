@@ -20,7 +20,7 @@ func CreateDeployment(db *sql.DB) gin.HandlerFunc {
 			return
 		}
 
-		timestamp := time.Now()
+		timestamp := time.Now().UTC()
 
 		// Start a transaction to insert into both tables
 		tx, err := db.Begin()

@@ -8,10 +8,10 @@ DeployBoard is a self-hosted application that tracks deployments by accepting de
 
 ## Features
 
-- 📝 Track deployments with application name, version, and environment
-- 🔐 API key authentication for secure access
 - 📊 Query deployments by application and environment
+- 📝 Track deployments with application name, version, and environment
 - 🏷️ Support for custom metadata (commit hash, branch, committer, etc.)
+- 🔐 API key authentication for secure access
 - 🐳 Docker Compose support for easy local development
 - ☸️ Kubernetes-ready architecture
 

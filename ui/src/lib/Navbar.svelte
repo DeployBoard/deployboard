@@ -44,7 +44,7 @@
 
 <style>
   nav {
-    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    background: #5b9dd9;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     position: sticky;
     top: 0;

@@ -211,7 +211,7 @@
   }
 
   .subnav-item.active {
-    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    background: #5b9dd9;
     color: white;
   }
 
@@ -229,7 +229,7 @@
   }
 
   .btn-primary {
-    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    background: #5b9dd9;
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -333,8 +333,8 @@
   }
 
   thead {
-    background: #34495e;
-    color: white;
+    background: #d1dce8;
+    color: #2c3e50;
   }
 
   th {

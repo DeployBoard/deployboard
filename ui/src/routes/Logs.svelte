@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { formatDateTime } from '../lib/dateUtils.js';
 
   const API_KEY = 'dev-key-12345';
 
@@ -55,10 +56,7 @@
     }
   });
 
-  function formatTimestamp(timestamp) {
-    const date = new Date(timestamp);
-    return date.toLocaleString();
-  }
+
 
   function handleFilterChange() {
     fetchLogs();
@@ -125,7 +123,7 @@
           <tbody>
             {#each logs as log}
               <tr>
-                <td>{formatTimestamp(log.timestamp)}</td>
+                <td>{formatDateTime(log.timestamp)}</td>
                 <td>{log.application}</td>
                 <td>{log.version}</td>
                 <td>
@@ -235,8 +233,8 @@
   }
 
   thead {
-    background: #34495e;
-    color: white;
+    background: #d1dce8;
+    color: #2c3e50;
   }
 
   th {

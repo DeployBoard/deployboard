@@ -96,7 +96,7 @@
   }
 
   .subnav-item.active {
-    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    background: #5b9dd9;
     color: white;
   }
 </style>

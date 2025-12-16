@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { link } from 'svelte-spa-router';
+  import { formatDateTime } from '../lib/dateUtils.js';
 
   let loading = true;
   let error = null;
@@ -68,10 +69,7 @@
     }
   }
 
-  function formatDate(timestamp) {
-    const date = new Date(timestamp);
-    return date.toLocaleString();
-  }
+
 
   function toggleKeyVisibility(keyId) {
     if (visibleKeys.has(keyId)) {
@@ -179,7 +177,7 @@
                     </button>
                   </div>
                 </td>
-                <td class="key-date">{formatDate(key.created_at)}</td>
+                <td class="key-date">{formatDateTime(key.created_at)}</td>
                 <td class="key-actions">
                   <button class="btn-delete" on:click={() => deleteAPIKey(key.id)}>
                     Delete
@@ -244,7 +242,7 @@
   }
 
   .subnav-item.active {
-    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    background: #5b9dd9;
     color: white;
   }
 
@@ -262,7 +260,7 @@
   }
 
   .btn-primary {
-    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    background: #5b9dd9;
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -379,8 +377,8 @@
   }
 
   thead {
-    background: #34495e;
-    color: white;
+    background: #d1dce8;
+    color: #2c3e50;
   }
 
   th {

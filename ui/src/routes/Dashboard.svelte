@@ -46,13 +46,7 @@
             <tr>
               <th class="app-column">Application</th>
               {#each environments as env}
-                <th class="env-column">
-                  <div class="env-header">
-                    <span class="env-badge" class:prod={env === 'production'} class:staging={env === 'staging'} class:dev={env === 'development'}>
-                      {env}
-                    </span>
-                  </div>
-                </th>
+                <th class="env-column">{env}</th>
               {/each}
             </tr>
           </thead>
@@ -119,8 +113,8 @@
   }
 
   thead {
-    background: #34495e;
-    color: white;
+    background: #d1dce8;
+    color: #2c3e50;
   }
 
   th {
@@ -136,37 +130,13 @@
     min-width: 200px;
     position: sticky;
     left: 0;
-    background: #34495e;
+    background: #d1dce8;
     z-index: 10;
   }
 
   .env-column {
     min-width: 180px;
-  }
-
-  .env-header {
-    display: flex;
-    justify-content: center;
-  }
-
-  .env-badge {
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: capitalize;
-  }
-
-  .env-badge.dev {
-    background: #3498db;
-  }
-
-  .env-badge.staging {
-    background: #f39c12;
-  }
-
-  .env-badge.prod {
-    background: #e74c3c;
+    text-align: center;
   }
 
   tbody tr {
