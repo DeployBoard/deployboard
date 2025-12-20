@@ -1,8 +1,7 @@
 import { useState } from "react";
-import LoadingButton from "@mui/lab/LoadingButton";
 import Modal from "@mui/material/Modal";
 import { Box } from "@mui/system";
-import { Typography } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -102,7 +101,7 @@ const DeleteApiKey = ({ keyData }) => {
           <br />
 
           <Box display="flex" justifyContent="flex-end">
-            <LoadingButton
+            <Button
               loading={loading}
               variant="contained"
               color="primary"
@@ -110,15 +109,15 @@ const DeleteApiKey = ({ keyData }) => {
               sx={{ mr: ".5rem" }}
             >
               Close
-            </LoadingButton>
-            <LoadingButton
+            </Button>
+            <Button
               loading={loading}
               variant="contained"
               color="error"
               onClick={handleSubmit}
             >
               Delete
-            </LoadingButton>
+            </Button>
           </Box>
         </Box>
       </Modal>

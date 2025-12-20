@@ -14,52 +14,54 @@ const AnalyticsDeploymentFailureRate = ({ daysAgo, filter }) => {
   const [failedError, setFailedError] = useState(null);
 
   // query analytics endpoint for total deployments
-  const getSuccess = (daysAgo, filter) => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/analytics/total-deployments`, {
-        headers: {
-          authorization: `Bearer ${getToken()}`,
-        },
-        params: {
-          daysAgo: daysAgo,
-          status: "Deployed",
-          ...filter,
-        },
-        timeout: 10000,
-      })
-      .then((response) => {
-        // console.log(response);
-        setSuccessData(response.data);
-        setSuccessLoading(false);
-      })
-      .catch((error) => {
-        setSuccessError(error);
-        setSuccessLoading(false);
-      });
+  const getSuccess = async (daysAgo, filter) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URI}/analytics/total-deployments`,
+        {
+          headers: {
+            authorization: `Bearer ${getToken()}`,
+          },
+          params: {
+            daysAgo: daysAgo,
+            status: "Deployed",
+            ...filter,
+          },
+          timeout: 10000,
+        }
+      );
+      // console.log(response);
+      setSuccessData(response.data);
+      setSuccessLoading(false);
+    } catch (error) {
+      setSuccessError(error);
+      setSuccessLoading(false);
+    }
   };
 
-  const getFailures = (daysAgo, filter) => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/analytics/total-deployments`, {
-        headers: {
-          authorization: `Bearer ${getToken()}`,
-        },
-        params: {
-          daysAgo: daysAgo,
-          status: "Failed",
-          ...filter,
-        },
-        timeout: 10000,
-      })
-      .then((response) => {
-        // console.log(response);
-        setFailedData(response.data);
-        setFailedLoading(false);
-      })
-      .catch((error) => {
-        setFailedError(error);
-        setFailedLoading(false);
-      });
+  const getFailures = async (daysAgo, filter) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URI}/analytics/total-deployments`,
+        {
+          headers: {
+            authorization: `Bearer ${getToken()}`,
+          },
+          params: {
+            daysAgo: daysAgo,
+            status: "Failed",
+            ...filter,
+          },
+          timeout: 10000,
+        }
+      );
+      // console.log(response);
+      setFailedData(response.data);
+      setFailedLoading(false);
+    } catch (error) {
+      setFailedError(error);
+      setFailedLoading(false);
+    }
   };
 
   useEffect(() => {

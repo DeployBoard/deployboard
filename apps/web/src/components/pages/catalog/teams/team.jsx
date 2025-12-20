@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
-import { Box, Typography, LinearProgress, CssBaseline } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
+import { Box, Typography, LinearProgress, CssBaseline, Grid } from "@mui/material";
 
 import MiniDrawer from "../../../structure/headerDrawer";
 import Metadata from "./metadata";
@@ -15,24 +14,25 @@ const Team = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const getTeam = () => {
+  const getTeam = async () => {
     setLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/teams/${teamId}`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
-      .then((res) => {
-        // console.log(res.data);
-        setData(res.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-        setError(error.message);
-      });
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URI}/teams/${teamId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      );
+      // console.log(res.data);
+      setData(res.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      setError(error.message);
+    }
   };
 
   useEffect(() => {
@@ -50,10 +50,10 @@ const Team = () => {
         {loading && <LinearProgress />}
         {error && <CustomSnackbar severity="error" message={error} />}
         <Grid container spacing={2}>
-          <Grid xs={4}>
+          <Grid size={4}>
             <Metadata data={data} />
           </Grid>
-          <Grid xs={4}>
+          <Grid size={4}>
             <ExternalLinks data={data} />
           </Grid>
         </Grid>

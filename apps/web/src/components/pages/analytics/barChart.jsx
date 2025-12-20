@@ -94,28 +94,29 @@ const BarChart = ({ daysAgo, filter }) => {
   };
 
   // query analytics endpoint for total deployments
-  const getGraphData = (daysAgo, filter) => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/analytics/deployment-graph`, {
-        headers: {
-          authorization: `Bearer ${getToken()}`,
-        },
-        params: {
-          daysAgo: daysAgo,
-          ...filter,
-        },
-        timeout: 10000,
-      })
-      .then((response) => {
-        // console.log(response);
-        const formattedData = formatChartData(response.data);
-        setLabels(formattedData.labels);
-        setDeployedData(formattedData.deployments);
-        setFailedData(formattedData.failures);
-      })
-      .catch((error) => {
-        setError(error);
-      });
+  const getGraphData = async (daysAgo, filter) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URI}/analytics/deployment-graph`,
+        {
+          headers: {
+            authorization: `Bearer ${getToken()}`,
+          },
+          params: {
+            daysAgo: daysAgo,
+            ...filter,
+          },
+          timeout: 10000,
+        }
+      );
+      // console.log(response);
+      const formattedData = formatChartData(response.data);
+      setLabels(formattedData.labels);
+      setDeployedData(formattedData.deployments);
+      setFailedData(formattedData.failures);
+    } catch (error) {
+      setError(error);
+    }
   };
 
   useEffect(() => {

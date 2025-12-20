@@ -22,24 +22,25 @@ const ServicesTable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const getServices = () => {
+  const getServices = async () => {
     setLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/services`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
-      .then((res) => {
-        // console.log(res.data);
-        setData(res.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-        setError(error.message);
-      });
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URI}/services`,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      );
+      // console.log(res.data);
+      setData(res.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      setError(error.message);
+    }
   };
 
   useEffect(() => {
