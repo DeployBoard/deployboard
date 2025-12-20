@@ -1,6 +1,6 @@
 # Source from the official Dockerfile repository
 # AS builder
-FROM node:16-slim
+FROM node:24-slim
 # Run as node user
 USER root
 # Install git
@@ -17,7 +17,7 @@ RUN npm install
 RUN npm run build
 
 # Source from the official Dockerfile repository
-# FROM node:16-slim
+# FROM node:24-slim
 # Install git
 # RUN apt-get update && apt-get install -y git
 # Set the working directory
