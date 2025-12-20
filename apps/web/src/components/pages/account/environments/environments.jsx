@@ -5,8 +5,8 @@ import {
   LinearProgress,
   TextField,
   Typography,
+  Button,
 } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
 
 import MiniDrawer from "../../../structure/headerDrawer";
 import CustomSnackbar from "../../../structure/customSnackbar";
@@ -91,14 +91,14 @@ const Environments = () => {
           sx={{ mt: 2 }}
         />
         <Box display="flex" justifyContent="flex-end" sx={{ mt: 2 }}>
-          <LoadingButton
+          <Button
             loading={loading}
             variant="contained"
             color="primary"
             onClick={handleSubmit}
           >
             Submit
-          </LoadingButton>
+          </Button>
         </Box>
       </Box>
     </Box>

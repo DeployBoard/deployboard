@@ -2,11 +2,11 @@ import { useState } from "react";
 import {
   Typography,
   TextField,
+  Button,
   InputAdornment,
   Link,
   CssBaseline,
 } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import RocketOutlinedIcon from "@mui/icons-material/RocketOutlined";
 
@@ -103,7 +103,7 @@ const Register = () => {
                 ),
               }}
             />
-            <LoadingButton
+            <Button
               loading={pending}
               variant="contained"
               color="primary"
@@ -112,7 +112,7 @@ const Register = () => {
               sx={{ p: ".75rem", mb: "1rem" }}
             >
               Submit
-            </LoadingButton>
+            </Button>
             <Typography variant="caption" align="right" pb="1rem">
               You will be emailed a link to complete the registration.
             </Typography>

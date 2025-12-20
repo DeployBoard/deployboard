@@ -21,43 +21,45 @@ const DashboardCards = () => {
   const [errorEnvironments, setErrorEnvironments] = useState("");
   const [errorServices, setErrorServices] = useState("");
 
-  const getEnvironments = () => {
+  const getEnvironments = async () => {
     setLoadingEnvironments(true);
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/environments`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
-      .then((res) => {
-        // console.log(res.data);
-        setEnvironments(res.data);
-        setLoadingEnvironments(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoadingEnvironments(false);
-        setErrorEnvironments(error.message);
-      });
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URI}/environments`,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      );
+      // console.log(res.data);
+      setEnvironments(res.data);
+      setLoadingEnvironments(false);
+    } catch (error) {
+      console.log(error);
+      setLoadingEnvironments(false);
+      setErrorEnvironments(error.message);
+    }
   };
 
-  const getServices = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/services`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
-      .then((res) => {
-        // console.log(res.data);
-        setServices(res.data);
-        setLoadingServices(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoadingServices(false);
-        setErrorServices(error.message);
-      });
+  const getServices = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URI}/services`,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      );
+      // console.log(res.data);
+      setServices(res.data);
+      setLoadingServices(false);
+    } catch (error) {
+      console.log(error);
+      setLoadingServices(false);
+      setErrorServices(error.message);
+    }
   };
 
   useEffect(() => {
