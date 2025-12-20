@@ -2,7 +2,7 @@ import express from "express";
 import log from "loglevel";
 
 import { Account } from "models";
-import { verifyRole } from "../middleware/auth";
+import { verifyRole } from "../middleware/auth.js";
 
 log.setLevel("debug");
 

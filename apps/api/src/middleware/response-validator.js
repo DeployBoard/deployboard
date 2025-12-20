@@ -110,6 +110,4 @@ const validateResponse = (req, res) => {
   return res.status(status).json(body);
 };
 
-module.exports = {
-  validateResponse,
-};
+export { validateResponse };

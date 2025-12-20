@@ -1,13 +1,17 @@
 import mongoose from "mongoose";
-import "./utils/db";
-
+import dotenv from "dotenv";
 import { Log, Service, Account, User, Team, ApiKey } from "models";
-import { generateServices } from "./scripts/service";
-import { generateLogs } from "./scripts/log";
-import { generateAccounts } from "./scripts/account";
-import { generateUsers } from "./scripts/user";
-import { generateTeams } from "./scripts/team";
-import { generateApiKeys } from "./scripts/apiKey";
+import { generateServices } from "./scripts/service.js";
+import { generateLogs } from "./scripts/log.js";
+import { generateAccounts } from "./scripts/account.js";
+import { generateUsers } from "./scripts/user.js";
+import { generateTeams } from "./scripts/team.js";
+import { generateApiKeys } from "./scripts/apiKey.js";
+
+dotenv.config();
+
+const mongo_uri = process.env.MONGO_URI || "mongodb://localhost:27017/deployboard";
+mongoose.set('strictQuery', true);
 
 const services = [
   "Payment",
@@ -17,10 +21,14 @@ const services = [
   "Admin",
   "Auth",
 ];
-const environments = ["Development", "Staging", "Production"];
+const environments = ["Production","Staging", "Development"];
 
 const seed = async () => {
-  if ((await mongoose.connection.readyState) > 0) {
+  try {
+    // Connect to MongoDB first
+    await mongoose.connect(mongo_uri);
+    console.log(`Connected to MongoDB at ${mongo_uri}`);
+
     console.log("Dropping database...");
     await mongoose.connection.dropDatabase();
     console.log("Dropping database...done");
@@ -38,16 +46,16 @@ const seed = async () => {
     console.log("Generating api keys...");
     await ApiKey.insertMany(generateApiKeys());
     console.log("Seeding database...done");
-    mongoose.connection.close();
+    await mongoose.connection.close();
+    console.log("done");
+  } catch (error) {
+    console.error("Seeding error:", error);
+    await mongoose.connection.close();
+    process.exit(1);
   }
 };
 
-seed()
-  .then(() => {
-    // mongoose.connecation.close();
-    console.log("done");
-  })
-  .catch((err) => {
+seed().catch((err) => {
     console.log(err);
     mongoose.connection.close();
     exit(1);

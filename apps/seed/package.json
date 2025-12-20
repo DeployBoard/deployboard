@@ -1,21 +1,22 @@
 {
   "name": "seed",
   "version": "0.0.0",
+  "type": "module",
   "private": true,
   "engines": {
-    "node": "16.x",
-    "npm": "8.x"
+    "node": "24.x",
+    "npm": "11.x"
   },
   "scripts": {
     "seed": "babel-node ./src/index.js",
-    "clean": "rm -rf node_modues/"
+    "clean": "rm -rf node_modules/"
   },
   "dependencies": {
-    "mongoose": "^6.4.4",
+    "mongoose": "^9.0.2",
     "models": "*",
-    "mongoose-bcrypt": "^1.9.0",
+    "mongoose-bcrypt": "^1.11.0",
     "mongoose-timestamp": "^0.6.0",
-    "dotenv": "^16.0.1",
+    "dotenv": "^17.2.3",
     "moment": "^2.29.4"
   },
   "devDependencies": {

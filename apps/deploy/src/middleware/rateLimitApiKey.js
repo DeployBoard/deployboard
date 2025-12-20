@@ -7,7 +7,7 @@ const ttl = 1; // TTL in minutes (How long requests live in the cache)
 const limit = 100; // Requests per TTL
 
 const apiKeyRateCache = new NodeCache({
-  stdTTL: 900, // The TTL of the Key in seconds, we clean the cach on every call, so this is is kinda redundant
+  stdTTL: 900, // The TTL of the Key in seconds, we clean the cache on every call, so this is is kinda redundant
   deleteOnExpire: true,
   checkperiod: 900,
 });

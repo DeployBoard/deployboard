@@ -26,36 +26,26 @@ router.route("/").get(async (req, res, next) => {
     filter.status = req.query.status;
   }
 
-  if (req.query.count) {
-    log.debug("counting logs");
-    Log.find(filter)
-      .count()
-      .exec(function (err, logsCount) {
-        if (err) {
-          log.error(err);
-          return res.status(500).json({
-            message: "Internal server error.",
-          });
-        }
-        return res.status(200).json(logsCount);
-      });
-  } else {
-    log.debug("fetching logs");
-    Log.find(filter)
-      .sort({ createdAt: sort })
-      .limit(limit)
-      .skip(skip)
-      .exec(function (err, logs) {
-        if (err) {
-          log.error(err);
-          return res.status(500).json({
-            message: "Internal server error.",
-          });
-        }
-        res.locals.status = 200;
-        res.locals.body = logs;
-        next();
-      });
+  try {
+    if (req.query.count) {
+      log.debug("counting logs");
+      const logsCount = await Log.find(filter).countDocuments();
+      return res.status(200).json(logsCount);
+    } else {
+      log.debug("fetching logs");
+      const logs = await Log.find(filter)
+        .sort({ createdAt: sort })
+        .limit(limit)
+        .skip(skip);
+      res.locals.status = 200;
+      res.locals.body = logs;
+      next();
+    }
+  } catch (err) {
+    log.error(err);
+    return res.status(500).json({
+      message: "Internal server error.",
+    });
   }
 });
 

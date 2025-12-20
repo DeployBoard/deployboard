@@ -4,8 +4,8 @@
   "type": "module",
   "private": true,
   "engines": {
-    "node": "16.x",
-    "npm": "8.x"
+    "node": "24.x",
+    "npm": "11.x"
   },
   "scripts": {
     "dev": "PORT=3003 HOST=localhost nodemon --delay 500ms --exec babel-node ./src/index.js",
@@ -18,33 +18,31 @@
     "lint": "npm run prettier --write --check --config ./.prettierrc \"**/*.js\" && eslint --fix ./src"
   },
   "dependencies": {
-    "express": "^4.18.1",
-    "express-mongo-sanitize": "^2.2.0",
-    "body-parser": "^1.20.0",
+    "express": "^5.2.1",
     "node-cache": "^5.1.2",
     "cors": "^2.8.5",
-    "mongoose": "^6.4.4",
+    "mongoose": "^9.0.2",
     "models": "*",
-    "dotenv": "^16.0.1",
-    "mongoose-bcrypt": "^1.9.0",
+    "dotenv": "^17.2.3",
+    "mongoose-bcrypt": "^1.11.0",
     "mongoose-timestamp": "^0.6.0",
     "loglevel": "^1.8.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19",
-    "@babel/cli": "^7.18.6",
-    "@babel/core": "^7.18.6",
-    "@babel/node": "^7.18.6",
-    "@babel/preset-env": "^7.18.6",
-    "@babel/eslint-parser": "^7.18.9",
-    "babel-loader": "^8.2.5",
+    "nodemon": "^3.1.11",
+    "@babel/cli": "^7.28.3",
+    "@babel/core": "^7.28.5",
+    "@babel/node": "^7.28.0",
+    "@babel/preset-env": "^7.28.5",
+    "@babel/eslint-parser": "^7.28.5",
+    "babel-loader": "^10.0.0",
     "babel-preset-env": "^1.7.0",
-    "eslint": "^8.19.0",
+    "eslint": "^9.39.2",
     "eslint-plugin-babel": "^5.3.1",
-    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.0",
-    "fs-extra": "^10.1.0",
-    "prettier": "^2.7.1"
+    "eslint-plugin-promise": "^7.2.1",
+    "fs-extra": "^11.3.3",
+    "prettier": "^3.7.4"
   }
 }

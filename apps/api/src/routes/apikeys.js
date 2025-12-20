@@ -1,7 +1,7 @@
 import express from "express";
 import log from "loglevel";
 
-import { verifyRole } from "../middleware/auth";
+import { verifyRole } from "../middleware/auth.js";
 import { ApiKey } from "models";
 
 log.setLevel("debug");
@@ -18,19 +18,19 @@ router.route("/").get(async (req, res, next) => {
     return next();
   }
 
-  ApiKey.find({ account: req.account }, function (err, apikeys) {
-    if (err) {
-      log.error(err);
-      res.locals.status = 500;
-      res.locals.body = {
-        message: "Internal server error.",
-      };
-      return next();
-    }
+  try {
+    const apikeys = await ApiKey.find({ account: req.account });
     res.locals.status = 200;
     res.locals.body = apikeys;
     next();
-  });
+  } catch (err) {
+    log.error(err);
+    res.locals.status = 500;
+    res.locals.body = {
+      message: "Internal server error.",
+    };
+    return next();
+  }
 });
 
 // Create a new API key

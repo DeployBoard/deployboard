@@ -115,41 +115,30 @@ UserSchema.pre("save", function (next) {
   });
 });
 
-UserSchema.methods.comparePassword = function (candidatePassword, cb) {
+UserSchema.methods.comparePassword = async function (candidatePassword) {
   // compare the hashed password to the one passed in
-  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
-    // if there's an error, return it
-    if (err) return cb(err);
-    // otherwise return whether the password matches or not
-    cb(null, isMatch);
-  });
+  return await bcrypt.compare(candidatePassword, this.password);
 };
 
 // call this method after successful login to reset the invalid login attempts
-UserSchema.methods.successfulLogin = function (cb) {
+UserSchema.methods.successfulLogin = function () {
   // clear the lock and loginAttempts, and set our lastLoggedIn date
-  return this.updateOne(
-    {
-      $set: {
-        loginAttempts: 0,
-        lastLoggedIn: new Date(),
-      },
-      $unset: { lockUntil: 1 },
+  return this.updateOne({
+    $set: {
+      loginAttempts: 0,
+      lastLoggedIn: new Date(),
     },
-    cb
-  );
+    $unset: { lockUntil: 1 },
+  });
 };
 
-UserSchema.methods.incLoginAttempts = function (cb) {
+UserSchema.methods.incLoginAttempts = function () {
   // if we have a previous lock that has expired, restart at 1
   if (this.lockUntil && this.lockUntil < Date.now()) {
-    return this.updateOne(
-      {
-        $set: { loginAttempts: 1 },
-        $unset: { lockUntil: 1 },
-      },
-      cb
-    );
+    return this.updateOne({
+      $set: { loginAttempts: 1 },
+      $unset: { lockUntil: 1 },
+    });
   }
   // otherwise we're incrementing
   let updates = { $inc: { loginAttempts: 1 } };
@@ -157,7 +146,7 @@ UserSchema.methods.incLoginAttempts = function (cb) {
   if (this.loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS && !this.isLocked) {
     updates.$set = { lockUntil: Date.now() + LOCK_TIME };
   }
-  return this.updateOne(updates, cb);
+  return this.updateOne(updates);
 };
 
 // UserSchema.statics.failedLogin = {
