@@ -13,8 +13,8 @@ import ListItemText from "@mui/material/ListItemText";
 
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import ListAltIcon from "@mui/icons-material/ListAlt";
-import EqualizerIcon from "@mui/icons-material/Equalizer";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import ArticleIcon from "@mui/icons-material/Article";
 import InsightsIcon from "@mui/icons-material/Insights";
 import ForestIcon from "@mui/icons-material/Forest";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
@@ -28,8 +28,8 @@ const drawerWidth = 240;
 
 const pages = [
   { name: "Dashboard", icon: <DashboardIcon /> },
-  { name: "Catalog", icon: <ListAltIcon /> },
-  { name: "Logs", icon: <EqualizerIcon /> },
+  { name: "Catalog", icon: <MenuBookIcon /> },
+  { name: "Logs", icon: <ArticleIcon /> },
   { name: "Analytics", icon: <InsightsIcon /> },
 ];
 

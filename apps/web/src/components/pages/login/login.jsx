@@ -9,12 +9,11 @@ import {
   Link,
   CssBaseline,
 } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 import LoginWrapper from "./loginWrapper";
 import CustomSnackbar from "../../structure/customSnackbar";
@@ -66,7 +65,7 @@ const Login = () => {
         setToken(token);
         setSuccess(message);
         // decode the token and get the user info
-        const decodedToken = jwt_decode(token);
+        const decodedToken = jwtDecode(token);
         // set the email, account and role in our store
         setStoreEmail(decodedToken.email);
         setStoreAccount(decodedToken.account);
@@ -146,7 +145,7 @@ const Login = () => {
                 ),
               }}
             />
-            <LoadingButton
+            <Button
               loading={pending}
               variant="contained"
               color="primary"
@@ -155,7 +154,7 @@ const Login = () => {
               sx={{ p: ".75rem", mb: "1rem" }}
             >
               Submit
-            </LoadingButton>
+            </Button>
             <Button
               variant="outlined"
               color="primary"

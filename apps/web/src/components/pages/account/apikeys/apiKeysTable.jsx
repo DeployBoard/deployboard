@@ -18,24 +18,25 @@ const ApiKeysTable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const getUsers = () => {
+  const getUsers = async () => {
     setLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/apikeys`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
-      .then((res) => {
-        // console.log(res.data);
-        setData(res.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(error.message);
-        setLoading(false);
-      });
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URI}/apikeys`,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      );
+      // console.log(res.data);
+      setData(res.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setError(error.message);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

@@ -35,88 +35,86 @@ const LogsTable = () => {
   const [statusesLoading, setStatusesLoading] = useState(true);
   const [statusesError, setStatusesError] = useState("");
 
-  const getLogs = () => {
+  const getLogs = async () => {
     setLogsLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/logs`, {
+    try {
+      const res = await axios.get(`${process.env.REACT_APP_API_URI}/logs`, {
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
         params: searchParams,
-      })
-      .then((res) => {
-        // console.log(res.data);
-        setLogsData(res.data);
-        setLogsLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLogsError(error.message);
-        setLogsLoading(false);
       });
+      // console.log(res.data);
+      setLogsData(res.data);
+      setLogsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLogsError(error.message);
+      setLogsLoading(false);
+    }
   };
 
-  const getLogsCount = () => {
+  const getLogsCount = async () => {
     setLogsCountLoading(true);
     // we have to convert the searchParams to an object
     const paramsObject = Object.fromEntries([...searchParams]);
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/logs`, {
+    try {
+      const res = await axios.get(`${process.env.REACT_APP_API_URI}/logs`, {
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
         params: { count: true, ...paramsObject },
-      })
-      .then((res) => {
-        // console.log(res.data);
-        setLogsCount(res.data);
-        setLogsCountLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLogsCountError(error.message);
-        setLogsCountLoading(false);
       });
+      // console.log(res.data);
+      setLogsCount(res.data);
+      setLogsCountLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLogsCountError(error.message);
+      setLogsCountLoading(false);
+    }
   };
 
-  const getServices = () => {
+  const getServices = async () => {
     setServicesLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/services`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
-      .then((res) => {
-        // console.log(res.data);
-        setServicesData(res.data);
-        setServicesLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setServicesError(error.message);
-        setServicesLoading(false);
-      });
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URI}/services`,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      );
+      // console.log(res.data);
+      setServicesData(res.data);
+      setServicesLoading(false);
+    } catch (error) {
+      console.log(error);
+      setServicesError(error.message);
+      setServicesLoading(false);
+    }
   };
 
-  const getEnvironments = () => {
+  const getEnvironments = async () => {
     setEnvironmentsLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/environments`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
-      .then((res) => {
-        // console.log(res.data);
-        setEnvironmentsData(res.data);
-        setEnvironmentsLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setEnvironmentsError(error.message);
-        setEnvironmentsLoading(false);
-      });
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URI}/environments`,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      );
+      // console.log(res.data);
+      setEnvironmentsData(res.data);
+      setEnvironmentsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setEnvironmentsError(error.message);
+      setEnvironmentsLoading(false);
+    }
   };
 
   const getStatuses = async () => {

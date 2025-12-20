@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Button from "@mui/material/Button";
-import LoadingButton from "@mui/lab/LoadingButton";
 import Modal from "@mui/material/Modal";
 import { Box } from "@mui/system";
 import { Switch, TextField, Typography } from "@mui/material";
@@ -128,7 +127,7 @@ const AddApiKey = () => {
             <MenuItem value="User">User</MenuItem>
           </TextField>
           <Box display="flex" justifyContent="flex-end">
-            <LoadingButton
+            <Button
               loading={loading}
               variant="contained"
               color="primary"
@@ -136,15 +135,15 @@ const AddApiKey = () => {
               sx={{ mr: ".5rem" }}
             >
               Close
-            </LoadingButton>
-            <LoadingButton
+            </Button>
+            <Button
               loading={loading}
               variant="contained"
               color="primary"
               onClick={handleSubmit}
             >
               Submit
-            </LoadingButton>
+            </Button>
           </Box>
         </Box>
       </Modal>

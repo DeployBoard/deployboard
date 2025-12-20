@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import xml2js from "xml2js";
-import LoadingButton from "@mui/lab/LoadingButton";
 import { Box } from "@mui/system";
-import { LinearProgress, Switch, TextField, Typography } from "@mui/material";
+import { LinearProgress, Switch, TextField, Typography, Button } from "@mui/material";
 
 import { getToken } from "../../../utils/auth";
 import CustomSnackbar from "../../../structure/customSnackbar";
@@ -19,52 +18,53 @@ const SamlConfig = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
 
-  const getAccount = () => {
+  const getAccount = async () => {
     setLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/accounts`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
-      .then((res) => {
-        // console.log(res.data);
-        // if auth is saml set enabled to true
-        if (res.data.auth === "saml") {
-          setSamlEnabled(true);
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URI}/accounts`,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
         }
-        // if we have an ssoDomain, set it.
-        if (res.data.ssoDomain) {
-          setSamlDomain(res.data.ssoDomain);
-        }
+      );
+      // console.log(res.data);
+      // if auth is saml set enabled to true
+      if (res.data.auth === "saml") {
+        setSamlEnabled(true);
+      }
+      // if we have an ssoDomain, set it.
+      if (res.data.ssoDomain) {
+        setSamlDomain(res.data.ssoDomain);
+      }
 
-        // parse the metadata xml
-        if (res.data.samlConfig) {
-          const builder = new xml2js.Builder();
-          const metadataXmlString = builder.buildObject(res.data.samlConfig);
-          setMetadataXml(metadataXmlString);
-        }
+      // parse the metadata xml
+      if (res.data.samlConfig) {
+        const builder = new xml2js.Builder();
+        const metadataXmlString = builder.buildObject(res.data.samlConfig);
+        setMetadataXml(metadataXmlString);
+      }
 
-        // set the groups if we have them
-        if (res.data.samlRoleMapping) {
-          if (res.data.samlRoleMapping.Admin) {
-            setAdminGroups(JSON.stringify(res.data.samlRoleMapping.Admin));
-          }
-          if (res.data.samlRoleMapping.Editor) {
-            setEditorGroups(JSON.stringify(res.data.samlRoleMapping.Editor));
-          }
-          if (res.data.samlRoleMapping.User) {
-            setUserGroups(JSON.stringify(res.data.samlRoleMapping.User));
-          }
+      // set the groups if we have them
+      if (res.data.samlRoleMapping) {
+        if (res.data.samlRoleMapping.Admin) {
+          setAdminGroups(JSON.stringify(res.data.samlRoleMapping.Admin));
         }
+        if (res.data.samlRoleMapping.Editor) {
+          setEditorGroups(JSON.stringify(res.data.samlRoleMapping.Editor));
+        }
+        if (res.data.samlRoleMapping.User) {
+          setUserGroups(JSON.stringify(res.data.samlRoleMapping.User));
+        }
+      }
 
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(error.message);
-        setLoading(false);
-      });
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setError(error.message);
+      setLoading(false);
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -201,14 +201,14 @@ const SamlConfig = () => {
       <br />
 
       <Box display="flex" justifyContent="flex-end" sx={{ mt: 2 }}>
-        <LoadingButton
+        <Button
           loading={loading}
           variant="contained"
           color="primary"
           onClick={handleSubmit}
         >
           Submit
-        </LoadingButton>
+        </Button>
       </Box>
     </>
   );

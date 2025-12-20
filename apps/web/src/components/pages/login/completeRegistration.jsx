@@ -9,7 +9,6 @@ import {
   Link,
   CssBaseline,
 } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
@@ -124,7 +123,7 @@ const CompleteRegistration = () => {
                     ),
                   }}
                 />
-                <LoadingButton
+                <Button
                   loading={pending}
                   variant="contained"
                   color="primary"
@@ -133,7 +132,7 @@ const CompleteRegistration = () => {
                   sx={{ p: ".75rem", mb: "1rem" }}
                 >
                   Submit
-                </LoadingButton>
+                </Button>
               </>
             )}
 

@@ -30,7 +30,7 @@
     "dotenv": "^17.2.3",
     "playwright": "^1.57.0",
     "prettier": "latest",
-    "turbo": "^2.6.3"
+    "turbo": "^2.7.0"
   },
   "volta": {
     "node": "24.12.0",

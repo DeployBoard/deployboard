@@ -20,24 +20,22 @@ const TeamsTable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const getTeams = () => {
+  const getTeams = async () => {
     setLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/teams`, {
+    try {
+      const res = await axios.get(`${process.env.REACT_APP_API_URI}/teams`, {
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
-      })
-      .then((res) => {
-        // console.log(res.data);
-        setData(res.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-        setError(error.message);
       });
+      // console.log(res.data);
+      setData(res.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      setError(error.message);
+    }
   };
 
   useEffect(() => {

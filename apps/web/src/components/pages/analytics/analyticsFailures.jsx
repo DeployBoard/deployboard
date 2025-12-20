@@ -11,28 +11,29 @@ const AnalyticsFailures = ({ daysAgo, filter }) => {
   const [error, setError] = useState(null);
 
   // query analytics endpoint for total deployments
-  const getTotalDeployments = (daysAgo, filter) => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/analytics/total-deployments`, {
-        headers: {
-          authorization: `Bearer ${getToken()}`,
-        },
-        params: {
-          daysAgo: daysAgo,
-          status: "Failed",
-          ...filter,
-        },
-        timeout: 10000,
-      })
-      .then((response) => {
-        // console.log(response);
-        setData(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
+  const getTotalDeployments = async (daysAgo, filter) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URI}/analytics/total-deployments`,
+        {
+          headers: {
+            authorization: `Bearer ${getToken()}`,
+          },
+          params: {
+            daysAgo: daysAgo,
+            status: "Failed",
+            ...filter,
+          },
+          timeout: 10000,
+        }
+      );
+      // console.log(response);
+      setData(response.data);
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

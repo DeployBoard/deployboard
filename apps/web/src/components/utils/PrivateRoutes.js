@@ -1,4 +1,4 @@
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { Outlet, Navigate } from "react-router";
 import { getToken, revokeTokens } from "./auth";
 
@@ -7,7 +7,7 @@ const PrivateRoutes = () => {
   // if we have a token, check if it's expired
   if (token) {
     // decode the token to get the expiration date
-    const decoded = jwt_decode(token);
+    const decoded = jwtDecode(token);
     // if the token is expired, remove it from local storage and navigate to login
     if (decoded.exp < Date.now() / 1000) {
       token = null;
