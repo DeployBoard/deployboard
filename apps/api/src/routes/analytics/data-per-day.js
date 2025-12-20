@@ -36,17 +36,15 @@ router.route("/").get(async (req, res) => {
 
   console.log(filter);
 
-  Log.find(filter)
-    .count()
-    .exec(function (err, total) {
-      if (err) {
-        log.error(err);
-        return res.status(500).json({
-          message: "Internal server error.",
-        });
-      }
-      return res.status(200).json(total);
+  try {
+    const total = await Log.find(filter).countDocuments();
+    return res.status(200).json(total);
+  } catch (err) {
+    log.error(err);
+    return res.status(500).json({
+      message: "Internal server error.",
     });
+  }
 });
 
 export { router as dataPerDayRouter };

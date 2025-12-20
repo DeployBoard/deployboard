@@ -24,10 +24,10 @@ router.route("/").post(async (req, res) => {
   // We get the domain from the email address
   // We then look up the account in the database via the ssoDomain field
   // If the account is found, we check the sso type
-  // If the sso type is saml, we send them off to thir saml provider
+  // If the sso type is saml, we send them off to their saml provider
   // If the sso type is local, we throw an error, because local auth shouldn't have an ssoDomain
   // After we get a valid response back from the sso provider, we generate a token and send it back to the user
-  // The user can then use the token to log in
+  // The user can then use the token to authenticate future requests
 
   try {
     const { email } = req.body;

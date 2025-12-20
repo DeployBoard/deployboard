@@ -2,7 +2,7 @@ import express from "express";
 import log from "loglevel";
 
 import { User } from "models";
-import { verifyRole } from "../middleware/auth";
+import { verifyRole } from "../middleware/auth.js";
 
 log.setLevel("debug");
 
@@ -18,26 +18,25 @@ router.route("/").get(async (req, res, next) => {
     return next();
   }
 
-  let usersList = [];
-
-  User.find({ account: req.account }, function (err, users) {
-    if (err) {
-      log.error(err);
-      return res.status(500).json({
-        message: "Internal server error.",
-      });
-    }
+  try {
+    const users = await User.find({ account: req.account });
+    
     // for each user in the list, remove the password
-    users.forEach((user) => {
-      user.password = undefined;
-      console.log(user);
-      usersList.push(user);
+    const usersList = users.map((user) => {
+      const userObj = user.toObject();
+      delete userObj.password;
+      return userObj;
     });
 
     res.locals.status = 200;
     res.locals.body = usersList;
     next();
-  });
+  } catch (err) {
+    log.error(err);
+    return res.status(500).json({
+      message: "Internal server error.",
+    });
+  }
 });
 
 router.route("/").post(async (req, res, next) => {

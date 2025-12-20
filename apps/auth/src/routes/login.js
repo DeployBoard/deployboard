@@ -15,13 +15,9 @@ const router = express.Router();
 router.route("/").post(async (req, res) => {
   const { email, password } = req.body;
 
-  User.findOne({ email }, function (err, user) {
-    if (err) {
-      log.error(err);
-      return res.status(500).json({
-        message: "Internal server error.",
-      });
-    }
+  try {
+    const user = await User.findOne({ email });
+    
     if (!user) {
       // return generic invalid message
       return res.status(401).json({
@@ -31,8 +27,8 @@ router.route("/").post(async (req, res) => {
 
     // check if the account is currently enabled
     if (!user.enabled) {
-      log.debug(`Account is disaled.`);
-      // just return generic invalid message, we don't want to leak if the account is locked
+      log.debug(`Account is disabled.`);
+      // just return generic invalid message, we don't want to leak if the account is disabled
       return res.status(401).json({
         message: "Invalid email or password.",
       });
@@ -42,73 +38,50 @@ router.route("/").post(async (req, res) => {
     if (user.isLocked) {
       log.debug("User is locked.");
       // just increment login attempts if account is already locked
-      return user.incLoginAttempts(function (err) {
-        if (err) {
-          log.error(err);
-          return res.status(500).json({
-            message: "Internal server error.",
-          });
-        }
-
-        // just return generic invalid message, we don't want to leak if the account is locked
-        return res.status(401).json({
-          message: "Invalid email or password.",
-        });
+      await user.incLoginAttempts();
+      // just return generic invalid message, we don't want to leak if the account is locked
+      return res.status(401).json({
+        message: "Invalid email or password.",
       });
     }
 
     log.debug("User found, comparing passwords");
 
-    user.comparePassword(password, function (err, isMatch) {
-      if (err) {
-        log.error(err);
-        return res.status(500).json({
-          message: "Internal server error.",
-        });
+    const isMatch = await user.comparePassword(password);
+    
+    if (isMatch) {
+      log.debug("Passwords match");
+      // generate a token for the user
+      const token = generateToken(user);
+      log.debug("Token generated");
+      log.debug(token);
+      // reset attempts and lockUntil
+      await user.successfulLogin();
+      // return success
+      return res.status(200).json({
+        message: "Login successful.",
+        token,
+      });
+    } else {
+      log.debug("Passwords do not match");
+      // increment failed login attempts
+      await user.incLoginAttempts();
+      // if we have reached max attempts, send the email
+      if (user.loginAttempts + 1 === MAX_LOGIN_ATTEMPTS) {
+        log.debug("Account is now locked");
+        // send email to user saying their account is locked
+        sendLockedMail(user.email);
       }
-      if (isMatch) {
-        log.debug("Passwords match");
-        // generate a token for the user
-        const token = generateToken(user);
-        log.debug("Token generated");
-        log.debug(token);
-        // reset attempts and lockUntil
-        user.successfulLogin(function (err) {
-          if (err) {
-            log.debug(err);
-            return res.status(500).json({
-              message: "Internal server error.",
-            });
-          }
-          // return success
-          return res.status(200).json({
-            message: "Login successful.",
-            token,
-          });
-        });
-      } else {
-        log.debug("Passwords do not match");
-        // increment failed login attempts
-        user.incLoginAttempts(function (err) {
-          if (err) {
-            log.error(err);
-            return res.status(500).json({
-              message: "Internal server error.",
-            });
-          }
-          // if we have reached max attempts, send the email
-          if (user.loginAttempts + 1 === MAX_LOGIN_ATTEMPTS) {
-            log.debug("Account is now locked");
-            // send email to user saying their account is locked
-            sendLockedMail(user.email);
-          }
-          return res.status(401).json({
-            message: "Invalid email or password.",
-          });
-        });
-      }
+      return res.status(401).json({
+        message: "Invalid email or password.",
+      });
+    }
+  } catch (err) {
+    log.error(err);
+    return res.status(500).json({
+      message: "Internal server error.",
     });
-  });
+  }
 });
 
 // /login/sso routes

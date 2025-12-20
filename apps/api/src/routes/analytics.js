@@ -1,9 +1,9 @@
 import express from "express";
 import log from "loglevel";
 
-import { totalDeploymentsRouter } from "./analytics/total-deployments";
-import { dataPerDayRouter } from "./analytics/data-per-day";
-import { deploymentGraphRouter } from "./analytics/deployment-graph";
+import { totalDeploymentsRouter } from "./analytics/total-deployments.js";
+import { dataPerDayRouter } from "./analytics/data-per-day.js";
+import { deploymentGraphRouter } from "./analytics/deployment-graph.js";
 
 const router = express.Router();
 

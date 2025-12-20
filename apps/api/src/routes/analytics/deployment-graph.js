@@ -78,38 +78,38 @@ router.route("/").get(async (req, res) => {
 
   log.debug("filter", filter);
 
-  Log.aggregate([
-    { $match: filter },
-    { $facet: facet },
-    // TODO: make sure this returns in the correct order.
-  ])
-    .then((logs) => {
-      log.debug("logs", logs[0]);
-      // create a new formattedLogs lobject
-      const formattedLogs = {};
-      // for each log in the logs array,
-      Object.entries(logs[0]).forEach((entry) => {
-        const [key, value] = entry;
-        // if value is empty, set it to zero
-        // TODO: Can this be moved to the aggregate?
-        if (value.length === 0) {
-          formattedLogs[key] = { Deployed: 0, Failed: 0, rollback: 0 };
-        }
-        // otherwise, set the value to the first element of the array
-        else {
-          formattedLogs[key] = value[0];
-        }
-      });
-      // return the formatted logs object
-      log.debug(formattedLogs);
-      return res.status(200).json(formattedLogs);
-    })
-    .catch((err) => {
-      log.error(err);
-      return res.status(500).json({
-        message: "Internal server error.",
-      });
+  try {
+    const logs = await Log.aggregate([
+      { $match: filter },
+      { $facet: facet },
+      // TODO: make sure this returns in the correct order.
+    ]);
+
+    log.debug("logs", logs[0]);
+    // create a new formattedLogs lobject
+    const formattedLogs = {};
+    // for each log in the logs array,
+    Object.entries(logs[0]).forEach((entry) => {
+      const [key, value] = entry;
+      // if value is empty, set it to zero
+      // TODO: Can this be moved to the aggregate?
+      if (value.length === 0) {
+        formattedLogs[key] = { Deployed: 0, Failed: 0, rollback: 0 };
+      }
+      // otherwise, set the value to the first element of the array
+      else {
+        formattedLogs[key] = value[0];
+      }
     });
+    // return the formatted logs object
+    log.debug(formattedLogs);
+    return res.status(200).json(formattedLogs);
+  } catch (err) {
+    log.error(err);
+    return res.status(500).json({
+      message: "Internal server error.",
+    });
+  }
 });
 
 export { router as deploymentGraphRouter };

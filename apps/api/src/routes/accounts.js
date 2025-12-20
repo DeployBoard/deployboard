@@ -3,7 +3,7 @@ import log from "loglevel";
 import { parseString } from "xml2js";
 
 import { Account } from "models";
-import { verifyRole } from "../middleware/auth";
+import { verifyRole } from "../middleware/auth.js";
 
 log.setLevel("debug");
 

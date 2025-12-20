@@ -8,13 +8,9 @@ log.setLevel("debug");
 const router = express.Router();
 
 router.route("/").get(async (req, res) => {
-  Account.findOne({ name: req.account }, function (err, account) {
-    if (err) {
-      log.error(err);
-      return res.status(500).json({
-        message: "Internal server error.",
-      });
-    }
+  try {
+    const account = await Account.findOne({ name: req.account });
+    
     if (!account) {
       log.warn(`Account: ${req.account} not found, but was in the token.`);
       // return generic invalid message
@@ -23,7 +19,12 @@ router.route("/").get(async (req, res) => {
       });
     }
     return res.status(200).json(account.statuses);
-  });
+  } catch (err) {
+    log.error(err);
+    return res.status(500).json({
+      message: "Internal server error.",
+    });
+  }
 });
 
 export { router as statusesRouter };
