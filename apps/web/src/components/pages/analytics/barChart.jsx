@@ -97,7 +97,7 @@ const BarChart = ({ daysAgo, filter }) => {
   const getGraphData = async (daysAgo, filter) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URI}/analytics/deployment-graph`,
+        `${import.meta.env.VITE_API_URI}/analytics/deployment-graph`,
         {
           headers: {
             authorization: `Bearer ${getToken()}`,

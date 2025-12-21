@@ -13,7 +13,7 @@ COPY ./ /app/
 RUN npm install --location=global turbo
 # Install dependencies
 RUN npm install
-# Build the app
+# Build the app (web now builds to dist/ instead of build/)
 RUN npm run build
 
 # Source from the official Dockerfile repository
@@ -28,7 +28,7 @@ RUN npm run build
 # COPY --from=builder /app/apps/api/dist ./app/apps/api/
 # COPY --from=builder /app/apps/auth/dist ./app/apps/auth/
 # COPY --from=builder /app/apps/deploy/dist ./app/apps/deploy/
-# COPY --from=builder /app/apps/web/build ./app/apps/web/
+# COPY --from=builder /app/apps/web/dist ./app/apps/web/
 # Install turborepo
 # RUN npm install --location=global turbo
 # Install dependencies

@@ -27,7 +27,7 @@ const LoginSSO = () => {
     // make the login api call
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_AUTH_URI}/login/sso`,
+        `${import.meta.env.VITE_AUTH_URI}/login/sso`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

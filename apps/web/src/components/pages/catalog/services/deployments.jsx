@@ -12,7 +12,7 @@ const Deployments = ({ service }) => {
   const getEnvironments = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URI}/environments`,
+        `${import.meta.env.VITE_API_URI}/environments`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,

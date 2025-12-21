@@ -33,7 +33,7 @@ const AddApiKey = () => {
     setLoading(true);
     // make the api call
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URI}/apikeys`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URI}/apikeys`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

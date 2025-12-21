@@ -22,7 +22,7 @@ const SamlConfig = () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URI}/accounts`,
+        `${import.meta.env.VITE_API_URI}/accounts`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,
@@ -84,7 +84,7 @@ const SamlConfig = () => {
     // make the api call
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URI}/accounts/samlConfig`,
+        `${import.meta.env.VITE_API_URI}/accounts/samlConfig`,
         {
           method: "POST",
           headers: {
@@ -111,7 +111,7 @@ const SamlConfig = () => {
     // make the api call
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URI}/accounts`,
+        `${import.meta.env.VITE_API_URI}/accounts`,
         {
           method: "POST",
           headers: {

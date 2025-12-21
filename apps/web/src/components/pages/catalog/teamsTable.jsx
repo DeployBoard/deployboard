@@ -23,7 +23,7 @@ const TeamsTable = () => {
   const getTeams = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URI}/teams`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_URI}/teams`, {
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },

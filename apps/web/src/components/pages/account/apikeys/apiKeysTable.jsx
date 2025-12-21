@@ -22,7 +22,7 @@ const ApiKeysTable = () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URI}/apikeys`,
+        `${import.meta.env.VITE_API_URI}/apikeys`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,

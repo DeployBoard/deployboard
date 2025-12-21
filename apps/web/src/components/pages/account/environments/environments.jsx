@@ -23,7 +23,7 @@ const Environments = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URI}/environments`,
+        `${import.meta.env.VITE_API_URI}/environments`,
         {
           method: "GET",
           headers: {
@@ -46,7 +46,7 @@ const Environments = () => {
     setLoading(true);
     // make the api call
     try {
-      await fetch(`${process.env.REACT_APP_API_URI}/environments`, {
+      await fetch(`${import.meta.env.VITE_API_URI}/environments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

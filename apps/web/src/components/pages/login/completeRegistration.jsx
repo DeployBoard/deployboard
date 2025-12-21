@@ -40,7 +40,7 @@ const CompleteRegistration = () => {
     try {
       setPending(true);
       const response = await fetch(
-        `${process.env.REACT_APP_AUTH_URI}/complete-registration`,
+        `${import.meta.env.VITE_AUTH_URI}/complete-registration`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

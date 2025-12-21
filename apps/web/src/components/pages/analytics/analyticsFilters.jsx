@@ -20,7 +20,7 @@ const AnalyticsFilters = () => {
     setServicesLoading(true);
     try {
       const services = await axios.get(
-        `${process.env.REACT_APP_API_URI}/services`,
+        `${import.meta.env.VITE_API_URI}/services`,
         {
           headers: {
             authorization: `Bearer ${getToken()}`,
@@ -49,7 +49,7 @@ const AnalyticsFilters = () => {
     setEnvironmentsLoading(true);
     try {
       const environments = await axios.get(
-        `${process.env.REACT_APP_API_URI}/environments`,
+        `${import.meta.env.VITE_API_URI}/environments`,
         {
           headers: {
             authorization: `Bearer ${getToken()}`,

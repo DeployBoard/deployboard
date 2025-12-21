@@ -17,7 +17,7 @@ const AnalyticsDeploymentFailureRate = ({ daysAgo, filter }) => {
   const getSuccess = async (daysAgo, filter) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URI}/analytics/total-deployments`,
+        `${import.meta.env.VITE_API_URI}/analytics/total-deployments`,
         {
           headers: {
             authorization: `Bearer ${getToken()}`,
@@ -42,7 +42,7 @@ const AnalyticsDeploymentFailureRate = ({ daysAgo, filter }) => {
   const getFailures = async (daysAgo, filter) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URI}/analytics/total-deployments`,
+        `${import.meta.env.VITE_API_URI}/analytics/total-deployments`,
         {
           headers: {
             authorization: `Bearer ${getToken()}`,
