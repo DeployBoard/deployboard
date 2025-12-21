@@ -34,6 +34,12 @@ const CompleteRegistration = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSubmit(event);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     // make the register api call
@@ -100,27 +106,30 @@ const CompleteRegistration = () => {
                   label="Password"
                   placeholder="Password"
                   onChange={handleChangePassword}
+                  onKeyDown={handleKeyDown}
                   sx={{ mb: "1rem" }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LockOpenIcon />
-                      </InputAdornment>
-                    ),
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="Toggle password visibility"
-                          onClick={handleClickShowPassword}
-                        >
-                          {showPassword ? (
-                            <VisibilityOffRoundedIcon />
-                          ) : (
-                            <VisibilityIcon />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
+                  slotProps={{
+                    input: {
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <LockOpenIcon />
+                        </InputAdornment>
+                      ),
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="Toggle password visibility"
+                            onClick={handleClickShowPassword}
+                          >
+                            {showPassword ? (
+                              <VisibilityOffRoundedIcon />
+                            ) : (
+                              <VisibilityIcon />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    },
                   }}
                 />
                 <Button
