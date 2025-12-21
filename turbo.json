@@ -33,7 +33,8 @@
       "cache": false
     },
     "dev": {
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "clean": {
       "dependsOn": ["^clean"]

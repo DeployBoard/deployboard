@@ -2,22 +2,22 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { getToken } from "../../utils/auth";
-import AnalyticsNumberBox from "./analyticsNumberBox";
+import InsightsNumberBox from "./insightsNumberBox";
 import { CircularProgress } from "@mui/material";
 
-const AnalyticsDeploymentFailureRate = ({ daysAgo, filter }) => {
+const InsightsDeploymentRollbackRate = ({ daysAgo, filter }) => {
   const [successData, setSuccessData] = useState(null);
   const [successLoading, setSuccessLoading] = useState(true);
   const [successError, setSuccessError] = useState(null);
-  const [failedData, setFailedData] = useState(null);
-  const [failedLoading, setFailedLoading] = useState(true);
-  const [failedError, setFailedError] = useState(null);
+  const [rollbackData, setRollbackData] = useState(null);
+  const [rollbackLoading, setRollbackLoading] = useState(true);
+  const [rollbackError, setRollbackError] = useState(null);
 
   // query analytics endpoint for total deployments
   const getSuccess = async (daysAgo, filter) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URI}/analytics/total-deployments`,
+        `${import.meta.env.VITE_API_URI}/analytics/total-deployments`,
         {
           headers: {
             authorization: `Bearer ${getToken()}`,
@@ -30,7 +30,7 @@ const AnalyticsDeploymentFailureRate = ({ daysAgo, filter }) => {
           timeout: 10000,
         }
       );
-      // console.log(response);
+      // console.log(response.data);
       setSuccessData(response.data);
       setSuccessLoading(false);
     } catch (error) {
@@ -39,55 +39,52 @@ const AnalyticsDeploymentFailureRate = ({ daysAgo, filter }) => {
     }
   };
 
-  const getFailures = async (daysAgo, filter) => {
+  const getRollbacks = async (daysAgo, filter) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URI}/analytics/total-deployments`,
+        `${import.meta.env.VITE_API_URI}/analytics/total-deployments`,
         {
           headers: {
             authorization: `Bearer ${getToken()}`,
           },
           params: {
             daysAgo: daysAgo,
-            status: "Failed",
+            rollback: true,
             ...filter,
           },
           timeout: 10000,
         }
       );
-      // console.log(response);
-      setFailedData(response.data);
-      setFailedLoading(false);
+      // console.log(response.data);
+      setRollbackData(response.data);
+      setRollbackLoading(false);
     } catch (error) {
-      setFailedError(error);
-      setFailedLoading(false);
+      setRollbackError(error);
+      setRollbackLoading(false);
     }
   };
 
   useEffect(() => {
     getSuccess(daysAgo, filter);
-    getFailures(daysAgo, filter);
+    getRollbacks(daysAgo, filter);
   }, [daysAgo, filter]);
 
-  if (successLoading || failedLoading) {
+  if (successLoading || rollbackLoading) {
     return (
-      <AnalyticsNumberBox
-        title="Deployment Failure Rate"
-        number={<CircularProgress />}
-      />
+      <InsightsNumberBox title="Rollback Rate" number={<CircularProgress />} />
     );
   }
 
-  if (successError || failedError) {
-    return <AnalyticsNumberBox title="Deployment Failure Rate" number="Err" />;
+  if (successError || rollbackError) {
+    return <InsightsNumberBox title="Rollback Rate" number="Err" />;
   }
 
   return (
-    <AnalyticsNumberBox
-      title="Deployment Failure Rate"
-      number={`${Math.round((failedData / successData) * 10000) / 100}%`}
+    <InsightsNumberBox
+      title="Rollback Rate"
+      number={`${Math.round((rollbackData / successData) * 10000) / 100}%`}
     />
   );
 };
 
-export default AnalyticsDeploymentFailureRate;
+export default InsightsDeploymentRollbackRate;

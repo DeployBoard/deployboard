@@ -38,7 +38,7 @@ const LogsTable = () => {
   const getLogs = async () => {
     setLogsLoading(true);
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URI}/logs`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_URI}/logs`, {
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
@@ -59,7 +59,7 @@ const LogsTable = () => {
     // we have to convert the searchParams to an object
     const paramsObject = Object.fromEntries([...searchParams]);
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URI}/logs`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_URI}/logs`, {
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
@@ -79,7 +79,7 @@ const LogsTable = () => {
     setServicesLoading(true);
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URI}/services`,
+        `${import.meta.env.VITE_API_URI}/services`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,
@@ -100,7 +100,7 @@ const LogsTable = () => {
     setEnvironmentsLoading(true);
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URI}/environments`,
+        `${import.meta.env.VITE_API_URI}/environments`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,
@@ -121,7 +121,7 @@ const LogsTable = () => {
     setStatusesLoading(true);
     try {
       const statuses = await axios.get(
-        `${process.env.REACT_APP_API_URI}/statuses`,
+        `${import.meta.env.VITE_API_URI}/statuses`,
         {
           headers: {
             authorization: `Bearer ${getToken()}`,

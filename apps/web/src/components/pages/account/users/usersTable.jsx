@@ -21,7 +21,7 @@ const UsersTable = () => {
   const getUsers = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URI}/users`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_URI}/users`, {
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },

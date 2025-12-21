@@ -51,7 +51,7 @@ const Login = () => {
     setPending(true);
     // make the login api call
     try {
-      const response = await fetch(`${process.env.REACT_APP_AUTH_URI}/login`, {
+      const response = await fetch(`${import.meta.env.VITE_AUTH_URI}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

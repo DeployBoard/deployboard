@@ -25,7 +25,7 @@ const DashboardCards = () => {
     setLoadingEnvironments(true);
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URI}/environments`,
+        `${import.meta.env.VITE_API_URI}/environments`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,
@@ -45,7 +45,7 @@ const DashboardCards = () => {
   const getServices = async () => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URI}/services`,
+        `${import.meta.env.VITE_API_URI}/services`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,

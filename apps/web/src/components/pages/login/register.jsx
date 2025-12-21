@@ -36,7 +36,7 @@ const Register = () => {
     // make the register api call
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_AUTH_URI}/register`,
+        `${import.meta.env.VITE_AUTH_URI}/register`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

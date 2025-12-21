@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Container,
@@ -14,20 +14,19 @@ import { useSearchParams } from "react-router-dom";
 
 import MiniDrawer from "../../structure/headerDrawer";
 import BarChart from "./barChart";
-import AnalyticsTotalDeployments from "./analyticsTotalDeployments";
-import AnalyticsAveragePerDay from "./analyticsAveragePerDay";
-import AnalyticsFilters from "./analyticsFilters";
-import AnalyticsFailures from "./analyticsFailures";
-import AnalyticsDeploymentFailureRate from "./analyticsDeploymentFailureRate";
-import AnalyticsDeploymentRollbackRate from "./analyticsDeploymentRollbackRate";
-import { useEffect } from "react";
+import InsightsTotalDeployments from "./insightsTotalDeployments";
+import InsightsAveragePerDay from "./insightsAveragePerDay";
+import InsightsFilters from "./insightsFilters";
+import InsightsFailures from "./insightsFailures";
+import InsightsDeploymentFailureRate from "./insightsDeploymentFailureRate";
+import InsightsDeploymentRollbackRate from "./insightsDeploymentRollbackRate";
 
-const Analytics = () => {
+const Insights = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [filter, setfilter] = useState({});
+  const [filter, setFilter] = useState({});
 
   useEffect(() => {
-    setfilter({
+    setFilter({
       environment: searchParams.get("environment"),
       service: searchParams.get("service"),
     });
@@ -39,7 +38,7 @@ const Analytics = () => {
       <MiniDrawer />
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Typography variant="h6" sx={{ pb: "1rem" }}>
-          Analytics
+          Insights
         </Typography>
         <Container>
           <Stack
@@ -76,7 +75,7 @@ const Analytics = () => {
                 </Select>
               </FormControl>
             </Box>
-            <AnalyticsFilters />
+            <InsightsFilters filter={filter} setFilter={setFilter} />
           </Stack>
           <Container sx={{ pt: "1rem", pb: "1rem" }}>
             <Box
@@ -84,23 +83,23 @@ const Analytics = () => {
               flexDirection="row"
               justifyContent="space-between"
             >
-              <AnalyticsTotalDeployments
+              <InsightsTotalDeployments
                 daysAgo={searchParams.get("daysAgo") || 30}
                 filter={{ ...filter, status: "Deployed" }}
               />
-              <AnalyticsAveragePerDay
+              <InsightsAveragePerDay
                 daysAgo={searchParams.get("daysAgo") || 30}
                 filter={filter}
               />
-              <AnalyticsFailures
+              <InsightsFailures
                 daysAgo={searchParams.get("daysAgo") || 30}
                 filter={filter}
               />
-              <AnalyticsDeploymentFailureRate
+              <InsightsDeploymentFailureRate
                 daysAgo={searchParams.get("daysAgo") || 30}
                 filter={filter}
               />
-              <AnalyticsDeploymentRollbackRate
+              <InsightsDeploymentRollbackRate
                 daysAgo={searchParams.get("daysAgo") || 30}
                 filter={filter}
               />
@@ -118,4 +117,4 @@ const Analytics = () => {
   );
 };
 
-export default Analytics;
+export default Insights;

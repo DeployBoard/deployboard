@@ -18,7 +18,7 @@ const Team = () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URI}/teams/${teamId}`,
+        `${import.meta.env.VITE_API_URI}/teams/${teamId}`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,

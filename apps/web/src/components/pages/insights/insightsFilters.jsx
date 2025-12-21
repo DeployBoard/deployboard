@@ -7,7 +7,7 @@ import CustomFilter from "../../structure/customFilter";
 import CustomSnackbar from "../../structure/customSnackbar";
 import { getToken } from "../../utils/auth";
 
-const AnalyticsFilters = () => {
+const InsightsFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [services, setServices] = useState([]);
   const [servicesLoading, setServicesLoading] = useState(true);
@@ -20,7 +20,7 @@ const AnalyticsFilters = () => {
     setServicesLoading(true);
     try {
       const services = await axios.get(
-        `${process.env.REACT_APP_API_URI}/services`,
+        `${import.meta.env.VITE_API_URI}/services`,
         {
           headers: {
             authorization: `Bearer ${getToken()}`,
@@ -49,7 +49,7 @@ const AnalyticsFilters = () => {
     setEnvironmentsLoading(true);
     try {
       const environments = await axios.get(
-        `${process.env.REACT_APP_API_URI}/environments`,
+        `${import.meta.env.VITE_API_URI}/environments`,
         {
           headers: {
             authorization: `Bearer ${getToken()}`,
@@ -116,4 +116,4 @@ const AnalyticsFilters = () => {
   );
 };
 
-export default AnalyticsFilters;
+export default InsightsFilters;

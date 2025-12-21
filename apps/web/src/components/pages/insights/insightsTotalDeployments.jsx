@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { getToken } from "../../utils/auth";
-import AnalyticsNumberBox from "./analyticsNumberBox";
+import InsightsNumberBox from "./insightsNumberBox";
 import { CircularProgress } from "@mui/material";
 
-const AnalyticsTotalDeployments = ({ daysAgo, filter }) => {
+const InsightsTotalDeployments = ({ daysAgo, filter }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,7 +14,7 @@ const AnalyticsTotalDeployments = ({ daysAgo, filter }) => {
   const getTotalDeployments = async (daysAgo, filter) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URI}/analytics/total-deployments`,
+        `${import.meta.env.VITE_API_URI}/analytics/total-deployments`,
         {
           headers: {
             authorization: `Bearer ${getToken()}`,
@@ -41,7 +41,7 @@ const AnalyticsTotalDeployments = ({ daysAgo, filter }) => {
 
   if (loading) {
     return (
-      <AnalyticsNumberBox
+      <InsightsNumberBox
         title="Total Deployments"
         number={<CircularProgress />}
       />
@@ -49,10 +49,10 @@ const AnalyticsTotalDeployments = ({ daysAgo, filter }) => {
   }
 
   if (error) {
-    return <AnalyticsNumberBox title="Total Deployments" number="Err" />;
+    return <InsightsNumberBox title="Total Deployments" number="Err" />;
   }
 
-  return <AnalyticsNumberBox title="Total Deployments" number={data} />;
+  return <InsightsNumberBox title="Total Deployments" number={data} />;
 };
 
-export default AnalyticsTotalDeployments;
+export default InsightsTotalDeployments;

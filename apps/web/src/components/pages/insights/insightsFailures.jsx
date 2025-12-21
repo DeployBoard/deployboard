@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { getToken } from "../../utils/auth";
-import AnalyticsNumberBox from "./analyticsNumberBox";
+import InsightsNumberBox from "./insightsNumberBox";
 import { CircularProgress } from "@mui/material";
 
-const AnalyticsFailures = ({ daysAgo, filter }) => {
+const InsightsFailures = ({ daysAgo, filter }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,7 +14,7 @@ const AnalyticsFailures = ({ daysAgo, filter }) => {
   const getTotalDeployments = async (daysAgo, filter) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URI}/analytics/total-deployments`,
+        `${import.meta.env.VITE_API_URI}/analytics/total-deployments`,
         {
           headers: {
             authorization: `Bearer ${getToken()}`,
@@ -42,7 +42,7 @@ const AnalyticsFailures = ({ daysAgo, filter }) => {
 
   if (loading) {
     return (
-      <AnalyticsNumberBox
+      <InsightsNumberBox
         title="Total Failures"
         number={<CircularProgress />}
       />
@@ -50,12 +50,12 @@ const AnalyticsFailures = ({ daysAgo, filter }) => {
   }
 
   if (error) {
-    return <AnalyticsNumberBox title="Total Failures" number="Err" />;
+    return <InsightsNumberBox title="Total Failures" number="Err" />;
   }
 
   return (
-    <AnalyticsNumberBox title="Total Failures" number={Math.round(data)} />
+    <InsightsNumberBox title="Total Failures" number={Math.round(data)} />
   );
 };
 
-export default AnalyticsFailures;
+export default InsightsFailures;
