@@ -21,6 +21,12 @@ const LoginSSO = () => {
     setEmail(event.target.value);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSubmit(event);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setPending(true);
@@ -78,13 +84,16 @@ const LoginSSO = () => {
               type="email"
               placeholder="Email"
               onChange={handleChangeEmail}
+              onKeyDown={handleKeyDown}
               sx={{ mb: "1rem" }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <MailOutlineIcon />
-                  </InputAdornment>
-                ),
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <MailOutlineIcon />
+                    </InputAdornment>
+                  ),
+                },
               }}
             />
             <Button

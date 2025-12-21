@@ -29,6 +29,12 @@ const Register = () => {
     setEmail(event.target.value);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSubmit(event);
+    }
+  };
+
   const handleSubmit = async (event) => {
     // TODO: put some form validation here
     event.preventDefault();
@@ -78,13 +84,16 @@ const Register = () => {
               type="text"
               placeholder="Account"
               onChange={handleChangeAccount}
+              onKeyDown={handleKeyDown}
               sx={{ mb: "1rem" }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <RocketOutlinedIcon />
-                  </InputAdornment>
-                ),
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <RocketOutlinedIcon />
+                    </InputAdornment>
+                  ),
+                },
               }}
             />
             <TextField
@@ -94,13 +103,16 @@ const Register = () => {
               type="email"
               placeholder="Email"
               onChange={handleChangeEmail}
+              onKeyDown={handleKeyDown}
               sx={{ mb: "1rem" }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <MailOutlineIcon />
-                  </InputAdornment>
-                ),
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <MailOutlineIcon />
+                    </InputAdornment>
+                  ),
+                },
               }}
             />
             <Button

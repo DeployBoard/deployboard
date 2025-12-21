@@ -19,6 +19,12 @@ const Forgot = () => {
     setEmail(event.target.value);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSubmit(event);
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     setPending(true);
@@ -39,13 +45,16 @@ const Forgot = () => {
               type="email"
               placeholder="Email"
               onChange={handleChangeEmail}
+              onKeyDown={handleKeyDown}
               sx={{ mb: "1rem" }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <MailOutlineIcon />
-                  </InputAdornment>
-                ),
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <MailOutlineIcon />
+                    </InputAdornment>
+                  ),
+                },
               }}
             />
             <Button
