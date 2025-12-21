@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { getToken } from "../../utils/auth";
-import AnalyticsNumberBox from "./analyticsNumberBox";
+import InsightsNumberBox from "./insightsNumberBox";
 import { CircularProgress } from "@mui/material";
 
-const AnalyticsTotalDeployments = ({ daysAgo, filter }) => {
+const InsightsFailures = ({ daysAgo, filter }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,6 +21,7 @@ const AnalyticsTotalDeployments = ({ daysAgo, filter }) => {
           },
           params: {
             daysAgo: daysAgo,
+            status: "Failed",
             ...filter,
           },
           timeout: 10000,
@@ -41,18 +42,20 @@ const AnalyticsTotalDeployments = ({ daysAgo, filter }) => {
 
   if (loading) {
     return (
-      <AnalyticsNumberBox
-        title="Total Deployments"
+      <InsightsNumberBox
+        title="Total Failures"
         number={<CircularProgress />}
       />
     );
   }
 
   if (error) {
-    return <AnalyticsNumberBox title="Total Deployments" number="Err" />;
+    return <InsightsNumberBox title="Total Failures" number="Err" />;
   }
 
-  return <AnalyticsNumberBox title="Total Deployments" number={data} />;
+  return (
+    <InsightsNumberBox title="Total Failures" number={Math.round(data)} />
+  );
 };
 
-export default AnalyticsTotalDeployments;
+export default InsightsFailures;

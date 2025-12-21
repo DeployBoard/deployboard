@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { getToken } from "../../utils/auth";
-import AnalyticsNumberBox from "./analyticsNumberBox";
+import InsightsNumberBox from "./insightsNumberBox";
 import { CircularProgress } from "@mui/material";
 
-const AnalyticsDeploymentRollbackRate = ({ daysAgo, filter }) => {
+const InsightsDeploymentRollbackRate = ({ daysAgo, filter }) => {
   const [successData, setSuccessData] = useState(null);
   const [successLoading, setSuccessLoading] = useState(true);
   const [successError, setSuccessError] = useState(null);
@@ -71,20 +71,20 @@ const AnalyticsDeploymentRollbackRate = ({ daysAgo, filter }) => {
 
   if (successLoading || rollbackLoading) {
     return (
-      <AnalyticsNumberBox title="Rollback Rate" number={<CircularProgress />} />
+      <InsightsNumberBox title="Rollback Rate" number={<CircularProgress />} />
     );
   }
 
   if (successError || rollbackError) {
-    return <AnalyticsNumberBox title="Rollback Rate" number="Err" />;
+    return <InsightsNumberBox title="Rollback Rate" number="Err" />;
   }
 
   return (
-    <AnalyticsNumberBox
+    <InsightsNumberBox
       title="Rollback Rate"
       number={`${Math.round((rollbackData / successData) * 10000) / 100}%`}
     />
   );
 };
 
-export default AnalyticsDeploymentRollbackRate;
+export default InsightsDeploymentRollbackRate;

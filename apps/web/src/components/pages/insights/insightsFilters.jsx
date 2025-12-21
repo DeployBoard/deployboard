@@ -7,7 +7,7 @@ import CustomFilter from "../../structure/customFilter";
 import CustomSnackbar from "../../structure/customSnackbar";
 import { getToken } from "../../utils/auth";
 
-const AnalyticsFilters = () => {
+const InsightsFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [services, setServices] = useState([]);
   const [servicesLoading, setServicesLoading] = useState(true);
@@ -116,4 +116,4 @@ const AnalyticsFilters = () => {
   );
 };
 
-export default AnalyticsFilters;
+export default InsightsFilters;

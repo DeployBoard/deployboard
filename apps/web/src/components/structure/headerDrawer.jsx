@@ -30,7 +30,7 @@ const pages = [
   { name: "Dashboard", icon: <DashboardIcon /> },
   { name: "Catalog", icon: <MenuBookIcon /> },
   { name: "Logs", icon: <ArticleIcon /> },
-  { name: "Analytics", icon: <InsightsIcon /> },
+  { name: "Insights", icon: <InsightsIcon /> },
 ];
 
 const editorPages = [{ name: "Environments", icon: <ForestIcon /> }];

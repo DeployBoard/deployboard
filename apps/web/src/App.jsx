@@ -11,8 +11,7 @@ import Catalog from "./components/pages/catalog/catalog";
 import Service from "./components/pages/catalog/services/service";
 import Team from "./components/pages/catalog/teams/team";
 import Logs from "./components/pages/logs/logs";
-import Analytics from "./components/pages/analytics/analytics";
-import Analytics2 from "./components/pages/analytics2/analytics2";
+import Insights from "./components/pages/insights/insights";
 import Environments from "./components/pages/account/environments/environments";
 import Users from "./components/pages/account/users/users";
 import ApiKeys from "./components/pages/account/apikeys/apikeys";
@@ -40,8 +39,7 @@ const App = () => {
           <Route path="/catalog/services/:serviceId" element={<Service />} />
           <Route path="/catalog/teams/:teamId" element={<Team />} />
           <Route path="/logs" element={<Logs />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/analytics2" element={<Analytics2 />} />
+          <Route path="/insights" element={<Insights />} />
           <Route
             path="/account"
             element={<Navigate to="/account/users" replace />}

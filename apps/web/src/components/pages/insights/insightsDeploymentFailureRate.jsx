@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { getToken } from "../../utils/auth";
-import AnalyticsNumberBox from "./analyticsNumberBox";
+import InsightsNumberBox from "./insightsNumberBox";
 import { CircularProgress } from "@mui/material";
 
-const AnalyticsDeploymentFailureRate = ({ daysAgo, filter }) => {
+const InsightsDeploymentFailureRate = ({ daysAgo, filter }) => {
   const [successData, setSuccessData] = useState(null);
   const [successLoading, setSuccessLoading] = useState(true);
   const [successError, setSuccessError] = useState(null);
@@ -71,7 +71,7 @@ const AnalyticsDeploymentFailureRate = ({ daysAgo, filter }) => {
 
   if (successLoading || failedLoading) {
     return (
-      <AnalyticsNumberBox
+      <InsightsNumberBox
         title="Deployment Failure Rate"
         number={<CircularProgress />}
       />
@@ -79,15 +79,15 @@ const AnalyticsDeploymentFailureRate = ({ daysAgo, filter }) => {
   }
 
   if (successError || failedError) {
-    return <AnalyticsNumberBox title="Deployment Failure Rate" number="Err" />;
+    return <InsightsNumberBox title="Deployment Failure Rate" number="Err" />;
   }
 
   return (
-    <AnalyticsNumberBox
+    <InsightsNumberBox
       title="Deployment Failure Rate"
       number={`${Math.round((failedData / successData) * 10000) / 100}%`}
     />
   );
 };
 
-export default AnalyticsDeploymentFailureRate;
+export default InsightsDeploymentFailureRate;

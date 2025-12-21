@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { getToken } from "../../utils/auth";
-import AnalyticsNumberBox from "./analyticsNumberBox";
+import InsightsNumberBox from "./insightsNumberBox";
 import { CircularProgress } from "@mui/material";
 
-const AnalyticsAveragePerDay = ({ daysAgo, filter }) => {
+const InsightsAveragePerDay = ({ daysAgo, filter }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -42,7 +42,7 @@ const AnalyticsAveragePerDay = ({ daysAgo, filter }) => {
 
   if (loading) {
     return (
-      <AnalyticsNumberBox
+      <InsightsNumberBox
         title="Avg Deployments/Day"
         number={<CircularProgress />}
       />
@@ -50,15 +50,15 @@ const AnalyticsAveragePerDay = ({ daysAgo, filter }) => {
   }
 
   if (error) {
-    return <AnalyticsNumberBox title="Avg Deployments/Day" number="Err" />;
+    return <InsightsNumberBox title="Avg Deployments/Day" number="Err" />;
   }
 
   return (
-    <AnalyticsNumberBox
+    <InsightsNumberBox
       title="Avg Deployments/Day"
       number={Math.round(data / daysAgo)}
     />
   );
 };
 
-export default AnalyticsAveragePerDay;
+export default InsightsAveragePerDay;

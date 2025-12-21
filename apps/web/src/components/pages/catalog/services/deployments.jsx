@@ -4,7 +4,7 @@ import { Container, Divider, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 import { getToken } from "../../../utils/auth";
-import BarChart from "../../analytics/barChart";
+import BarChart from "../../insights/barChart";
 
 const Deployments = ({ service }) => {
   const [topEnvironment, setTopEnvironment] = useState("");

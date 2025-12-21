@@ -1,6 +1,6 @@
 import { Paper, Typography } from "@mui/material";
 
-export const AnalyticsNumberBox = ({ title, number }) => {
+export const InsightsNumberBox = ({ title, number }) => {
   return (
     <Paper
       style={{
@@ -40,4 +40,4 @@ export const AnalyticsNumberBox = ({ title, number }) => {
   );
 };
 
-export default AnalyticsNumberBox;
+export default InsightsNumberBox;
