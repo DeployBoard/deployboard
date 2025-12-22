@@ -44,9 +44,11 @@ const Environments = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
+    setError("");
+    setSuccess("");
     // make the api call
     try {
-      await fetch(`${import.meta.env.VITE_API_URI}/environments`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URI}/environments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,9 +56,17 @@ const Environments = () => {
         },
         body: environments,
       });
-      setSuccess("Environments updated successfully");
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        setSuccess("Environments updated successfully");
+        getEnvironments();
+      } else {
+        // Handle error responses (403, 400, etc.)
+        setError(data.message || "Failed to update environments");
+      }
       setLoading(false);
-      getEnvironments();
     } catch (error) {
       console.error(error.message);
       setError(error.message);

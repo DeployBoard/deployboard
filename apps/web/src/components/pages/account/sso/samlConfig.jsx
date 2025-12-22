@@ -95,6 +95,11 @@ const SamlConfig = () => {
         }
       );
       const { message } = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(message || "Failed to update SAML config");
+      }
+      
       return message;
     } catch (error) {
       console.error(error);
@@ -130,6 +135,11 @@ const SamlConfig = () => {
         }
       );
       const { message } = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(message || "Failed to update SAML settings");
+      }
+      
       return message;
     } catch (error) {
       console.error(error);

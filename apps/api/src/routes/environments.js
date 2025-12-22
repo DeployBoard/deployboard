@@ -31,8 +31,8 @@ router.route("/").post(async (req, res) => {
   try {
     // verify the user has the correct role to access the resource
     if (!verifyRole(["Editor", "Admin"], req.role)) {
-      return res.status(401).json({
-        message: "You are not authorized to access this resource.",
+      return res.status(403).json({
+        message: "You do not have permission to access this resource.",
       });
     }
     // body should be an array of strings

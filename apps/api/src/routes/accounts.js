@@ -43,9 +43,9 @@ router.route("/").get(async (req, res, next) => {
 router.route("/").post(async (req, res, next) => {
   // verify the user has the correct role to access the resource
   if (!verifyRole(["Admin"], req.role)) {
-    res.locals.status = 401;
+    res.locals.status = 403;
     res.locals.body = {
-      message: "You are not authorized to access this resource",
+      message: "You do not have permission to access this resource",
     };
     return next();
   }
@@ -91,9 +91,9 @@ router.route("/").post(async (req, res, next) => {
 router.route("/samlConfig").post(async (req, res, next) => {
   // verify the user has the correct role to access the resource
   if (!verifyRole(["Admin"], req.role)) {
-    res.locals.status = 401;
+    res.locals.status = 403;
     res.locals.body = {
-      message: "You are not authorized to access this resource",
+      message: "You do not have permission to access this resource",
     };
     return next();
   }
