@@ -33,6 +33,7 @@ const Login = () => {
   const setStoreAccount = useStore((state) => state.setAccount);
   const setStoreRole = useStore((state) => state.setRole);
   const loggedOut = window.location.search.includes("loggedOut");
+  const sessionExpired = window.location.search.includes("sessionExpired");
 
   const handleChangeEmail = (event) => {
     setEmail(event.target.value);
@@ -98,6 +99,12 @@ const Login = () => {
         <CustomSnackbar
           severity="success"
           message="You have been logged out."
+        />
+      )}
+      {sessionExpired && (
+        <CustomSnackbar
+          severity="warning"
+          message="Your session has expired. Please log in again."
         />
       )}
       {success && <CustomSnackbar severity="success" message={success} />}
