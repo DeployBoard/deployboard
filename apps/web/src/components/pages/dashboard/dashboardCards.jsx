@@ -97,53 +97,71 @@ const DashboardCards = () => {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell>{item.service}</TableCell>
-                  {item.environments.map((env) => (
-                    <TableCell key={env._id} align="right">
-                      {env.version}
-                      <br />
-                      {(() => {
-                        if (env.status === "Deployed") {
-                          return (
-                            <Chip
-                              label={env.status}
-                              color="success"
-                              variant="outlined"
-                              size="small"
-                            />
-                          );
-                        } else if (env.status === "Deploying") {
-                          return (
-                            <Chip
-                              label={env.status}
-                              color="primary"
-                              variant="outlined"
-                              size="small"
-                            />
-                          );
-                        } else if (env.status === "Failed") {
-                          return (
-                            <Chip
-                              label={env.status}
-                              color="error"
-                              variant="outlined"
-                              size="small"
-                            />
-                          );
-                        } else {
-                          return (
-                            <Chip
-                              label={env.status}
-                              color="secondary"
-                              variant="outlined"
-                              size="small"
-                            />
-                          );
-                        }
-                      })()}
-                      <br />
-                      {tzConvert(env.timestamp)}
-                    </TableCell>
-                  ))}
+                  {environments.map((envName) => {
+                    // Find the matching environment data for this service
+                    const env = item.environments.find(
+                      (e) => e.name === envName
+                    );
+                    
+                    return (
+                      <TableCell key={envName} align="right">
+                        {env ? (
+                          <>
+                            {env.version}
+                            <br />
+                            {(() => {
+                              if (env.status === "Deployed") {
+                                return (
+                                  <Chip
+                                    label={env.status}
+                                    color="success"
+                                    variant="outlined"
+                                    size="small"
+                                  />
+                                );
+                              } else if (env.status === "Deploying") {
+                                return (
+                                  <Chip
+                                    label={env.status}
+                                    color="primary"
+                                    variant="outlined"
+                                    size="small"
+                                  />
+                                );
+                              } else if (env.status === "Failed") {
+                                return (
+                                  <Chip
+                                    label={env.status}
+                                    color="error"
+                                    variant="outlined"
+                                    size="small"
+                                  />
+                                );
+                              } else {
+                                return (
+                                  <Chip
+                                    label={env.status}
+                                    color="secondary"
+                                    variant="outlined"
+                                    size="small"
+                                  />
+                                );
+                              }
+                            })()}
+                            <br />
+                            {tzConvert(env.timestamp)}
+                          </>
+                        ) : (
+                          <Chip
+                            label="No Data"
+                            color="default"
+                            variant="outlined"
+                            size="small"
+                          />
+                        )}
+                      </TableCell>
+                    );
+                  })}
                 </TableRow>
               ))
             : null}
