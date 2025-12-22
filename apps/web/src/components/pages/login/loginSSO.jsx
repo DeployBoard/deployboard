@@ -10,6 +10,7 @@ import {
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 
 import LoginWrapper from "./loginWrapper";
+import CustomSnackbar from "../../structure/customSnackbar";
 
 const LoginSSO = () => {
   let [email, setEmail] = useState("");
@@ -30,6 +31,8 @@ const LoginSSO = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setPending(true);
+    setWarning("");
+    setError("");
     // make the login api call
     try {
       const response = await fetch(
@@ -48,20 +51,12 @@ const LoginSSO = () => {
       if (status == 200) {
         // redirect to the saml login page
         window.location.replace(message);
-      } else {
+      } else if (status >= 400 && status < 500) {
+        // Client errors (401, 400, etc.) - user/request issue
         setWarning(message);
-      }
-
-      console.log(message);
-      if (status == 200) {
-        // TODO: I don't think we need this code because the api redirects to the sso provider.
-        // We should never get a 200 status code here.
-        console.log("token", token);
-        navigate("/dashboard");
-      } else if (status == 401) {
-        setWarning(message);
-      } else {
-        setWarning(message);
+      } else if (status >= 500) {
+        // Server errors - something went wrong on the backend
+        setError(message);
       }
       setPending(false);
     } catch (error) {
@@ -74,6 +69,8 @@ const LoginSSO = () => {
   return (
     <>
       <CssBaseline />
+      {warning && <CustomSnackbar severity="warning" message={warning} />}
+      {error && <CustomSnackbar severity="error" message={error} />}
       <LoginWrapper
         content={
           <>
