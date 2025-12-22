@@ -8,6 +8,7 @@ import MiniDrawer from "../../../structure/headerDrawer";
 import CustomSnackbar from "../../../structure/customSnackbar";
 import ExternalLinks from "./externalLinks";
 import Deployments from "./deployments";
+import EnvironmentStatus from "./environmentStatus";
 import Maturity from "./maturity";
 import Metadata from "./metadata";
 import { getToken } from "../../../utils/auth";
@@ -65,6 +66,9 @@ const Service = () => {
           </Grid>
           <Grid size={12}>
             <Deployments service={serviceId} />
+          </Grid>
+          <Grid size={12}>
+            <EnvironmentStatus environments={data.environments} />
           </Grid>
           {/* <Grid size={8}>
             <Dependencies links={links} />
