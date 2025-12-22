@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
 import PrivateRoutes from "./components/utils/PrivateRoutes";
+import setupAxiosInterceptor from "./components/utils/axiosInterceptor";
 import Login from "./components/pages/login/login";
 import LoginSSO from "./components/pages/login/loginSSO";
 import LoginSSOCallback from "./components/pages/login/loginSSOCallback";
@@ -21,6 +23,11 @@ import NotFound from "./components/pages/notFound/notFound";
 import Logout from "./components/pages/logout/logout";
 
 const App = () => {
+  // Setup axios interceptor to handle 401 errors globally
+  useEffect(() => {
+    setupAxiosInterceptor();
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
