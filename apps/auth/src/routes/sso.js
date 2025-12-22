@@ -44,12 +44,12 @@ router.route("/").post(async (req, res) => {
 
     // Find the account in the database that matches our email domain.
     const account = await Account.findOne({ ssoDomain: emailDomain });
-    // if we don't find an account, return a 401.
+    // if we don't find an account, return a 401 with a generic message.
     if (!account) {
-      // return invalid message
+      // Use a generic message to prevent enumeration of SSO domains
       return res.status(401).json({
         message:
-          "Unable to find an account matching this domain. Contact your administrator to set up SSO.",
+          "Unable to authenticate with SSO. Please contact your administrator or use standard login.",
       });
     }
     log.debug("account.name:", account.name);
