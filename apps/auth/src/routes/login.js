@@ -61,6 +61,7 @@ router.route("/").post(async (req, res) => {
       return res.status(200).json({
         message: "Login successful.",
         token,
+        theme: user.theme || "system",
       });
     } else {
       log.debug("Passwords do not match");

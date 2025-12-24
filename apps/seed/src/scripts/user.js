@@ -15,7 +15,7 @@ const generateUsers = () => {
     locale: "en_US",
     zoneInfo: "America/Los_Angeles",
     avatar: "None",
-    theme: "light",
+    theme: "system",
   });
   users.push({
     email: "editor@seed.seed",
@@ -32,7 +32,7 @@ const generateUsers = () => {
     locale: "en_US",
     zoneInfo: "America/Los_Angeles",
     avatar: "None",
-    theme: "light",
+    theme: "system",
   });
   users.push({
     email: "user@seed.seed",
@@ -49,7 +49,7 @@ const generateUsers = () => {
     locale: "en_US",
     zoneInfo: "America/Los_Angeles",
     avatar: "None",
-    theme: "light",
+    theme: "system",
   });
   users.push({
     email: "seedSaml@seedSaml.seed",
@@ -64,7 +64,7 @@ const generateUsers = () => {
     locale: "en_US",
     zoneInfo: "America/Los_Angeles",
     avatar: "None",
-    theme: "light",
+    theme: "system",
   });
   return users;
 };

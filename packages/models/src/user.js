@@ -83,6 +83,8 @@ let UserSchema = new mongoose.Schema(
     theme: {
       type: String,
       required: false,
+      default: "system",
+      enum: ["system", "light", "dark"],
     },
   },
   {
