@@ -97,22 +97,15 @@ UserSchema.virtual("isLocked").get(function () {
 });
 
 // if the password was changed, hash it before saving
-UserSchema.pre("save", function (next) {
-  let user = this;
+UserSchema.pre("save", async function () {
   // only hash the password if it has been modified (or is new)
-  if (!user.isModified("password")) return next();
+  if (!this.isModified("password")) return;
 
-  // generate a salt
-  bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
-    if (err) return next(err);
-    // hash the password using our new salt
-    bcrypt.hash(user.password, salt, function (err, hash) {
-      if (err) return next(err);
-      // override the cleartext password with the hashed one
-      user.password = hash;
-      next();
-    });
-  });
+  // generate a salt and hash the password
+  const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+  const hash = await bcrypt.hash(this.password, salt);
+  // override the cleartext password with the hashed one
+  this.password = hash;
 });
 
 UserSchema.methods.comparePassword = async function (candidatePassword) {

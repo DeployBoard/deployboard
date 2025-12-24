@@ -21,6 +21,7 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import MemoryIcon from "@mui/icons-material/Memory";
 import LogoutIcon from "@mui/icons-material/Logout";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 import useStore from "../utils/appStore";
 
@@ -221,6 +222,28 @@ const MiniDrawer = () => {
       <Divider />
 
       <List>
+        <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItemButton
+            component={Link}
+            to="/settings"
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Settings" sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </ListItem>
         <ListItem disablePadding sx={{ display: "block" }}>
           <ListItemButton
             component={Link}
