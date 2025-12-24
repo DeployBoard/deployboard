@@ -15,13 +15,20 @@ const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 
 const lightOrDark = () => {
-  // check if the user has theme preference in localStorage
-  const themePreference = localStorage.getItem("theme");
-  if (themePreference) {
-    return themePreference;
+  // Check zustand store for theme preference
+  const stored = localStorage.getItem("deployboard-storage");
+  if (stored) {
+    try {
+      const { state } = JSON.parse(stored);
+      if (state.theme && state.theme !== "system") {
+        return state.theme;
+      }
+    } catch (e) {
+      // Ignore parse errors
+    }
   }
 
-  // if not, check the system theme
+  // Fall back to system theme
   if (
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches

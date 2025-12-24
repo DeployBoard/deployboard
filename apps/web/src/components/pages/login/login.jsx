@@ -32,6 +32,8 @@ const Login = () => {
   const setStoreEmail = useStore((state) => state.setEmail);
   const setStoreAccount = useStore((state) => state.setAccount);
   const setStoreRole = useStore((state) => state.setRole);
+  const setStoreTheme = useStore((state) => state.setTheme);
+  const storeTheme = useStore((state) => state.theme);
   const loggedOut = window.location.search.includes("loggedOut");
   const sessionExpired = window.location.search.includes("sessionExpired");
 
@@ -65,20 +67,31 @@ const Login = () => {
       });
       // check the response status
       const status = response.status;
-      // get the message and token from our response.
-      const { message, token } = await response.json();
+      // get the message, token, and theme from our response.
+      const { message, token, theme } = await response.json();
       if (status == 200) {
         // set the token in our session storage
         setToken(token);
         setSuccess(message);
         // decode the token and get the user info
         const decodedToken = jwtDecode(token);
-        // set the email, account and role in our store
+        // set the email, account, role, and theme in our store
         setStoreEmail(decodedToken.email);
         setStoreAccount(decodedToken.account);
         setStoreRole(decodedToken.role);
-        // redirect to the dashboard
-        navigate("/dashboard");
+        
+        // if the theme changed, set it and do a full reload
+        const newTheme = theme || "system";
+        const themeChanged = newTheme !== storeTheme;
+        
+        if (themeChanged) {
+          setStoreTheme(newTheme);
+          // Full page reload to apply new theme
+          window.location.href = "/dashboard";
+        } else {
+          // Fast navigation - no reload needed
+          navigate("/dashboard");
+        }
       } else if (status == 401) {
         setWarning(message);
       } else {

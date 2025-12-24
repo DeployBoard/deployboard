@@ -23,6 +23,7 @@ import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import CssBaseline from "@mui/material/CssBaseline";
 import MiniDrawer from "../../structure/headerDrawer";
 import { getToken } from "../../utils/auth";
+import useStore from "../../utils/appStore";
 
 // Generate timezone list with GMT offsets using all IANA timezones
 const getTimezoneOptions = () => {
@@ -62,6 +63,9 @@ const getTimezoneOptions = () => {
 };
 
 const Settings = () => {
+  const storeTheme = useStore((state) => state.theme);
+  const setStoreTheme = useStore((state) => state.setTheme);
+  
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -72,7 +76,7 @@ const Settings = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
-  const [theme, setTheme] = useState("");
+  const [theme, setTheme] = useState(storeTheme || "system");
   const [locale, setLocale] = useState("");
   const [zoneInfo, setZoneInfo] = useState("");
 
@@ -108,7 +112,7 @@ const Settings = () => {
       setLastName(res.data.lastName || "");
       setEmail(res.data.email || "");
       setRole(res.data.role || "");
-      setTheme(res.data.theme || "");
+      setTheme(res.data.theme || "system");
       setLocale(res.data.locale || "");
       setZoneInfo(res.data.zoneInfo || "");
       setLoading(false);
@@ -142,6 +146,14 @@ const Settings = () => {
       );
 
       setSuccess("Profile updated successfully");
+      
+      // Sync theme to zustand store (which persists to localStorage)
+      setStoreTheme(theme);
+      
+      // Reload page to apply theme change
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (err) {
       setError(err.response?.data?.message || err.message);
     } finally {
@@ -272,7 +284,7 @@ const Settings = () => {
                   label="Theme"
                   onChange={(e) => setTheme(e.target.value)}
                 >
-                  <MenuItem value="">
+                  <MenuItem value="system">
                     <em>System Default</em>
                   </MenuItem>
                   <MenuItem value="light">Light</MenuItem>
