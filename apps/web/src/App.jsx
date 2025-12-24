@@ -19,6 +19,7 @@ import Users from "./components/pages/account/users/users";
 import ApiKeys from "./components/pages/account/apikeys/apikeys";
 import SSOConfig from "./components/pages/account/sso/ssoConfig";
 import Integrations from "./components/pages/account/integrations/integrations";
+import Settings from "./components/pages/settings/settings";
 import NotFound from "./components/pages/notFound/notFound";
 import Logout from "./components/pages/logout/logout";
 
@@ -56,6 +57,7 @@ const App = () => {
           <Route path="/account/apikeys" element={<ApiKeys />} />
           <Route path="/account/sso" element={<SSOConfig />} />
           <Route path="/account/integrations" element={<Integrations />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
         </Route>
