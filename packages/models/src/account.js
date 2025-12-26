@@ -68,6 +68,13 @@ const AccountSchema = new mongoose.Schema(
       type: Object,
       required: false,
     },
+    sessionDuration: {
+      type: Number,
+      required: true,
+      default: 8,
+      min: 1,
+      max: 720, // 30 days * 24 hours
+    },
   },
   {
     collection: "accounts",

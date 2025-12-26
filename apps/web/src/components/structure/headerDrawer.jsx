@@ -20,6 +20,7 @@ import ForestIcon from "@mui/icons-material/Forest";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import MemoryIcon from "@mui/icons-material/Memory";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SettingsIcon from "@mui/icons-material/Settings";
 
@@ -40,6 +41,11 @@ const adminPages = [
   { name: "Users", icon: <PeopleAltIcon /> },
   { name: "ApiKeys", icon: <VpnKeyIcon /> },
   { name: "SSO", icon: <MemoryIcon /> },
+  {
+    name: "Account Settings",
+    icon: <AdminPanelSettingsIcon />,
+    path: "/account/settings",
+  },
 ];
 
 const openedMixin = (theme) => ({
@@ -192,7 +198,7 @@ const MiniDrawer = () => {
               >
                 <ListItemButton
                   component={Link}
-                  to={`/account/${item.name.toLowerCase()}`}
+                  to={item.path || `/account/${item.name.toLowerCase()}`}
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",

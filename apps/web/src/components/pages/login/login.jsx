@@ -165,6 +165,8 @@ const Login = () => {
                       <IconButton
                         aria-label="Toggle password visibility"
                         onClick={handleClickShowPassword}
+                        edge="end"
+                        tabIndex={-1}
                       >
                         {showPassword ? (
                           <VisibilityOffRoundedIcon />

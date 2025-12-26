@@ -59,8 +59,8 @@ router.route("/").post(async (req, res, next) => {
         message: "Account not found.",
       });
     }
-    // get ssoDomain, and samlRoleMapping from payload
-    const { auth, ssoDomain, samlRoleMapping } = req.body;
+    // get ssoDomain, samlRoleMapping, sessionDuration, and passwordPolicy from payload
+    const { auth, ssoDomain, samlRoleMapping, sessionDuration, passwordPolicy } = req.body;
     // if we have auth, update the account with the auth
     if (auth) {
       account.auth = auth;
@@ -72,6 +72,73 @@ router.route("/").post(async (req, res, next) => {
     // if we have samlRoleMapping, update the account with the samlRoleMapping
     if (samlRoleMapping) {
       account.samlRoleMapping = samlRoleMapping;
+    }
+    // if we have sessionDuration, update the account with the sessionDuration
+    if (sessionDuration !== undefined) {
+      // validate sessionDuration is within acceptable range (1 hour to 30 days)
+      if (sessionDuration < 1 || sessionDuration > 720) {
+        return res.status(400).json({
+          message: "Session duration must be between 1 and 720 hours.",
+        });
+      }
+      account.sessionDuration = sessionDuration;
+    }
+    // if we have passwordPolicy, update the account with the passwordPolicy
+    if (passwordPolicy) {
+      // validate passwordPolicy fields
+      if (passwordPolicy.length !== undefined) {
+        if (passwordPolicy.length < 8 || passwordPolicy.length > 128) {
+          return res.status(400).json({
+            message: "Password length must be between 8 and 128 characters.",
+          });
+        }
+        account.passwordPolicy.length = passwordPolicy.length;
+      }
+      if (passwordPolicy.lowercase !== undefined) {
+        if (passwordPolicy.lowercase < 0) {
+          return res.status(400).json({
+            message: "Lowercase requirement cannot be negative.",
+          });
+        }
+        account.passwordPolicy.lowercase = passwordPolicy.lowercase;
+      }
+      if (passwordPolicy.uppercase !== undefined) {
+        if (passwordPolicy.uppercase < 0) {
+          return res.status(400).json({
+            message: "Uppercase requirement cannot be negative.",
+          });
+        }
+        account.passwordPolicy.uppercase = passwordPolicy.uppercase;
+      }
+      if (passwordPolicy.number !== undefined) {
+        if (passwordPolicy.number < 0) {
+          return res.status(400).json({
+            message: "Number requirement cannot be negative.",
+          });
+        }
+        account.passwordPolicy.number = passwordPolicy.number;
+      }
+      if (passwordPolicy.special !== undefined) {
+        if (passwordPolicy.special < 0) {
+          return res.status(400).json({
+            message: "Special character requirement cannot be negative.",
+          });
+        }
+        account.passwordPolicy.special = passwordPolicy.special;
+      }
+      
+      // Validate that the sum of character requirements doesn't exceed total length
+      const totalRequired = 
+        account.passwordPolicy.lowercase + 
+        account.passwordPolicy.uppercase + 
+        account.passwordPolicy.number + 
+        account.passwordPolicy.special;
+      
+      if (totalRequired > account.passwordPolicy.length) {
+        return res.status(400).json({
+          message: `Total character requirements (${totalRequired}) cannot exceed password length (${account.passwordPolicy.length}).`,
+        });
+      }
     }
     // save the account
     await account.save();
