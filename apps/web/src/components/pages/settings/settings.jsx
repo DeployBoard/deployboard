@@ -79,6 +79,7 @@ const Settings = () => {
   const [theme, setTheme] = useState(storeTheme || "system");
   const [locale, setLocale] = useState("");
   const [zoneInfo, setZoneInfo] = useState("");
+  const [passwordPolicy, setPasswordPolicy] = useState(null);
 
   // Password change fields
   const [currentPassword, setCurrentPassword] = useState("");
@@ -89,6 +90,10 @@ const Settings = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
+  // Password validation state
+  const [passwordValidationError, setPasswordValidationError] = useState("");
+  const [passwordMatchError, setPasswordMatchError] = useState("");
 
   // Generate timezone options once
   const timezoneOptions = getTimezoneOptions();
@@ -115,6 +120,18 @@ const Settings = () => {
       setTheme(res.data.theme || "system");
       setLocale(res.data.locale || "");
       setZoneInfo(res.data.zoneInfo || "");
+      
+      // Fetch account password policy
+      const accountRes = await axios.get(
+        `${import.meta.env.VITE_API_URI}/accounts`,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      );
+      setPasswordPolicy(accountRes.data.passwordPolicy);
+      
       setLoading(false);
     } catch (err) {
       console.error("Fetch error:", err);
@@ -176,8 +193,10 @@ const Settings = () => {
       return;
     }
 
-    if (newPassword.length < 8) {
-      setError("New password must be at least 8 characters long");
+    // Validate against password policy
+    const validation = validatePassword(newPassword);
+    if (!validation.valid) {
+      setError(`Password does not meet requirements: ${validation.errors.join(', ')}`);
       return;
     }
 
@@ -211,6 +230,63 @@ const Settings = () => {
   const handleCloseSnackbar = () => {
     setError("");
     setSuccess("");
+  };
+
+  const validatePassword = (password) => {
+    if (!passwordPolicy) return { valid: false, errors: [] };
+
+    const errors = [];
+    const lowercaseCount = (password.match(/[a-z]/g) || []).length;
+    const uppercaseCount = (password.match(/[A-Z]/g) || []).length;
+    const numberCount = (password.match(/[0-9]/g) || []).length;
+    const specialCount = (password.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g) || []).length;
+
+    if (password.length < passwordPolicy.length) {
+      errors.push(`At least ${passwordPolicy.length} characters`);
+    }
+    if (lowercaseCount < passwordPolicy.lowercase) {
+      errors.push(`At least ${passwordPolicy.lowercase} lowercase letter${passwordPolicy.lowercase !== 1 ? 's' : ''}`);
+    }
+    if (uppercaseCount < passwordPolicy.uppercase) {
+      errors.push(`At least ${passwordPolicy.uppercase} uppercase letter${passwordPolicy.uppercase !== 1 ? 's' : ''}`);
+    }
+    if (numberCount < passwordPolicy.number) {
+      errors.push(`At least ${passwordPolicy.number} number${passwordPolicy.number !== 1 ? 's' : ''}`);
+    }
+    if (specialCount < passwordPolicy.special) {
+      errors.push(`At least ${passwordPolicy.special} special character${passwordPolicy.special !== 1 ? 's' : ''}`);
+    }
+
+    return { valid: errors.length === 0, errors };
+  };
+
+  const handleNewPasswordBlur = () => {
+    if (newPassword && passwordPolicy) {
+      const validation = validatePassword(newPassword);
+      if (!validation.valid) {
+        setPasswordValidationError(validation.errors.join(', '));
+      } else {
+        setPasswordValidationError("");
+      }
+    }
+  };
+
+  const handleConfirmPasswordBlur = () => {
+    if (confirmPassword && newPassword) {
+      if (confirmPassword !== newPassword) {
+        setPasswordMatchError("Passwords must match");
+      } else {
+        setPasswordMatchError("");
+      }
+    }
+  };
+
+  const isPasswordFormValid = () => {
+    if (!currentPassword || !newPassword || !confirmPassword) return false;
+    if (newPassword !== confirmPassword) return false;
+    if (!passwordPolicy) return false;
+    const validation = validatePassword(newPassword);
+    return validation.valid;
   };
 
   if (loading) {
@@ -352,6 +428,7 @@ const Settings = () => {
                           aria-label="Toggle password visibility"
                           onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                           edge="end"
+                          tabIndex={-1}
                         >
                           {showCurrentPassword ? (
                             <VisibilityOffRoundedIcon />
@@ -369,10 +446,28 @@ const Settings = () => {
                 label="New Password"
                 type={showNewPassword ? "text" : "password"}
                 value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                onChange={(e) => {
+                  setNewPassword(e.target.value);
+                  if (passwordValidationError) setPasswordValidationError("");
+                  // Check if passwords match whenever confirmPassword has a value
+                  if (confirmPassword) {
+                    if (e.target.value === confirmPassword) {
+                      setPasswordMatchError("");
+                    } else {
+                      setPasswordMatchError("Passwords must match");
+                    }
+                  }
+                }}
+                onBlur={handleNewPasswordBlur}
+                error={!!passwordValidationError}
                 fullWidth
                 margin="normal"
-                helperText="Must be at least 8 characters"
+                helperText={
+                  passwordValidationError ||
+                  (passwordPolicy
+                    ? `Requirements: ${passwordPolicy.length}+ chars${passwordPolicy.lowercase > 0 ? `, ${passwordPolicy.lowercase}+ lowercase` : ''}${passwordPolicy.uppercase > 0 ? `, ${passwordPolicy.uppercase}+ uppercase` : ''}${passwordPolicy.number > 0 ? `, ${passwordPolicy.number}+ number` : ''}${passwordPolicy.special > 0 ? `, ${passwordPolicy.special}+ special` : ''}`
+                    : "Loading policy...")
+                }
                 slotProps={{
                   input: {
                     endAdornment: (
@@ -381,6 +476,7 @@ const Settings = () => {
                           aria-label="Toggle password visibility"
                           onClick={() => setShowNewPassword(!showNewPassword)}
                           edge="end"
+                          tabIndex={-1}
                         >
                           {showNewPassword ? (
                             <VisibilityOffRoundedIcon />
@@ -398,9 +494,15 @@ const Settings = () => {
                 label="Confirm New Password"
                 type={showConfirmPassword ? "text" : "password"}
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  if (passwordMatchError) setPasswordMatchError("");
+                }}
+                onBlur={handleConfirmPasswordBlur}
+                error={!!passwordMatchError}
                 fullWidth
                 margin="normal"
+                helperText={passwordMatchError || "Re-enter your new password"}
                 slotProps={{
                   input: {
                     endAdornment: (
@@ -409,6 +511,7 @@ const Settings = () => {
                           aria-label="Toggle password visibility"
                           onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                           edge="end"
+                          tabIndex={-1}
                         >
                           {showConfirmPassword ? (
                             <VisibilityOffRoundedIcon />
@@ -425,7 +528,7 @@ const Settings = () => {
               <Button
                 variant="contained"
                 onClick={handleChangePassword}
-                disabled={saving}
+                disabled={saving || !isPasswordFormValid()}
                 sx={{ mt: 2 }}
               >
                 {saving ? "Changing..." : "Change Password"}

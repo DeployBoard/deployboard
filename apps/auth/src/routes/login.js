@@ -1,7 +1,7 @@
 import express from "express";
 import log from "loglevel";
 
-import { User } from "models";
+import { User, Account } from "models";
 import { sendLockedMail } from "../utils/sendMail.js";
 import { generateToken } from "../utils/token.js";
 
@@ -51,8 +51,10 @@ router.route("/").post(async (req, res) => {
     
     if (isMatch) {
       log.debug("Passwords match");
+      // fetch account to get sessionDuration
+      const account = await Account.findOne({ name: user.account });
       // generate a token for the user
-      const token = generateToken(user);
+      const token = generateToken(user, account.sessionDuration);
       log.debug("Token generated");
       log.debug(token);
       // reset attempts and lockUntil

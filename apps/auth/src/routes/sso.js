@@ -204,13 +204,16 @@ router.route("/callback").post(async (req, res) => {
 
     log.debug("userRole:", userRole);
 
-    // generate a token
-    const token = generateToken({
-      id: uid,
+    // construct user object for token generation
+    const user = {
+      _id: uid,
       email: email,
       role: userRole,
       account: accountName,
-    });
+    };
+
+    // generate a token
+    const token = generateToken(user, account.sessionDuration);
     log.debug("Token generated");
     log.debug(token);
 

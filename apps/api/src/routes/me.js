@@ -1,7 +1,7 @@
 import express from "express";
 import log from "loglevel";
 
-import { User } from "models";
+import { User, Account } from "models";
 
 log.setLevel("debug");
 
@@ -87,11 +87,62 @@ router.route("/").patch(async (req, res, next) => {
         return next();
       }
 
-      // Validate new password
-      if (req.body.password.length < 8) {
+      // Fetch account to get password policy
+      const account = await Account.findOne({ name: req.account });
+      if (!account) {
+        res.locals.status = 404;
+        res.locals.body = {
+          message: "Account not found",
+        };
+        return next();
+      }
+
+      const passwordPolicy = account.passwordPolicy;
+      const newPassword = req.body.password;
+
+      // Validate password against policy
+      if (newPassword.length < passwordPolicy.length) {
         res.locals.status = 400;
         res.locals.body = {
-          message: "New password must be at least 8 characters long",
+          message: `Password must be at least ${passwordPolicy.length} characters long`,
+        };
+        return next();
+      }
+
+      // Count character types
+      const lowercaseCount = (newPassword.match(/[a-z]/g) || []).length;
+      const uppercaseCount = (newPassword.match(/[A-Z]/g) || []).length;
+      const numberCount = (newPassword.match(/[0-9]/g) || []).length;
+      const specialCount = (newPassword.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g) || []).length;
+
+      if (lowercaseCount < passwordPolicy.lowercase) {
+        res.locals.status = 400;
+        res.locals.body = {
+          message: `Password must contain at least ${passwordPolicy.lowercase} lowercase letter${passwordPolicy.lowercase !== 1 ? 's' : ''}`,
+        };
+        return next();
+      }
+
+      if (uppercaseCount < passwordPolicy.uppercase) {
+        res.locals.status = 400;
+        res.locals.body = {
+          message: `Password must contain at least ${passwordPolicy.uppercase} uppercase letter${passwordPolicy.uppercase !== 1 ? 's' : ''}`,
+        };
+        return next();
+      }
+
+      if (numberCount < passwordPolicy.number) {
+        res.locals.status = 400;
+        res.locals.body = {
+          message: `Password must contain at least ${passwordPolicy.number} number${passwordPolicy.number !== 1 ? 's' : ''}`,
+        };
+        return next();
+      }
+
+      if (specialCount < passwordPolicy.special) {
+        res.locals.status = 400;
+        res.locals.body = {
+          message: `Password must contain at least ${passwordPolicy.special} special character${passwordPolicy.special !== 1 ? 's' : ''}`,
         };
         return next();
       }

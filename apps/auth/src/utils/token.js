@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
-const generateToken = (user) => {
+const generateToken = (user, sessionDuration = 8) => {
   return jwt.sign(
     {
       id: user._id,
@@ -12,7 +12,7 @@ const generateToken = (user) => {
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: "8h",
+      expiresIn: `${sessionDuration}h`,
     }
   );
 };
